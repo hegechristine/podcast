@@ -753,7 +753,8 @@
     letter-spacing: 0.14em;
     text-transform: uppercase;
     transition: background var(--dur-fast);
-    margin-right: auto; /* push CTA to left, links cluster right */
+    order: 99; /* push CTA til høyre, lenkene til venstre */
+    margin-left: auto;
   }
   .ep__expand-cta:hover { background: var(--soft-rust-deep); }
   .ep__expand-link {
