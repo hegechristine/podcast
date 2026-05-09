@@ -352,10 +352,6 @@ function renderEpisode(ep, campaign) {
       <p class="ep-host__bio">${escHtml(SHOW.hostBio)}</p>
       <h3>Hva er The <em>Edit</em>?</h3>
       <p>${escHtml(SHOW.showAbout)}</p>
-      <div class="ep-host__cta">
-        <a href="${escAttr(SHOW.spotifyShow)}" target="_blank" rel="noopener" class="btn btn--primary">Abonnér på Spotify</a>
-        <a href="${escAttr(SHOW.appleShow)}" target="_blank" rel="noopener" class="btn btn--secondary">Apple Podcasts</a>
-      </div>
     </div>
   </section>
 

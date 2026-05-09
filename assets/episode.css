@@ -367,12 +367,6 @@ em, .italic {
   color: var(--ink-600);
   margin: 0 0 10px;
 }
-.ep-host__cta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 24px;
-}
 
 /* SIDEBAR */
 .ep-sidebar { display: flex; flex-direction: column; gap: 24px; }
