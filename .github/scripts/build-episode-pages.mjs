@@ -158,7 +158,9 @@ function parseResourcesSection(sec) {
     const urlMatch = text.match(/(https?:\/\/\S+|[\w.-]+\.(com|no|net|org|io|app|fm)\b\S*)/i);
     const href = urlMatch ? (urlMatch[0].startsWith('http') ? urlMatch[0] : `https://${urlMatch[0]}`) : null;
     return { emoji, text, href };
-  });
+  })
+  // Skip Kajabi-related items — Kajabi has its own block in the campaign sidebar
+  .filter(r => !/kajabi/i.test(r.text));
 }
 
 function formatDate(iso) {
@@ -280,21 +282,26 @@ function renderEpisode(ep, campaign) {
 <main class="ep">
 
   <section class="ep-hero">
-    <div class="ep-hero__meta">
-      <span class="kicker">${escHtml(seasonEp)}</span>
-      <span class="ep-hero__date">${escHtml(date)}${duration ? ` · ${escHtml(duration)}` : ''}</span>
-    </div>
-    <h1 class="ep-hero__title">${escHtml(ep.title)}</h1>
-
-    ${ep.audioUrl ? `<div class="ep-player">
-      <audio controls preload="metadata" src="${escAttr(ep.audioUrl)}"></audio>
+    ${ep.imageUrl ? `<div class="ep-hero__cover">
+      <img src="${escAttr(ep.imageUrl)}" alt="${escAttr(ep.title)} — episode-cover" loading="eager" />
     </div>` : ''}
+    <div class="ep-hero__body">
+      <div class="ep-hero__meta">
+        <span class="kicker">${escHtml(seasonEp)}</span>
+        <span class="ep-hero__date">${escHtml(date)}${duration ? ` · ${escHtml(duration)}` : ''}</span>
+      </div>
+      <h1 class="ep-hero__title">${escHtml(ep.title)}</h1>
 
-    <div class="ep-subscribe">
-      <span class="ep-subscribe__label">Abonnér:</span>
-      <a class="ep-subscribe__btn" href="${escAttr(SHOW.spotifyShow)}" target="_blank" rel="noopener">Spotify</a>
-      <a class="ep-subscribe__btn" href="${escAttr(SHOW.appleShow)}" target="_blank" rel="noopener">Apple Podcasts</a>
-      <a class="ep-subscribe__btn ep-subscribe__btn--rss" href="${escAttr(SHOW.rssUrl)}" target="_blank" rel="noopener">RSS</a>
+      ${ep.audioUrl ? `<div class="ep-player">
+        <audio controls preload="metadata" src="${escAttr(ep.audioUrl)}"></audio>
+      </div>` : ''}
+
+      <div class="ep-subscribe">
+        <span class="ep-subscribe__label">Abonnér:</span>
+        <a class="ep-subscribe__btn" href="${escAttr(SHOW.spotifyShow)}" target="_blank" rel="noopener">Spotify</a>
+        <a class="ep-subscribe__btn" href="${escAttr(SHOW.appleShow)}" target="_blank" rel="noopener">Apple Podcasts</a>
+        <a class="ep-subscribe__btn ep-subscribe__btn--rss" href="${escAttr(SHOW.rssUrl)}" target="_blank" rel="noopener">RSS</a>
+      </div>
     </div>
   </section>
 
