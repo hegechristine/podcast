@@ -458,10 +458,10 @@ function renderEpisode(ep, campaign, allEpisodes, showStats) {
   <section class="ep-hero">
     <div class="ep-hero__grid" aria-hidden="true"></div>
     ${ep.imageUrl ? `<div class="ep-hero__cover">
-      <span class="ep-hero__cover-tag">${escHtml(tagLabel)}</span>
       <img src="${escAttr(ep.imageUrl)}" alt="${escAttr(ep.title)} — episode-cover" loading="eager" />
     </div>` : ''}
     <div class="ep-hero__body">
+      <span class="kicker">${escHtml(epSeasonLabel)}</span>
       <h1 class="ep-hero__title">${escHtml(ep.title)}</h1>
       ${ep.audioUrl ? `<div class="ep-player" data-audio-src="${escAttr(ep.audioUrl)}">
         <button class="ep-player__play" type="button" aria-label="Spill av episoden">

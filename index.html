@@ -243,35 +243,120 @@
   .ep__art, .featured__art, .featured, .about__portrait, .panel { border-radius: 4px; }
   .ep__play, .featured__play { border-radius: 999px; }
 
-  /* Footer — DARK cognac, the heaviest anchor at the page bottom.
-     RULE: yellow against brown, rust against cream. */
-  body .ds-footer { background: #2e3230 !important; color: var(--soft-bg) !important; }
-  body .ds-footer h5 { color: var(--soft-yellow) !important; }
-  body .ds-footer a { color: rgba(244,242,239,0.92) !important; } /* whiter, more legible */
-  body .ds-footer a:hover { color: var(--soft-yellow) !important; }
-  body .ds-footer__tag { color: rgba(244,242,239,0.7) !important; }
-  body .ds-footer__base { color: rgba(244,242,239,0.55) !important; }
-  body .ds-footer__base span { color: rgba(244,242,239,0.55) !important; }
-  body .ds-footer__tag { color: rgba(244,242,239,0.6) !important; }
-
-  /* Footer wordmark — switches to MAIN brand identity (Hege Christine personally,
-     not The Edit). Archivo Black "Hege" + Newsreader italic "Christine". */
+  /* Footer — paritet med episode-side (assets/episode.css), minus grid-bakgrunn.
+     Dark olive #2e3230, deles på tvers av alle hegechristine.no-properties. */
+  body .ds-footer {
+    background: #2e3230 !important;
+    color: #F4F2EF !important;
+    padding: 64px 48px 32px !important;
+    margin-top: 0 !important;
+    overflow: hidden;
+    position: relative;
+  }
+  body .ds-footer::before { display: none !important; } /* ingen grid-overlay */
+  body .ds-footer__inner {
+    position: relative;
+    z-index: 1;
+    max-width: 1320px;
+    margin: 0 auto;
+  }
+  body .ds-footer__grid {
+    display: grid !important;
+    gap: 48px !important;
+    grid-template-columns: 2fr 1fr 1fr 1fr !important;
+    padding-bottom: 48px !important;
+    border-bottom: 1px solid rgba(244,242,239,0.15) !important;
+  }
+  body .ds-footer h5 {
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 0.75rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.18em !important;
+    text-transform: uppercase;
+    margin: 0 0 16px !important;
+    color: #FFCC00 !important;
+  }
+  body .ds-footer ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px !important;
+  }
+  body .ds-footer a {
+    color: rgba(244,242,239,0.92) !important;
+    text-decoration: none;
+    font-family: 'Montserrat', sans-serif !important;
+    font-weight: 400 !important;
+    font-size: 0.875rem !important;
+    transition: color 140ms ease;
+  }
+  body .ds-footer a:hover { color: #FFCC00 !important; }
   body .ds-footer__wordmark {
-    font-family: 'Archivo', sans-serif !important;
+    font-family: 'Archivo Black', sans-serif !important;
     font-weight: 900 !important;
-    font-size: clamp(2.5rem, 5vw, 4.5rem) !important;
+    font-size: 2.25rem !important;
+    line-height: 1 !important;
     letter-spacing: -0.02em !important;
-    line-height: 0.95 !important;
-    color: var(--soft-bg) !important;
+    color: #F4F2EF !important;
+    margin: 0 0 12px !important;
   }
   body .ds-footer__wordmark em {
     font-family: 'Newsreader', serif !important;
     font-style: italic !important;
     font-weight: 500 !important;
-    font-variation-settings: "opsz" 96;
-    color: var(--soft-yellow) !important; /* yellow against the dark footer */
-    letter-spacing: -0.015em !important;
-    margin-left: 0.05em;
+    color: #FFCC00 !important;
+    letter-spacing: -0.01em !important;
+    margin-left: 2px;
+  }
+  body .ds-footer__tag {
+    font-family: 'Cormorant Garamond', serif !important;
+    font-style: italic !important;
+    font-weight: 500 !important;
+    font-size: 1.05rem !important;
+    color: rgba(244,242,239,0.85) !important;
+    max-width: 36ch !important;
+    line-height: 1.5 !important;
+    margin: 0 0 24px !important;
+  }
+  body .ds-footer__base {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 24px !important;
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 0.7rem !important;
+    letter-spacing: 0.14em !important;
+    text-transform: uppercase;
+    color: rgba(244,242,239,0.6) !important;
+  }
+  body .ds-footer__base span { color: rgba(244,242,239,0.6) !important; }
+  body .ds-footer__legal { display: flex; gap: 22px; }
+  body .ds-footer__legal a {
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 0.7rem !important;
+    letter-spacing: 0.14em !important;
+    text-transform: uppercase;
+    color: rgba(244,242,239,0.6) !important;
+  }
+  body .ds-footer__legal a:hover { color: #FFCC00 !important; }
+  @media (max-width: 720px) {
+    body .ds-footer { padding: 48px 24px 28px !important; }
+    body .ds-footer__grid {
+      grid-template-columns: 1fr !important;
+      gap: 32px !important;
+      padding-bottom: 32px !important;
+    }
+    body .ds-footer__base {
+      flex-direction: row !important;
+      flex-wrap: wrap !important;
+      gap: 8px 16px !important;
+      font-size: 0.62rem !important;
+    }
+    body .ds-footer__legal { gap: 14px !important; }
+    body .ds-footer__legal a { font-size: 0.62rem !important; }
+    body .ds-footer__wordmark { font-size: 1.85rem !important; }
   }
 
   /* Newsletter — light cream, ties into the page flow above; footer below carries the dark weight */
