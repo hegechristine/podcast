@@ -636,24 +636,27 @@ em, .italic {
 @media (max-width: 720px) { .ep-more { margin-bottom: 64px; } }
 .ep-more__head {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 8px;
+  align-items: end;
+  justify-content: space-between;
+  gap: 24px;
   margin-bottom: 32px;
   padding-bottom: 20px;
   border-bottom: 1px solid rgba(48, 48, 48, 0.18);
 }
+.ep-more__head > div:first-child {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
 .ep-more__footer {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
-  gap: 16px;
   margin-top: 24px;
 }
 @media (max-width: 480px) {
-  .ep-more__footer { flex-direction: column-reverse; align-items: stretch; gap: 16px; }
-  .ep-more__nav { justify-content: center; }
-  .ep-more__cta { text-align: center; }
+  .ep-more__footer { justify-content: stretch; }
+  .ep-more__cta { width: 100%; justify-content: center; }
 }
 .ep-more__cta {
   display: inline-flex;
