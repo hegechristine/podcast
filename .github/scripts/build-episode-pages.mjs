@@ -5,7 +5,6 @@ import path from 'path';
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..', '..');
 const EPISODES_PATH = path.join(ROOT, 'episodes.json');
 const CAMPAIGN_PATH = path.join(ROOT, 'data', 'campaign.json');
-const RESOURCE_LINKS_PATH = path.join(ROOT, 'data', 'resource-links.json');
 
 const SHOW = {
   title: 'The Edit',
@@ -51,39 +50,164 @@ function episodeSlug(ep) {
   return `episode-${num}-${titleSlug}`;
 }
 
-// Parse fullDesc into structured sections.
-// Pattern: sections separated by long dash-runs (---...). Each section identified by header keyword.
-function parseShowNotes(fullDesc, linkMap) {
-  if (!fullDesc) return { hook: '', guest: null, resources: [], hostSection: null, disclaimer: null };
+// Parse the sanitized show-notes HTML from Anchor into structured sections.
+// Anchor splits sections with <hr>, identifies them by heading keyword, and
+// includes real <a href> tags inside each item — so we read URLs directly from
+// the RSS instead of guessing.
+function parseShowNotes(descriptionHtml, fullDescFallback) {
+  const empty = { hook: '', guest: null, resources: [], hostSection: null, disclaimer: null };
+  if (!descriptionHtml) {
+    // Fallback to plain-text parsing if HTML not available
+    if (fullDescFallback) return parseShowNotesPlainText(fullDescFallback);
+    return empty;
+  }
 
-  // Split on lines of 10+ dashes (RSS often collapses to spaces)
-  const sections = fullDesc.split(/\s*-{10,}\s*/).map(s => s.trim()).filter(Boolean);
+  // Split on <hr> (with optional whitespace/attributes)
+  const sections = descriptionHtml.split(/<hr\s*\/?\s*>/i).map(s => s.trim()).filter(Boolean);
+  if (sections.length === 0) return empty;
 
-  const result = { hook: '', guest: null, resources: [], hostSection: null, disclaimer: null };
+  const result = { ...empty };
 
-  if (sections.length === 0) return result;
+  // First section is hook/intro — strip HTML for rendering
+  result.hook = htmlToText(sections[0]);
 
-  // First section is always hook/intro
-  result.hook = sections[0];
-
-  // Match remaining sections by header keyword
   for (let i = 1; i < sections.length; i++) {
     const sec = sections[i];
-    const firstLine = sec.split('\n')[0].toLowerCase();
+    const firstHeading = (htmlToText(sec).split('\n')[0] || '').toLowerCase();
 
-    if (/gjest:/i.test(firstLine)) {
-      result.guest = parseGuestSection(sec);
-    } else if (/ressurser|lenker\s*&\s*ressurser|^lenker\b/i.test(firstLine)) {
-      result.resources = parseResourcesSection(sec, linkMap);
-    } else if (/bli bedre kjent med hege/i.test(firstLine)) {
-      result.hostSection = sec; // we ignore for rendering — replaced by static Host & Show block
-    } else if (/disclaimer/i.test(firstLine)) {
+    if (/gjest:/i.test(firstHeading)) {
+      result.guest = parseGuestFromHtml(sec);
+    } else if (/ressurser|lenker\s*&\s*ressurser|^lenker\b|lenker og ressurser/i.test(firstHeading)) {
+      result.resources = parseResourcesFromHtml(sec);
+    } else if (/bli bedre kjent med hege/i.test(firstHeading)) {
+      result.hostSection = sec;
+    } else if (/disclaimer/i.test(firstHeading)) {
       result.disclaimer = sec;
-    } else if (/lenker & ressurser|lenker og ressurser/i.test(firstLine)) {
-      result.resources = parseResourcesSection(sec, linkMap);
     }
   }
 
+  return result;
+}
+
+// Strip tags and decode common entities; preserve paragraph breaks as \n\n
+function htmlToText(html) {
+  if (!html) return '';
+  return html
+    .replace(/<\/p>\s*<p[^>]*>/gi, '\n\n')
+    .replace(/<br\s*\/?\s*>/gi, '\n')
+    .replace(/<[^>]+>/g, '')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/[⁠​-‍﻿]/g, '') // zero-width chars
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
+}
+
+function normalizeHref(raw) {
+  if (!raw) return null;
+  const t = raw.trim();
+  if (/^(https?:|mailto:|tel:)/i.test(t)) return t;
+  return `https://${t.replace(/^\/+/, '')}`;
+}
+
+// Match each <p>…</p> inside the section
+function paragraphsOf(sectionHtml) {
+  const m = sectionHtml.match(/<p[^>]*>[\s\S]*?<\/p>/gi);
+  return m || [];
+}
+
+function parseResourcesFromHtml(sec) {
+  const out = [];
+  for (const p of paragraphsOf(sec)) {
+    const text = htmlToText(p).replace(/\s+/g, ' ').trim();
+    if (!text) continue;
+    // Skip the heading paragraph ("Ressurser:" etc.)
+    if (/^(ressurser|lenker)/i.test(text) && text.length < 30) continue;
+
+    // Extract first emoji (any non-ASCII character at start)
+    const emojiMatch = text.match(/^(\S)/);
+    const emoji = emojiMatch ? emojiMatch[1] : '';
+
+    // Find first <a href> in the paragraph
+    const aMatch = p.match(/<a\s+[^>]*href\s*=\s*["']([^"']+)["'][^>]*>([\s\S]*?)<\/a>/i);
+    if (aMatch) {
+      const href = normalizeHref(aMatch[1]);
+      const linkText = htmlToText(aMatch[2]).trim();
+      out.push({ emoji, text: linkText || text.replace(/^\S\s*/, '').trim(), href });
+    } else {
+      // No link present — keep the item but href stays null
+      out.push({ emoji, text: text.replace(/^\S\s*/, '').trim(), href: null });
+    }
+  }
+  // Filter out:
+  // - Kajabi-related items (Kajabi has its own block in the campaign sidebar)
+  // - Hege's own social links (the host block already shows these statically)
+  return out.filter(r => {
+    if (/kajabi/i.test(r.text)) return false;
+    const href = (r.href || '').toLowerCase();
+    if (/hegechristine\.no/.test(href)) return false;
+    if (/instagram\.com\/hegechristine/.test(href)) return false;
+    if (/linkedin\.com\/in\/hegechristine/.test(href)) return false;
+    if (/facebook\.com\/groups\/strategisksalg/.test(href)) return false;
+    if (/youtube\.com\/@hegechristine/.test(href)) return false;
+    return true;
+  });
+}
+
+function parseGuestFromHtml(sec) {
+  // Heading paragraph contains "Gjest: <Name>"
+  let name = '';
+  const headingPara = paragraphsOf(sec)[0] || '';
+  const headingText = htmlToText(headingPara);
+  const nameMatch = headingText.match(/Gjest:\s*([^\n]+)/i);
+  if (nameMatch) name = nameMatch[1].trim();
+
+  // Each subsequent paragraph: "📸 Instagram: <a href>handle</a>"
+  const links = [];
+  const labelMap = {
+    'instagram': 'Instagram',
+    'linkedin': 'LinkedIn',
+    'facebook': 'Facebook',
+    'nettside': 'Nettside',
+    'youtube': 'YouTube',
+    'tiktok': 'TikTok',
+  };
+
+  for (const p of paragraphsOf(sec).slice(1)) {
+    const text = htmlToText(p).replace(/\s+/g, ' ').trim();
+    if (!text) continue;
+    const emojiMatch = text.match(/^(\S)/);
+    const emoji = emojiMatch ? emojiMatch[1] : '';
+    const labelMatch = text.match(/^\S\s*([A-Za-zÆØÅæøå-]+)\s*:/);
+    const labelKey = (labelMatch ? labelMatch[1] : '').toLowerCase();
+    const label = labelMap[labelKey] || (labelMatch ? labelMatch[1] : '');
+
+    const aMatch = p.match(/<a\s+[^>]*href\s*=\s*["']([^"']+)["'][^>]*>([\s\S]*?)<\/a>/i);
+    if (aMatch) {
+      const href = normalizeHref(aMatch[1]);
+      const value = htmlToText(aMatch[2]).trim();
+      links.push({ emoji, label, value, href });
+    }
+  }
+
+  return { name, links };
+}
+
+// Plain-text fallback (legacy) — only used if descriptionHtml is missing
+function parseShowNotesPlainText(fullDesc) {
+  const sections = fullDesc.split(/\s*-{10,}\s*/).map(s => s.trim()).filter(Boolean);
+  const result = { hook: '', guest: null, resources: [], hostSection: null, disclaimer: null };
+  if (sections.length === 0) return result;
+  result.hook = sections[0];
+  for (let i = 1; i < sections.length; i++) {
+    const sec = sections[i];
+    const firstLine = sec.split('\n')[0].toLowerCase();
+    if (/gjest:/i.test(firstLine)) result.guest = parseGuestSection(sec);
+  }
   return result;
 }
 
@@ -141,41 +265,6 @@ function makeLinkHref(label, value) {
   return '#';
 }
 
-function parseResourcesSection(sec, linkMap) {
-  // Format: "Ressurser: 📙 Skattekutt for gründere 🎓 30K Skattekutt Challenge 🎓 Test Kajabi gratis..."
-  // Items separated by emojis at start of each item
-  const cleaned = sec.replace(/^[^:]*:\s*/i, '').replace(/\s+/g, ' ').trim();
-
-  // Split on emoji that starts an item (any non-ASCII rune at start of "item")
-  // Heuristic: split on space-emoji-space pattern
-  const parts = cleaned.split(/(?=[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}])/u).map(s => s.trim()).filter(Boolean);
-
-  // Pre-sort link-map keys longest-first so "30K Skattekutt Challenge" wins over "Skattekutt"
-  const linkEntries = Object.entries(linkMap || {})
-    .filter(([k]) => !k.startsWith('_'))
-    .sort((a, b) => b[0].length - a[0].length);
-
-  return parts.map(p => {
-    const m = p.match(/^(\S)\s*(.+)$/u); // first char is emoji
-    if (!m) return { emoji: '', text: p, href: null };
-    const emoji = m[1];
-    const text = m[2].trim();
-    // First: try to extract URL from text directly
-    const urlMatch = text.match(/(https?:\/\/\S+|[\w.-]+\.(com|no|net|org|io|app|fm)\b\S*)/i);
-    let href = urlMatch ? (urlMatch[0].startsWith('http') ? urlMatch[0] : `https://${urlMatch[0]}`) : null;
-    // Second: fall back to manual mapping in data/resource-links.json
-    if (!href) {
-      const lowerText = text.toLowerCase();
-      for (const [key, url] of linkEntries) {
-        if (lowerText.includes(key.toLowerCase())) { href = url; break; }
-      }
-    }
-    return { emoji, text, href };
-  })
-  // Skip Kajabi-related items — Kajabi has its own block in the campaign sidebar
-  .filter(r => !/kajabi/i.test(r.text));
-}
-
 function formatDate(iso) {
   if (!iso) return '';
   try {
@@ -221,23 +310,14 @@ async function loadCampaign() {
   }
 }
 
-async function loadResourceLinks() {
-  try {
-    const raw = await fs.readFile(RESOURCE_LINKS_PATH, 'utf-8');
-    return JSON.parse(raw);
-  } catch {
-    return {};
-  }
-}
-
-function renderEpisode(ep, campaign, allEpisodes, linkMap) {
+function renderEpisode(ep, campaign, allEpisodes) {
   const related = (allEpisodes || [])
     .filter(e => e.slug && e.slug !== ep.slug && e.n)
     .sort((a, b) => (b.n || 0) - (a.n || 0))
     .slice(0, 3);
 
   const slug = episodeSlug(ep);
-  const parsed = parseShowNotes(ep.fullDesc || ep.desc || '', linkMap);
+  const parsed = parseShowNotes(ep.descriptionHtml || '', ep.fullDesc || ep.desc || '');
   const date = formatDate(ep.pubDate || ep.date);
   const duration = formatDuration(ep.durationSeconds || 0);
   const seasonEp = (ep.season && ep.episode) ? `SESONG ${ep.season} · EP ${String(ep.episode).padStart(2,'0')}` : 'TRAILER';
@@ -479,11 +559,9 @@ async function main() {
   const parsed = JSON.parse(raw);
   const episodes = Array.isArray(parsed) ? parsed : (parsed.episodes || []);
   const campaign = await loadCampaign();
-  const linkMap = await loadResourceLinks();
 
   console.log(`Building ${episodes.length} episode pages...`);
   if (campaign) console.log(`  campaign: "${campaign.title}"`);
-  console.log(`  resource-links: ${Object.keys(linkMap).filter(k => !k.startsWith('_')).length} mapped`);
 
   // Clean old episode-* directories first (so removed episodes get cleaned up)
   const entries = await fs.readdir(ROOT, { withFileTypes: true });
@@ -502,7 +580,7 @@ async function main() {
 
   let count = 0;
   for (const ep of episodes) {
-    const html = renderEpisode(ep, campaign, episodes, linkMap);
+    const html = renderEpisode(ep, campaign, episodes);
     const dir = path.join(ROOT, ep.slug);
     await fs.mkdir(dir, { recursive: true });
     await fs.writeFile(path.join(dir, 'index.html'), html, 'utf-8');

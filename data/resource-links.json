@@ -1,5 +1,0 @@
-{
-  "_comment": "Manuell lenkemapping for ressurser nevnt i show notes (Anchor leverer dem ofte uten URL). Nøkkel = substring som matches case-insensitivt mot resource-teksten. Verdien = URL som puttes inn på lenken. Lengre nøkler vinner ved overlapp.",
-  "Skattekutt for gründere": "https://www.norli.no/boker/fagboker/okonomi-og-ledelse/okonomi-regnskap-og-revisjon/skattekutt-for-grundere-9788269460704",
-  "30K Skattekutt Challenge": "https://www.sjekkregnskapet.no/skattekutt"
-}

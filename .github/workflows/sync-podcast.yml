@@ -9,7 +9,6 @@ on:
     paths:
       - 'feed.config.json'
       - 'data/campaign.json'
-      - 'data/resource-links.json'
       - 'assets/episode.css'
       - '.github/scripts/sync-podcast.mjs'
       - '.github/scripts/build-episode-pages.mjs'
