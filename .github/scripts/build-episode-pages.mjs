@@ -329,7 +329,8 @@ function renderEpisode(ep, campaign, allEpisodes) {
   const parsed = parseShowNotes(ep.descriptionHtml || '', ep.fullDesc || ep.desc || '');
   const date = formatDate(ep.pubDate || ep.date);
   const duration = formatDuration(ep.durationSeconds || 0);
-  const seasonEp = (ep.season && ep.episode) ? `SESONG ${ep.season} · EP ${String(ep.episode).padStart(2,'0')}` : 'TRAILER';
+  // Bruk ep.n (global episode-nummer fra tittel) — ep.season fra Anchor er årstall, ikke sesong
+  const seasonEp = ep.n ? `Episode ${String(ep.n).padStart(2,'0')}` : 'Trailer';
   const canonical = `https://podcast.hegechristine.no/${slug}/`;
   const ogImage = ep.imageUrl || 'https://podcast.hegechristine.no/assets/hege-portrait.jpg';
 
@@ -402,6 +403,7 @@ function renderEpisode(ep, campaign, allEpisodes) {
 <main class="ep">
 
   <section class="ep-hero">
+    <div class="ep-hero__grid" aria-hidden="true"></div>
     ${ep.imageUrl ? `<div class="ep-hero__cover">
       <img src="${escAttr(ep.imageUrl)}" alt="${escAttr(ep.title)} — episode-cover" loading="eager" />
     </div>` : ''}
@@ -439,22 +441,6 @@ function renderEpisode(ep, campaign, allEpisodes) {
       <div class="ep-prose">
         ${paragraphize(parsed.hook)}
       </div>
-
-      ${related.length ? `<section class="ep-more">
-        <header class="ep-more__head">
-          <span class="kicker">Mer fra</span>
-          <h3>The <em>Edit</em></h3>
-        </header>
-        <ul class="ep-more__list">
-          ${related.map(r => `<li><a href="/${escAttr(r.slug)}/" class="ep-more__item">
-            <div class="ep-more__cover">${r.imageUrl ? `<img src="${escAttr(r.imageUrl)}" alt="" loading="lazy" />` : ''}</div>
-            <div class="ep-more__body">
-              <span class="ep-more__num">EP ${escHtml(String(r.n))}</span>
-              <span class="ep-more__title">${escHtml(r.title)}</span>
-            </div>
-          </a></li>`).join('\n          ')}
-        </ul>
-      </section>` : ''}
     </article>
 
     <aside class="ep-sidebar">
@@ -498,7 +484,7 @@ function renderEpisode(ep, campaign, allEpisodes) {
 
   <section class="ep-newsletter" id="never-miss">
     <div class="ep-newsletter__face ep-newsletter__face--front">
-      <span class="kicker">— NYHETSBREV</span>
+      <span class="kicker">Nyhetsbrev</span>
       <h2>Aldri gå <em>glipp</em> av en episode</h2>
       <form id="newsletter-form" class="hc-newsletter-form">
         <input type="text" name="name" placeholder="Navn" required autocomplete="name">
@@ -519,6 +505,22 @@ function renderEpisode(ep, campaign, allEpisodes) {
     </div>
     <iframe name="kajabi-response-frame" style="display:none" aria-hidden="true"></iframe>
   </section>
+
+  ${related.length ? `<section class="ep-more">
+    <header class="ep-more__head">
+      <span class="kicker">Mer fra</span>
+      <h2>The <em>Edit</em></h2>
+    </header>
+    <ul class="ep-more__list">
+      ${related.map(r => `<li><a href="/${escAttr(r.slug)}/" class="ep-more__item">
+        <div class="ep-more__cover">${r.imageUrl ? `<img src="${escAttr(r.imageUrl)}" alt="" loading="lazy" />` : ''}</div>
+        <div class="ep-more__body">
+          <span class="ep-more__num">Episode ${escHtml(String(r.n))}</span>
+          <span class="ep-more__title">${escHtml(r.title)}</span>
+        </div>
+      </a></li>`).join('\n      ')}
+    </ul>
+  </section>` : ''}
 
 </main>
 
