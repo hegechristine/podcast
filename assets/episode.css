@@ -69,13 +69,16 @@ body {
 img { max-width: 100%; height: auto; display: block; }
 a { color: var(--soft-ink); }
 
+/* Yellow dryss-mønsteret matcher showsiden:
+   På cream bg: brown text + YELLOW 3px ::before-strek
+   På dark bg (newsletter/campaign): yellow text + yellow stroke */
 .kicker {
   font-family: var(--font-mono);
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.18em;
   font-size: 0.7rem;
-  color: var(--soft-rust);
+  color: var(--soft-ink-soft);
   display: inline-flex;
   align-items: center;
   gap: 12px;
@@ -83,15 +86,13 @@ a { color: var(--soft-ink); }
 .kicker::before {
   content: "";
   width: 30px;
-  height: 2px;
-  background: var(--soft-rust);
+  height: 3px;
+  background: var(--soft-yellow);
   flex-shrink: 0;
 }
-/* Yellow-on-dark variant — newsletter, campaign, host (alt på warm-brown bg) */
+/* Dark-bg variant — same yellow stroke, but text also yellow for contrast */
 .ep-newsletter .kicker,
 .ep-campaign .kicker { color: var(--soft-yellow); }
-.ep-newsletter .kicker::before,
-.ep-campaign .kicker::before { background: var(--soft-yellow); height: 3px; }
 
 em, .italic {
   font-family: var(--font-display);
@@ -164,7 +165,7 @@ em, .italic {
   padding-bottom: 2px;
   transition: border-color 140ms ease, color 140ms ease;
 }
-.topbar__nav a:hover { border-color: var(--rust-400); color: var(--rust-400); }
+.topbar__nav a:hover { border-color: var(--soft-rust); color: var(--soft-ink); }
 .topbar__right {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.7rem;
@@ -187,7 +188,7 @@ em, .italic {
   padding: 64px 48px 96px;
 }
 
-/* HERO */
+/* HERO — grid-areas så subscribe kan flyttes til topp på mobil */
 .ep-hero {
   position: relative;
   background: var(--cream-50);
@@ -198,7 +199,11 @@ em, .italic {
   margin-bottom: 56px;
   display: grid;
   grid-template-columns: 240px 1fr;
-  gap: 36px;
+  grid-template-areas:
+    "cover body"
+    "subscribe subscribe";
+  column-gap: 36px;
+  row-gap: 28px;
   align-items: start;
   overflow: hidden;
 }
@@ -210,20 +215,58 @@ em, .italic {
   background-size: 64px 64px;
 }
 .ep-hero > *:not(.ep-hero__grid) { position: relative; }
+.ep-hero__cover { grid-area: cover; }
+.ep-hero__body { grid-area: body; }
+.ep-hero .ep-subscribe {
+  grid-area: subscribe;
+  padding-top: 22px;
+  border-top: 1px solid rgba(48, 48, 48, 0.18);
+}
 @media (max-width: 720px) {
-  .ep-hero { grid-template-columns: 1fr; gap: 24px; padding: 28px 26px; }
+  .ep-hero {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "subscribe"
+      "cover"
+      "body";
+    column-gap: 0;
+    row-gap: 22px;
+    padding: 28px 26px;
+  }
+  .ep-hero .ep-subscribe {
+    padding-top: 0;
+    padding-bottom: 18px;
+    border-top: 0;
+    border-bottom: 1px solid rgba(48, 48, 48, 0.18);
+    justify-content: center;
+  }
 }
 .ep-hero__cover {
+  position: relative;
   border-radius: 4px;
-  overflow: hidden;
-  border: 2px solid var(--ink-600);
+  overflow: visible;
+  border: 2px solid var(--soft-ink);
   aspect-ratio: 1;
-  background: var(--rust-400);
-  box-shadow: 4px 4px 0 var(--ink-600);
+  background: var(--soft-rust);
+  box-shadow: 4px 4px 0 var(--soft-ink);
 }
-.ep-hero__cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.ep-hero__cover img {
+  width: 100%; height: 100%;
+  object-fit: cover; display: block;
+  border-radius: 2px;
+}
+.ep-hero__cover-tag {
+  position: absolute; top: -10px; left: 14px;
+  background: var(--soft-yellow);
+  color: var(--soft-ink);
+  font-family: var(--font-mono);
+  font-size: 10px; font-weight: 600;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  padding: 5px 9px;
+  z-index: 2;
+}
 @media (max-width: 720px) {
-  .ep-hero__cover { max-width: 200px; }
+  .ep-hero__cover { max-width: 200px; margin-left: auto; margin-right: auto; }
 }
 .ep-hero__body { min-width: 0; }
 .ep-hero__meta {
@@ -861,17 +904,21 @@ em, .italic {
 }
 .ds-footer__legal a:hover { color: var(--soft-yellow); }
 @media (max-width: 720px) {
-  .ds-footer { padding: 48px 24px 32px; }
+  .ds-footer { padding: 48px 24px 28px; }
   .ds-footer__grid {
     grid-template-columns: 1fr;
     gap: 32px;
     padding-bottom: 32px;
   }
   .ds-footer__base {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 16px;
+    font-size: 0.62rem;
   }
+  .ds-footer__legal { gap: 14px; }
+  .ds-footer__legal a { font-size: 0.62rem; }
   .ds-footer__wordmark { font-size: 1.85rem; }
 }
 
