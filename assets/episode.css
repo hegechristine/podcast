@@ -49,23 +49,28 @@ em, .italic {
   letter-spacing: -0.01em;
 }
 
-/* SITE HEADER */
-.site-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 32px;
-  border-bottom: 1px solid rgba(46, 50, 48, 0.12);
+/* TOPBAR — matches podcast.hegechristine.no */
+.topbar {
   background: var(--cream-50);
+  border-bottom: 1px solid rgba(46, 50, 48, 0.12);
 }
-.brand {
+.topbar__inner {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 14px 32px;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 24px;
+}
+.topbar__brand {
   display: inline-flex;
   align-items: center;
   gap: 12px;
   text-decoration: none;
   color: inherit;
 }
-.brand-mark {
+.hc-mark {
   width: 36px; height: 36px;
   background: var(--ink-600);
   color: var(--cream-50);
@@ -77,27 +82,51 @@ em, .italic {
   letter-spacing: -0.04em;
   border-radius: 2px;
 }
-.brand-name {
+.wordmark {
   font-family: 'Archivo Black', sans-serif;
-  font-size: 1.05rem;
+  font-size: 1.1rem;
   letter-spacing: -0.01em;
+  color: var(--ink-600);
 }
-.site-nav {
+.wordmark em {
+  font-family: 'Newsreader', serif;
+  font-style: italic;
+  font-weight: 500;
+  color: var(--rust-400);
+  letter-spacing: -0.01em;
+  margin-left: 2px;
+}
+.topbar__nav {
+  justify-self: center;
   display: flex;
-  gap: 24px;
+  gap: 28px;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.78rem;
-  letter-spacing: 0.12em;
+  font-size: 0.74rem;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
 }
-.site-nav a {
+.topbar__nav a {
   color: var(--ink-600);
   text-decoration: none;
   border-bottom: 1px solid transparent;
   padding-bottom: 2px;
   transition: border-color 140ms ease, color 140ms ease;
 }
-.site-nav a:hover { border-color: var(--rust-400); color: var(--rust-400); }
+.topbar__nav a:hover { border-color: var(--rust-400); color: var(--rust-400); }
+.topbar__right {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--olive-600);
+}
+@media (max-width: 720px) {
+  .topbar__nav { display: none; }
+  .topbar__inner { grid-template-columns: auto 1fr; padding: 12px 20px; gap: 16px; }
+  .hc-mark { width: 32px; height: 32px; font-size: 13px; }
+  .wordmark { font-size: 1rem; }
+  .topbar__right { font-size: 0.62rem; }
+}
 
 /* MAIN CONTAINER */
 .ep {
@@ -237,65 +266,60 @@ em, .italic {
   font-weight: 500;
 }
 
-/* RESOURCES */
+/* RESOURCES — sidebar block */
 .ep-resources {
-  margin-top: 48px;
-  padding: 28px 32px;
   background: var(--sage-300);
-  border-radius: 6px;
   border: 1.5px solid var(--ink-600);
+  border-radius: 6px;
+  padding: 22px 24px;
   box-shadow: 4px 4px 0 var(--ink-600);
 }
-.ep-resources h2 {
+.ep-resources .kicker { font-size: 0.66rem; color: var(--olive-700); }
+.ep-resources h3 {
   font-family: 'Archivo Black', sans-serif;
-  font-size: 1.4rem;
-  margin: 0 0 18px;
+  font-size: 1.25rem;
+  margin: 6px 0 14px;
   letter-spacing: -0.015em;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 10px;
+  color: var(--ink-700);
 }
-.ep-resources h2 .kicker {
-  font-size: 0.66rem;
-  color: var(--olive-700);
-}
-.ep-resources ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 12px; }
+.ep-resources ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
 .ep-resources li {
   display: flex;
   align-items: baseline;
-  gap: 12px;
-  font-size: 1rem;
-  color: var(--ink-600);
+  gap: 10px;
+  font-size: 0.92rem;
+  color: var(--ink-700);
+  line-height: 1.4;
 }
 .ep-resources__emoji {
   flex-shrink: 0;
-  font-size: 1.05rem;
+  font-size: 1rem;
   line-height: 1;
 }
 .ep-resources a {
-  color: var(--ink-600);
+  color: var(--ink-700);
   border-bottom: 1.5px solid var(--rust-400);
   text-decoration: none;
   padding-bottom: 1px;
 }
 .ep-resources a:hover { color: var(--rust-400); }
 
-/* HOST & SHOW */
+/* HOST & SHOW — full-width feature block under the layout */
 .ep-host {
-  margin-top: 48px;
+  margin-top: 56px;
   display: grid;
-  grid-template-columns: 200px 1fr;
-  gap: 32px;
-  padding: 32px;
+  grid-template-columns: 280px 1fr;
+  gap: 44px;
+  padding: 44px 48px;
   background: var(--cream-50);
   border-radius: 6px;
   border: 1.5px solid var(--ink-600);
-  box-shadow: 4px 4px 0 var(--ink-600);
+  box-shadow: 6px 6px 0 var(--ink-600);
+  align-items: start;
 }
-@media (max-width: 600px) {
-  .ep-host { grid-template-columns: 1fr; gap: 20px; padding: 24px; }
-  .ep-host__photo { max-width: 200px; }
+@media (max-width: 720px) {
+  .ep-host { grid-template-columns: 1fr; gap: 24px; padding: 28px 26px; }
+  .ep-host__photo { max-width: 220px; }
 }
 .ep-host__photo {
   border-radius: 4px;
@@ -303,35 +327,51 @@ em, .italic {
   border: 2px solid var(--ink-600);
   aspect-ratio: 1;
   background: var(--rust-400);
+  box-shadow: 4px 4px 0 var(--ink-600);
 }
 .ep-host__photo img {
   width: 100%; height: 100%; object-fit: cover;
 }
-.ep-host__body .kicker { font-size: 0.66rem; }
+.ep-host__body .kicker { font-size: 0.7rem; }
+.ep-host__body h2 {
+  font-family: 'Archivo Black', sans-serif;
+  font-size: clamp(1.6rem, 3vw, 2rem);
+  margin: 8px 0 16px;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  color: var(--ink-700);
+}
+.ep-host__bio {
+  font-size: 1.1rem !important;
+  line-height: 1.6 !important;
+  color: var(--ink-700) !important;
+  margin: 0 0 22px !important;
+}
 .ep-host__body h3 {
   font-family: 'Archivo Black', sans-serif;
-  font-size: 1.5rem;
-  margin: 6px 0 12px;
-  letter-spacing: -0.015em;
-}
-.ep-host__body h4 {
-  font-family: 'Archivo Black', sans-serif;
-  font-size: 1.05rem;
-  margin: 18px 0 8px;
+  font-size: 1.15rem;
+  margin: 22px 0 8px;
   letter-spacing: -0.01em;
+  color: var(--ink-700);
+}
+.ep-host__body h3 em {
+  font-family: 'Newsreader', serif;
+  font-style: italic;
+  font-weight: 500;
+  color: var(--rust-400);
 }
 .ep-host__body p {
   font-family: 'Newsreader', serif;
-  font-size: 1rem;
-  line-height: 1.55;
+  font-size: 1.02rem;
+  line-height: 1.6;
   color: var(--ink-600);
-  margin: 0 0 8px;
+  margin: 0 0 10px;
 }
 .ep-host__cta {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  margin-top: 18px;
+  margin-top: 24px;
 }
 
 /* SIDEBAR */

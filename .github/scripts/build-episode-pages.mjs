@@ -267,16 +267,20 @@ function renderEpisode(ep, campaign) {
 </head>
 <body>
 
-<header class="site-header">
-  <a href="/" class="brand">
-    <span class="brand-mark">HC</span>
-    <span class="brand-name">Hege <em>Christine</em></span>
-  </a>
-  <nav class="site-nav">
-    <a href="/">Alle episoder</a>
-    <a href="/#om">Om</a>
-    <a href="https://www.hegechristine.no" target="_blank" rel="noopener">Hovedside ↗</a>
-  </nav>
+<header class="topbar">
+  <div class="topbar__inner">
+    <a href="/" class="topbar__brand">
+      <span class="hc-mark"><span>HC</span></span>
+      <span class="wordmark">Hege<em>Christine</em></span>
+    </a>
+    <nav class="topbar__nav" aria-label="Hovednavigasjon">
+      <a href="/">Podcast</a>
+      <a href="/#om">Om</a>
+      <a href="/#never-miss">Nyhetsbrev</a>
+      <a href="https://www.hegechristine.no" rel="noopener">Hovedside ↗</a>
+    </nav>
+    <div class="topbar__right">${ep.n ? `Episode ${ep.n}` : 'The Edit'}</div>
+  </div>
 </header>
 
 <main class="ep">
@@ -310,30 +314,6 @@ function renderEpisode(ep, campaign) {
       <div class="ep-prose">
         ${paragraphize(parsed.hook)}
       </div>
-
-      ${parsed.resources.length ? `<section class="ep-resources">
-        <h2><span class="kicker">Ressurser</span> Lenker fra episoden</h2>
-        <ul>
-          ${parsed.resources.map(r => `<li>${r.emoji ? `<span class="ep-resources__emoji" aria-hidden="true">${escHtml(r.emoji)}</span>` : ''}${r.href ? `<a href="${escAttr(r.href)}" target="_blank" rel="noopener">${escHtml(r.text.replace(r.href.replace(/^https?:\/\//, ''), '').trim() || r.text)}</a>` : escHtml(r.text)}</li>`).join('\n          ')}
-        </ul>
-      </section>` : ''}
-
-      <section class="ep-host">
-        <div class="ep-host__photo">
-          <img src="${escAttr(SHOW.hostPhoto)}" alt="${escAttr(SHOW.host)}" loading="lazy" />
-        </div>
-        <div class="ep-host__body">
-          <span class="kicker">Host & Show</span>
-          <h3>${escHtml(SHOW.host)}</h3>
-          <p>${escHtml(SHOW.hostBio)}</p>
-          <h4>Hva er The <em>Edit</em>?</h4>
-          <p>${escHtml(SHOW.showAbout)}</p>
-          <div class="ep-host__cta">
-            <a href="${escAttr(SHOW.spotifyShow)}" target="_blank" rel="noopener" class="btn btn--primary">Abonnér på Spotify</a>
-            <a href="${escAttr(SHOW.appleShow)}" target="_blank" rel="noopener" class="btn btn--secondary">Apple Podcasts</a>
-          </div>
-        </div>
-      </section>
     </article>
 
     <aside class="ep-sidebar">
@@ -345,6 +325,14 @@ function renderEpisode(ep, campaign) {
         </ul>` : ''}
       </section>` : ''}
 
+      ${parsed.resources.length ? `<section class="ep-resources">
+        <span class="kicker">Lenker</span>
+        <h3>Fra episoden</h3>
+        <ul>
+          ${parsed.resources.map(r => `<li>${r.emoji ? `<span class="ep-resources__emoji" aria-hidden="true">${escHtml(r.emoji)}</span>` : ''}${r.href ? `<a href="${escAttr(r.href)}" target="_blank" rel="noopener">${escHtml(r.text.replace(r.href.replace(/^https?:\/\//, ''), '').trim() || r.text)}</a>` : escHtml(r.text)}</li>`).join('\n          ')}
+        </ul>
+      </section>` : ''}
+
       ${campaign ? `<section class="ep-campaign">
         <span class="kicker">${escHtml(campaign.kicker || 'Aktuelt nå')}</span>
         <h3>${escHtml(campaign.title)}</h3>
@@ -353,6 +341,23 @@ function renderEpisode(ep, campaign) {
       </section>` : ''}
     </aside>
   </div>
+
+  <section class="ep-host">
+    <div class="ep-host__photo">
+      <img src="${escAttr(SHOW.hostPhoto)}" alt="${escAttr(SHOW.host)}" loading="lazy" />
+    </div>
+    <div class="ep-host__body">
+      <span class="kicker">Host & Show</span>
+      <h2>${escHtml(SHOW.host)}</h2>
+      <p class="ep-host__bio">${escHtml(SHOW.hostBio)}</p>
+      <h3>Hva er The <em>Edit</em>?</h3>
+      <p>${escHtml(SHOW.showAbout)}</p>
+      <div class="ep-host__cta">
+        <a href="${escAttr(SHOW.spotifyShow)}" target="_blank" rel="noopener" class="btn btn--primary">Abonnér på Spotify</a>
+        <a href="${escAttr(SHOW.appleShow)}" target="_blank" rel="noopener" class="btn btn--secondary">Apple Podcasts</a>
+      </div>
+    </div>
+  </section>
 
   <section class="ep-newsletter" id="never-miss">
     <div class="ep-newsletter__face ep-newsletter__face--front">
