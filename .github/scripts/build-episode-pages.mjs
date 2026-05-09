@@ -5,6 +5,7 @@ import path from 'path';
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..', '..');
 const EPISODES_PATH = path.join(ROOT, 'episodes.json');
 const CAMPAIGN_PATH = path.join(ROOT, 'data', 'campaign.json');
+const FEED_CONFIG_PATH = path.join(ROOT, 'feed.config.json');
 
 const SHOW = {
   title: 'The Edit',
@@ -319,7 +320,34 @@ async function loadCampaign() {
   }
 }
 
-function renderEpisode(ep, campaign, allEpisodes) {
+async function loadFeedConfig() {
+  try {
+    const raw = await fs.readFile(FEED_CONFIG_PATH, 'utf-8');
+    return JSON.parse(raw);
+  } catch {
+    return {};
+  }
+}
+
+// Compute samme stats som updateHeroStats() på showsiden:
+// 1. Total timer fra sum av alle episoders varighet
+// 2. Episoder + sesonger (unike season-verdier)
+// 3. Rating fra feed.config.json (manuell)
+function computeShowStats(episodes, feedConfig) {
+  const totalSec = episodes.reduce((a, e) => a + (e.durationSeconds || 0), 0);
+  const totalHours = Math.max(1, Math.round(totalSec / 3600));
+  const seasonCount = new Set(episodes.map(e => e.season).filter(Boolean)).size || 1;
+  const epCount = episodes.length;
+  const rating = feedConfig?.stats?.rating || '';
+  const ratingPlatform = feedConfig?.stats?.ratingPlatform || 'Spotify';
+  return {
+    hours: { num: String(totalHours), label: totalHours === 1 ? 'Time med innhold' : 'Timer med innhold' },
+    episodes: { num: String(epCount), label: `Episoder, ${seasonCount} ${seasonCount === 1 ? 'sesong' : 'sesonger'}` },
+    rating: rating ? { num: rating, label: `Vurdering på ${ratingPlatform}`, isStar: true } : null,
+  };
+}
+
+function renderEpisode(ep, campaign, allEpisodes, showStats) {
   const related = (allEpisodes || [])
     .filter(e => e.slug && e.slug !== ep.slug && e.n)
     .sort((a, b) => (b.n || 0) - (a.n || 0))
@@ -517,17 +545,17 @@ function renderEpisode(ep, campaign, allEpisodes) {
       <p class="about__p">Her deler jeg praktiske strategier og ærlige refleksjoner sammen med gjester som har bygget noe på egne premisser. Tema er strategi, systemer, salg og mindset. Målet er at du skal sitte igjen med noe konkret du faktisk kan implementere i egen business.</p>
       <div class="about__stats">
         <div class="stat">
-          <div class="stat__num stat__num--rust">12k</div>
-          <div class="stat__label">Lyttere per episode</div>
+          <div class="stat__num stat__num--rust">${escHtml(showStats.hours.num)}</div>
+          <div class="stat__label">${escHtml(showStats.hours.label)}</div>
         </div>
         <div class="stat">
-          <div class="stat__num">42</div>
-          <div class="stat__label">Episoder, tre sesonger</div>
+          <div class="stat__num">${escHtml(showStats.episodes.num)}</div>
+          <div class="stat__label">${escHtml(showStats.episodes.label)}</div>
         </div>
-        <div class="stat">
-          <div class="stat__num">4.9</div>
-          <div class="stat__label">På Apple Podcasts</div>
-        </div>
+        ${showStats.rating ? `<div class="stat">
+          <div class="stat__num">${escHtml(showStats.rating.num)}<span class="stat__star" aria-hidden="true">★</span></div>
+          <div class="stat__label">${escHtml(showStats.rating.label)}</div>
+        </div>` : ''}
       </div>
     </div>
   </section>
@@ -696,9 +724,12 @@ async function main() {
   const parsed = JSON.parse(raw);
   const episodes = Array.isArray(parsed) ? parsed : (parsed.episodes || []);
   const campaign = await loadCampaign();
+  const feedConfig = await loadFeedConfig();
+  const showStats = computeShowStats(episodes, feedConfig);
 
   console.log(`Building ${episodes.length} episode pages...`);
   if (campaign) console.log(`  campaign: "${campaign.title}"`);
+  console.log(`  stats: ${showStats.hours.num} ${showStats.hours.label.toLowerCase()}, ${showStats.episodes.num} ep, rating ${showStats.rating?.num || '–'}`);
 
   // Clean old episode-* directories first (so removed episodes get cleaned up)
   const entries = await fs.readdir(ROOT, { withFileTypes: true });
@@ -717,7 +748,7 @@ async function main() {
 
   let count = 0;
   for (const ep of episodes) {
-    const html = renderEpisode(ep, campaign, episodes);
+    const html = renderEpisode(ep, campaign, episodes, showStats);
     const dir = path.join(ROOT, ep.slug);
     await fs.mkdir(dir, { recursive: true });
     await fs.writeFile(path.join(dir, 'index.html'), html, 'utf-8');

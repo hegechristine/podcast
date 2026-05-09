@@ -494,7 +494,7 @@ em, .italic {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 64px;
-  align-items: start;
+  align-items: center;
   border-top: 1px solid var(--soft-ink);
 }
 @media (max-width: 720px) {
@@ -518,7 +518,7 @@ em, .italic {
   border: 1px solid var(--soft-cream);
   pointer-events: none;
 }
-.about__text { padding-top: 16px; }
+.about__text { padding-top: 0; }
 .about__eyebrow {
   font-family: var(--font-mono);
   font-size: 11px;
