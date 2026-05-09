@@ -323,7 +323,7 @@ function renderEpisode(ep, campaign, allEpisodes) {
   const related = (allEpisodes || [])
     .filter(e => e.slug && e.slug !== ep.slug && e.n)
     .sort((a, b) => (b.n || 0) - (a.n || 0))
-    .slice(0, 8);
+    .slice(0, 10);
 
   const slug = episodeSlug(ep);
   const parsed = parseShowNotes(ep.descriptionHtml || '', ep.fullDesc || ep.desc || '');
@@ -541,22 +541,6 @@ function renderEpisode(ep, campaign, allEpisodes) {
     </div>
   </section>
 
-  ${related.length ? `<section class="ep-more">
-    <header class="ep-more__head">
-      <span class="kicker">Mer fra</span>
-      <h2>The <em>Edit</em></h2>
-    </header>
-    <ul class="ep-more__list">
-      ${related.map(r => `<li><a href="/${escAttr(r.slug)}/" class="ep-more__item">
-        <div class="ep-more__cover">${r.imageUrl ? `<img src="${escAttr(r.imageUrl)}" alt="" loading="lazy" />` : ''}</div>
-        <div class="ep-more__body">
-          <span class="ep-more__num">Episode ${escHtml(String(r.n))}</span>
-          <span class="ep-more__title">${escHtml(r.title)}</span>
-        </div>
-      </a></li>`).join('\n      ')}
-    </ul>
-  </section>` : ''}
-
   <section class="ep-newsletter" id="never-miss">
     <div class="ep-newsletter__face ep-newsletter__face--front">
       <span class="kicker">Nyhetsbrev</span>
@@ -581,6 +565,21 @@ function renderEpisode(ep, campaign, allEpisodes) {
     <iframe name="kajabi-response-frame" style="display:none" aria-hidden="true"></iframe>
   </section>
 
+  ${related.length ? `<section class="ep-more">
+    <header class="ep-more__head">
+      <span class="kicker">Mer fra</span>
+      <h2>The <em>Edit</em></h2>
+    </header>
+    <ul class="ep-more__list">
+      ${related.map(r => `<li><a href="/${escAttr(r.slug)}/" class="ep-more__item">
+        <div class="ep-more__cover">${r.imageUrl ? `<img src="${escAttr(r.imageUrl)}" alt="" loading="lazy" />` : ''}</div>
+        <div class="ep-more__body">
+          <span class="ep-more__num">Episode ${escHtml(String(r.n))}</span>
+          <span class="ep-more__title">${escHtml(r.title)}</span>
+        </div>
+      </a></li>`).join('\n      ')}
+    </ul>
+  </section>` : ''}
 
 </main>
 

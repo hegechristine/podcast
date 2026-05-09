@@ -212,9 +212,11 @@ em, .italic {
 @media (max-width: 720px) {
   .ep-hero { grid-template-columns: 1fr; row-gap: 22px; padding: 16px 0 32px; }
 }
-/* Cover som .featured-card: 2px ink-border, cream-bg, kvadratisk, gul tag floating top */
+/* Cover som .featured-card: 2px ink-border, cream-bg, kvadratisk, gul tag floating top.
+   align-self: center sentrer cover vertikalt i hero-griden så empty space er
+   balansert over og under (matcher .featured__art-plassering på showsiden). */
 .ep-hero__cover {
-  align-self: start;
+  align-self: center;
   position: relative;
   aspect-ratio: 1;
   border-radius: 4px;
