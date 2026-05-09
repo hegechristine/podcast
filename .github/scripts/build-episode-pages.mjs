@@ -439,6 +439,22 @@ function renderEpisode(ep, campaign, allEpisodes) {
       <div class="ep-prose">
         ${paragraphize(parsed.hook)}
       </div>
+
+      ${related.length ? `<section class="ep-more">
+        <header class="ep-more__head">
+          <span class="kicker">Mer fra</span>
+          <h3>The <em>Edit</em></h3>
+        </header>
+        <ul class="ep-more__list">
+          ${related.map(r => `<li><a href="/${escAttr(r.slug)}/" class="ep-more__item">
+            <div class="ep-more__cover">${r.imageUrl ? `<img src="${escAttr(r.imageUrl)}" alt="" loading="lazy" />` : ''}</div>
+            <div class="ep-more__body">
+              <span class="ep-more__num">EP ${escHtml(String(r.n))}</span>
+              <span class="ep-more__title">${escHtml(r.title)}</span>
+            </div>
+          </a></li>`).join('\n          ')}
+        </ul>
+      </section>` : ''}
     </article>
 
     <aside class="ep-sidebar">
@@ -466,22 +482,6 @@ function renderEpisode(ep, campaign, allEpisodes) {
       </section>` : ''}
     </aside>
   </div>
-
-  ${related.length ? `<section class="ep-more">
-    <header class="ep-more__head">
-      <span class="kicker">Mer fra</span>
-      <h2>The <em>Edit</em></h2>
-    </header>
-    <ul class="ep-more__list">
-      ${related.map(r => `<li><a href="/${escAttr(r.slug)}/" class="ep-more__item">
-        <div class="ep-more__cover">${r.imageUrl ? `<img src="${escAttr(r.imageUrl)}" alt="" loading="lazy" />` : ''}</div>
-        <div class="ep-more__body">
-          <span class="ep-more__num">EP ${escHtml(String(r.n))}</span>
-          <span class="ep-more__title">${escHtml(r.title)}</span>
-        </div>
-      </a></li>`).join('\n      ')}
-    </ul>
-  </section>` : ''}
 
   <section class="ep-host">
     <div class="ep-host__photo">
@@ -522,12 +522,45 @@ function renderEpisode(ep, campaign, allEpisodes) {
 
 </main>
 
-<footer class="site-footer">
-  <div class="site-footer__inner">
-    <span class="kicker">© ${new Date().getFullYear()} HEGECHRISTINE.NO</span>
-    <div class="site-footer__links">
-      <a href="https://www.hegechristine.no/pages/personvern" target="_blank" rel="noopener" class="kicker">PERSONVERN</a>
-      <a href="https://www.hegechristine.no/pages/cookieerklaering" target="_blank" rel="noopener" class="kicker">COOKIES</a>
+<footer class="ds-footer">
+  <div class="ds-footer__inner">
+    <div class="ds-footer__grid">
+      <div>
+        <div class="ds-footer__wordmark">Hege<em>Christine</em></div>
+        <p class="ds-footer__tag">Strategi og samtaler for de som vil bygge noe som varer.</p>
+      </div>
+      <div>
+        <h5>Podcast</h5>
+        <ul>
+          <li><a href="/">Alle episoder</a></li>
+          <li><a href="/#om">Om podcasten</a></li>
+          <li><a href="${escAttr(SHOW.spotifyShow)}" target="_blank" rel="noopener">Spotify</a></li>
+          <li><a href="${escAttr(SHOW.appleShow)}" target="_blank" rel="noopener">Apple Podcasts</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Hege Christine</h5>
+        <ul>
+          <li><a href="https://www.hegechristine.no" rel="noopener">Hovedside</a></li>
+          <li><a href="mailto:hegechristine@hegechristine.no">Kontakt</a></li>
+          <li><a href="https://www.hegechristine.no/pages/personvern" target="_blank" rel="noopener">Personvern</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Følg</h5>
+        <ul>
+          <li><a href="https://www.instagram.com/hegechristine.no/" target="_blank" rel="noopener">Instagram</a></li>
+          <li><a href="https://www.linkedin.com/in/hegechristine/" target="_blank" rel="noopener">LinkedIn</a></li>
+          <li><a href="https://www.youtube.com/@hegechristine" target="_blank" rel="noopener">YouTube</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="ds-footer__base">
+      <span>© ${new Date().getFullYear()} hegechristine.no</span>
+      <span class="ds-footer__legal">
+        <a href="https://www.hegechristine.no/pages/personvern" target="_blank" rel="noopener">Personvern</a>
+        <a href="https://www.hegechristine.no/pages/cookieerklaering" target="_blank" rel="noopener">Cookies</a>
+      </span>
     </div>
   </div>
 </footer>
