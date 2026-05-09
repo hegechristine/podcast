@@ -9,8 +9,8 @@ const CAMPAIGN_PATH = path.join(ROOT, 'data', 'campaign.json');
 const SHOW = {
   title: 'The Edit',
   host: 'Hege Christine',
-  hostBio: 'Online business strategist, mentor og tech founder. Hjelper gründere bygge en smartere business som gir frihet og fleksibilitet til å gjøre mer av det som faktisk betyr noe.',
-  showAbout: 'Podkasten for deg som vil bygge en smartere business — én som gir frihet og fleksibilitet til å fokusere på det som faktisk teller. Praktiske strategier, ærlige refleksjoner og dypere samtaler.',
+  hostBio: 'Online business strategist, mentor og tech founder. Hjelper gründere bygge en smartere business — ved å redigere bort det som ikke gir resultater.',
+  showAbout: 'Podkasten for deg som vil bygge en smartere business — ved å redigere bort det som ikke gir de resultatene du ønsker. Praktiske strategier, ærlige refleksjoner og samtaler med gjester som har bygget noe på egne premisser.',
   spotifyShow: 'https://open.spotify.com/show/286EpL6ZfSuJVB47nXSQbZ',
   appleShow: 'https://podcasts.apple.com/us/podcast/the-edit/id1857930330',
   rssUrl: 'https://anchor.fm/s/4f734584/podcast/rss',
