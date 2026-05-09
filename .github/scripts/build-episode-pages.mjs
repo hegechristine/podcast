@@ -107,6 +107,15 @@ function htmlToText(html) {
     .trim();
 }
 
+// Get first grapheme cluster (handles emoji w/ surrogate pairs + variant selectors)
+const _graphemeSeg = new Intl.Segmenter(undefined, { granularity: 'grapheme' });
+function firstGrapheme(text) {
+  if (!text) return '';
+  const it = _graphemeSeg.segment(text)[Symbol.iterator]();
+  const first = it.next().value;
+  return first ? first.segment : '';
+}
+
 function normalizeHref(raw) {
   if (!raw) return null;
   const t = raw.trim();
@@ -128,19 +137,19 @@ function parseResourcesFromHtml(sec) {
     // Skip the heading paragraph ("Ressurser:" etc.)
     if (/^(ressurser|lenker)/i.test(text) && text.length < 30) continue;
 
-    // Extract first emoji (any non-ASCII character at start)
-    const emojiMatch = text.match(/^(\S)/);
-    const emoji = emojiMatch ? emojiMatch[1] : '';
+    // Extract first grapheme (emoji handled correctly — surrogate pairs + variant selectors)
+    const emoji = firstGrapheme(text);
 
+    const afterEmoji = text.slice(emoji.length).trim();
     // Find first <a href> in the paragraph
     const aMatch = p.match(/<a\s+[^>]*href\s*=\s*["']([^"']+)["'][^>]*>([\s\S]*?)<\/a>/i);
     if (aMatch) {
       const href = normalizeHref(aMatch[1]);
       const linkText = htmlToText(aMatch[2]).trim();
-      out.push({ emoji, text: linkText || text.replace(/^\S\s*/, '').trim(), href });
+      out.push({ emoji, text: linkText || afterEmoji, href });
     } else {
       // No link present — keep the item but href stays null
-      out.push({ emoji, text: text.replace(/^\S\s*/, '').trim(), href: null });
+      out.push({ emoji, text: afterEmoji, href: null });
     }
   }
   // Filter out:
@@ -180,9 +189,9 @@ function parseGuestFromHtml(sec) {
   for (const p of paragraphsOf(sec).slice(1)) {
     const text = htmlToText(p).replace(/\s+/g, ' ').trim();
     if (!text) continue;
-    const emojiMatch = text.match(/^(\S)/);
-    const emoji = emojiMatch ? emojiMatch[1] : '';
-    const labelMatch = text.match(/^\S\s*([A-Za-zÆØÅæøå-]+)\s*:/);
+    const emoji = firstGrapheme(text);
+    const afterEmoji = text.slice(emoji.length).trim();
+    const labelMatch = afterEmoji.match(/^([A-Za-zÆØÅæøå-]+)\s*:/);
     const labelKey = (labelMatch ? labelMatch[1] : '').toLowerCase();
     const label = labelMap[labelKey] || (labelMatch ? labelMatch[1] : '');
 
@@ -455,22 +464,24 @@ function renderEpisode(ep, campaign, allEpisodes) {
         <p>${escHtml(campaign.body)}</p>
         <a href="${escAttr(campaign.href)}" target="_blank" rel="noopener" class="btn btn--primary">${escHtml(campaign.cta)}</a>
       </section>` : ''}
-
-      ${related.length ? `<section class="ep-more">
-        <span class="kicker">Mer fra</span>
-        <h3>The <em>Edit</em></h3>
-        <ul class="ep-more__list">
-          ${related.map(r => `<li><a href="/${escAttr(r.slug)}/" class="ep-more__item">
-            <div class="ep-more__cover">${r.imageUrl ? `<img src="${escAttr(r.imageUrl)}" alt="" loading="lazy" />` : ''}</div>
-            <div class="ep-more__body">
-              <span class="ep-more__num">EP ${escHtml(String(r.n))}</span>
-              <span class="ep-more__title">${escHtml(r.title)}</span>
-            </div>
-          </a></li>`).join('\n          ')}
-        </ul>
-      </section>` : ''}
     </aside>
   </div>
+
+  ${related.length ? `<section class="ep-more">
+    <header class="ep-more__head">
+      <span class="kicker">Mer fra</span>
+      <h2>The <em>Edit</em></h2>
+    </header>
+    <ul class="ep-more__list">
+      ${related.map(r => `<li><a href="/${escAttr(r.slug)}/" class="ep-more__item">
+        <div class="ep-more__cover">${r.imageUrl ? `<img src="${escAttr(r.imageUrl)}" alt="" loading="lazy" />` : ''}</div>
+        <div class="ep-more__body">
+          <span class="ep-more__num">EP ${escHtml(String(r.n))}</span>
+          <span class="ep-more__title">${escHtml(r.title)}</span>
+        </div>
+      </a></li>`).join('\n      ')}
+    </ul>
+  </section>` : ''}
 
   <section class="ep-host">
     <div class="ep-host__photo">
