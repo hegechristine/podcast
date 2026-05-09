@@ -1717,16 +1717,16 @@
     <p class="about__p">Her deler jeg praktiske strategier og ærlige refleksjoner sammen med gjester som har bygget noe på egne premisser. Tema er strategi, systemer, salg og mindset. Målet er at du skal sitte igjen med noe konkret du faktisk kan implementere i egen business.</p>
     <div class="about__stats">
       <div class="stat">
-        <div class="stat__num stat__num--rust">12k</div>
-        <div class="stat__label">Lyttere per episode</div>
-      </div>
-      <div class="stat">
-        <div class="stat__num">42</div>
+        <div class="stat__num stat__num--rust">42</div>
         <div class="stat__label">Episoder, tre sesonger</div>
       </div>
       <div class="stat">
-        <div class="stat__num">4.9</div>
-        <div class="stat__label">På Apple Podcasts</div>
+        <div class="stat__num">12</div>
+        <div class="stat__label">Timer med innhold</div>
+      </div>
+      <div class="stat">
+        <div class="stat__num">5</div>
+        <div class="stat__label">På Spotify</div>
       </div>
     </div>
   </div>
@@ -1906,29 +1906,29 @@ function updateHeroStats(episodes, channel = {}) {
     }
   }
 
-  // About-stats: 3 stats — timer med innhold, episoder, rating
+  // About-stats: rekkefølge — episoder først, så timer, så rating
   const aboutStats = document.querySelectorAll('.about__stats .stat');
 
-  // Stat 0: Total timer innhold (auto fra RSS)
+  // Stat 0: Episode count + sesonger (auto)
   if (aboutStats[0]) {
-    const totalSec = episodes.reduce((a, e) => a + (e.durSec || 0), 0);
-    const totalHours = Math.max(1, Math.round(totalSec / 3600));
+    const seasonCount = new Set(episodes.map(e => e.season)).size;
     const num = aboutStats[0].querySelector('.stat__num');
     const label = aboutStats[0].querySelector('.stat__label');
-    if (num) num.textContent = String(totalHours);
-    if (label) label.textContent = totalHours === 1 ? 'Time med innhold' : 'Timer med innhold';
-  }
-
-  // Stat 1: Episode count + sesonger (auto)
-  if (aboutStats[1]) {
-    const seasonCount = new Set(episodes.map(e => e.season)).size;
-    const num = aboutStats[1].querySelector('.stat__num');
-    const label = aboutStats[1].querySelector('.stat__label');
     if (num) num.textContent = String(episodes.length);
     if (label) {
       const seasonWord = seasonCount === 1 ? 'sesong' : 'sesonger';
       label.textContent = `Episoder, ${seasonCount} ${seasonWord}`;
     }
+  }
+
+  // Stat 1: Total timer innhold (auto fra RSS)
+  if (aboutStats[1]) {
+    const totalSec = episodes.reduce((a, e) => a + (e.durSec || 0), 0);
+    const totalHours = Math.max(1, Math.round(totalSec / 3600));
+    const num = aboutStats[1].querySelector('.stat__num');
+    const label = aboutStats[1].querySelector('.stat__label');
+    if (num) num.textContent = String(totalHours);
+    if (label) label.textContent = totalHours === 1 ? 'Time med innhold' : 'Timer med innhold';
   }
 
   // Stat 2: Rating (manuell, fra feed.config.json)

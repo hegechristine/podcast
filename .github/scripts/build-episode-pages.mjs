@@ -545,12 +545,12 @@ function renderEpisode(ep, campaign, allEpisodes, showStats) {
       <p class="about__p">Her deler jeg praktiske strategier og ærlige refleksjoner sammen med gjester som har bygget noe på egne premisser. Tema er strategi, systemer, salg og mindset. Målet er at du skal sitte igjen med noe konkret du faktisk kan implementere i egen business.</p>
       <div class="about__stats">
         <div class="stat">
-          <div class="stat__num stat__num--rust">${escHtml(showStats.hours.num)}</div>
-          <div class="stat__label">${escHtml(showStats.hours.label)}</div>
+          <div class="stat__num stat__num--rust">${escHtml(showStats.episodes.num)}</div>
+          <div class="stat__label">${escHtml(showStats.episodes.label)}</div>
         </div>
         <div class="stat">
-          <div class="stat__num">${escHtml(showStats.episodes.num)}</div>
-          <div class="stat__label">${escHtml(showStats.episodes.label)}</div>
+          <div class="stat__num">${escHtml(showStats.hours.num)}</div>
+          <div class="stat__label">${escHtml(showStats.hours.label)}</div>
         </div>
         ${showStats.rating ? `<div class="stat">
           <div class="stat__num">${escHtml(showStats.rating.num)}<span class="stat__star" aria-hidden="true">★</span></div>
