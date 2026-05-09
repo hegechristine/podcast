@@ -1,97 +1,2220 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="no">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>The Edit — Hege Christine</title>
-  <meta name="description" content="The Edit — podcast med Hege Christine">
-  <meta http-equiv="refresh" content="0; url=https://hegechristine.github.io/podcast/">
-  <link rel="canonical" href="https://hegechristine.github.io/podcast/">
-  <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Archivo+Black&family=Newsreader:ital,wght@1,400;1,500&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --olive-600: #5E5F4C;
-      --cream-200: #EFE6D4;
-      --rust-400:  #C5522C;
-      --ink-600:   #2E3230;
-      --grid-line: rgba(46, 50, 48, 0.08);
-    }
-    *, *::before, *::after { box-sizing: border-box; }
-    html, body { margin: 0; padding: 0; }
-    body {
-      min-height: 100vh;
-      background: var(--cream-200);
-      color: var(--ink-600);
-      font-family: 'Archivo', system-ui, sans-serif;
-      display: grid;
-      place-items: center;
-      padding: 2rem;
-      background-image:
-        linear-gradient(var(--grid-line) 1px, transparent 1px),
-        linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
-      background-size: 48px 48px;
-      -webkit-font-smoothing: antialiased;
-      text-rendering: optimizeLegibility;
-    }
-    main {
-      max-width: 640px;
-      text-align: center;
-    }
-    .eyebrow {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 12px;
-      letter-spacing: 0.24em;
-      text-transform: uppercase;
-      color: var(--olive-600);
-      font-weight: 600;
-      display: inline-flex;
+<meta charset="utf-8" />
+<title>The Edit — podkasten med Hege Christine</title>
+<meta name="description" content="Podkasten for deg som vil bygge en business som passer livet du vil leve — uten at alt hviler på deg. Praktiske strategier, ærlige refleksjoner og dypere samtaler. Strategisk. Ærlig. Praktisk." />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<link rel="canonical" href="https://podcast.hegechristine.no/" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+
+<!-- Open Graph (Facebook, LinkedIn) -->
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="The Edit" />
+<meta property="og:title" content="The Edit — podkasten med Hege Christine" />
+<meta property="og:description" content="For deg som vil bygge en business som passer livet du vil leve — uten at alt hviler på deg. Strategisk. Ærlig. Praktisk." />
+<meta property="og:url" content="https://podcast.hegechristine.no/" />
+<meta property="og:image" content="https://d3t3ozftmdmh3i.cloudfront.net/staging/podcast_uploaded_nologo/13229545/13229545-1764775912328-a3788a7dba0e8.jpg" />
+<meta property="og:image:alt" content="The Edit — podkast-cover" />
+<meta property="og:locale" content="nb_NO" />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="The Edit — podkasten med Hege Christine" />
+<meta name="twitter:description" content="For deg som vil bygge en business som passer livet du vil leve — uten at alt hviler på deg." />
+<meta name="twitter:image" content="https://d3t3ozftmdmh3i.cloudfront.net/staging/podcast_uploaded_nologo/13229545/13229545-1764775912328-a3788a7dba0e8.jpg" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=Newsreader:ital,wght@0,400;0,500;0,600;1,400;1,500&family=JetBrains+Mono:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap" rel="stylesheet">
+
+<!-- CS Calory — licensed font (Connary Fagen) -->
+<style>
+@font-face {
+  font-family: 'CS Calory';
+  src: url('assets/fonts/CSCalory-Regular.ttf') format('truetype');
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+</style>
+
+<link rel="stylesheet" href="assets/tokens.css">
+<link rel="stylesheet" href="assets/marks.css">
+<link rel="stylesheet" href="assets/decorations.css">
+<link rel="stylesheet" href="assets/components.css">
+<link rel="stylesheet" href="assets/patterns.css">
+
+<style>
+  /* ============================================================
+     PAGE-SCOPED — "The Edit" sub-brand (matching cover art)
+     CS Calory display (with Cormorant fallback) + Montserrat body
+     ============================================================ */
+  :root {
+    /* Palette pulled from cover art: cream + warm brown */
+    --soft-bg:        #F4F2EF;   /* cream paper — exact cover swatch */
+    --soft-bg-alt:    #FAF8F4;
+    --soft-bg-deep:   #E8E4DC;
+    --soft-ink:       #303030;   /* near-black ink — exact swatch */
+    --soft-ink-soft:  #503D30;   /* warm dark brown — exact swatch */
+    --soft-muted:     #6B5945;
+    --soft-soft:      #A89882;
+    --soft-accent:    #503D30;   /* warm brown carries the page */
+    --soft-accent-2:  #303030;
+    --soft-yellow:    #FFCC00;   /* mustard highlighter — small accents only */
+    --soft-rust:      #A0522D;   /* terracotta — italic emphasis + key body accents */
+    --soft-rust-deep: #7E3F1F;   /* hover state for rust elements */
+    --soft-warm:      #C9A878;
+    --soft-cream:     #FAF8F4;
+    --soft-sand:      #E8C796;
+
+    --bg:        var(--soft-bg);
+    --fg:        var(--soft-ink);
+    --ink-600:   var(--soft-ink);
+    --ink-700:   var(--soft-ink);
+    --cream-200: var(--soft-bg);
+    --cream-100: var(--soft-cream);
+    --cream-50:  var(--soft-bg-alt);
+    --rust-400:  var(--soft-accent);
+    --rust-500:  var(--soft-accent-2);
+    --olive-700: var(--soft-ink-soft);
+    --olive-600: var(--soft-muted);
+    --olive-500: var(--soft-muted);
+    --olive-400: var(--soft-soft);
+    --olive-300: var(--soft-soft);
+    --olive-200: rgba(74, 51, 34, 0.18);
+    --sand-200:  var(--soft-sand);
+    --sage-300:  #C9B998;
+
+    /* Display: CS Calory (when uploaded) → Cormorant fallback. Body: Montserrat */
+    --font-display: 'CS Calory', 'Cormorant Garamond', 'Times New Roman', serif;
+    --font-body:    'Montserrat', system-ui, sans-serif;
+    --font-editorial: 'Newsreader', 'Cormorant Garamond', serif;
+  }
+
+  body { background: var(--soft-bg); color: var(--soft-ink); font-family: 'Montserrat', system-ui, sans-serif; font-weight: 400; }
+
+  /* ------ Highlighter (mustard yellow) — small, selective accents only ------
+     Eyebrow strokes use mustard for the "yellow dryss" rhythm across the page. */
+  body .hero__kicker { color: var(--soft-ink-soft) !important; }
+  body .hero__kicker::before { background: var(--soft-yellow) !important; height: 3px !important; }
+  body .about__eyebrow { color: var(--soft-ink-soft) !important; }
+  body .about__eyebrow::before { background: var(--soft-yellow) !important; height: 3px !important; }
+  body .newsletter__eyebrow { color: var(--soft-ink-soft) !important; }
+  body .list-head__sub { color: var(--soft-ink-soft) !important; }
+  body .featured__tag { background: var(--soft-yellow) !important; color: var(--soft-ink) !important; }
+  body .ep__num { color: var(--soft-ink-soft) !important; }
+
+  /* Filter pill aktiv state: mustard yellow med mørk tekst (yellow dryss) */
+  body .filter-pills button.is-active {
+    background: var(--soft-yellow) !important;
+    color: var(--soft-ink) !important;
+  }
+
+  /* Nav active state: yellow underline */
+  body .topbar__nav a.is-active::after { background: var(--soft-rust) !important; }
+  body .topbar__nav a:hover { color: var(--soft-ink) !important; }
+
+  /* Italic emphasis: see consolidated rule further down — yellow fill, dark stroke */
+
+  /* Play buttons: yellow on hover for delight */
+  body .ep__play:hover {
+    background: var(--soft-rust) !important;
+    border-color: var(--soft-rust) !important;
+    color: var(--soft-ink) !important;
+  }
+  body .player__play:hover { background: var(--soft-yellow) !important; color: var(--soft-ink) !important; }
+
+  /* Player progress bar: yellow on dark player background */
+  body .player__bar-fill { background: var(--soft-yellow) !important; }
+  body .player__bar-fill::after { background: var(--soft-yellow) !important; }
+
+  /* Newsletter submit: yellow CTA */
+  body .newsletter__form button {
+    background: var(--soft-rust) !important;
+    color: var(--soft-ink) !important;
+    border-color: var(--soft-rust) !important;
+  }
+  body .newsletter__form button:hover {
+    background: var(--soft-ink-soft) !important;
+    color: var(--soft-bg) !important;
+    border-color: var(--soft-ink-soft) !important;
+  }
+  body .newsletter__form input:focus { border-color: var(--soft-rust) !important; }
+  body .search input:focus { border-color: var(--soft-rust) !important; background: #fff !important; }
+
+  /* Display type — CS Calory with WIDE letter-spacing (matching cover art).
+     The cover pulls letters apart — that's what gives Calory its editorial poise.
+  */
+  /* Big display headlines: Cormorant Garamond — works at scale.
+     Calory is great for body/wordmark but breaks down at hero sizes
+     no matter how much we space it. */
+  body .hero__h,
+  body .featured__art-title,
+  body .about__h,
+  body .newsletter__h,
+  body .list-head h2 {
+    font-family: 'Cormorant Garamond', 'Times New Roman', serif !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.005em !important;
+    line-height: 1.05 !important;
+  }
+  body .hero__h em,
+  body .featured__art-title em,
+  body .about__h em,
+  body .list-head h2 em,
+  body .ep__title em {
+    font-family: 'Cormorant Garamond', serif !important;
+    font-style: italic !important;
+    font-weight: 500 !important;
+    /* Terracotta — warm, editorial, reads instantly on cream.
+       Sits in the same family as brown, complements yellow accents. */
+    color: var(--soft-rust) !important;
+  }
+  /* Newsletter italic stays yellow on its dark background — handled in newsletter block below */
+  .hero__h em, .featured__art-title em, .about__h em,
+  .newsletter__h em, .list-head h2 em {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-weight: 500;
+    color: var(--soft-accent);
+    letter-spacing: 0;
+  }
+  /* HC-monogram skal alltid være Archivo Black, uavhengig av sub-brand-overstyring */
+  body .hc-mark {
+    font-family: 'Archivo', sans-serif !important;
+    font-weight: 900 !important;
+    letter-spacing: -0.04em !important;
+  }
+
+  /* Wordmark i topbar — Hege Christines brand-logo:
+     "Hege" i Archivo Black, "Christine" i Newsreader Italic Rust */
+  .topbar__brand .wordmark {
+    font-family: 'Archivo', sans-serif;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    color: var(--soft-ink);
+  }
+  .topbar__brand .wordmark em {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-weight: 500;
+    color: var(--soft-rust) !important;
+    letter-spacing: -0.01em;
+  }
+  .ds-footer__wordmark {
+    font-family: 'CS Calory', 'Cormorant Garamond', serif;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+  }
+  /* Episode titles — slightly less tracking, since they're smaller */
+  body .ep__title {
+    font-family: 'Cormorant Garamond', 'Times New Roman', serif !important;
+    font-weight: 500 !important;
+    font-size: var(--text-2xl);
+    letter-spacing: 0.005em !important;
+    line-height: 1.2 !important;
+  }
+  body .ep__title em {
+    font-family: 'Cormorant Garamond', serif !important;
+    font-style: italic !important; font-weight: 500 !important;
+    color: var(--soft-accent) !important;
+  }
+  .stat__num {
+    font-family: 'CS Calory', 'Cormorant Garamond', serif;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+  }
+
+  /* Body type — Montserrat */
+  body, p, .ep__desc, .hero__lede, .about__p, .newsletter__p,
+  .topbar__nav a, .plat-btn, .btn, .input, .field__label,
+  .ep__meta, .topbar__right, .badge, .card__body, .card__meta,
+  .ds-footer, .ds-footer a, .ds-footer__tag {
+    font-family: 'Montserrat', system-ui, sans-serif;
+  }
+  /* Lighter body weight for that soft, magazine feel */
+  .ep__desc, .about__p, .hero__lede { font-weight: 300; }
+  .hero__lede, .about__p, .newsletter__p, .ds-footer__tag {
+    font-style: normal; /* drop the italic now that we're in Montserrat */
+  }
+
+  /* Mono labels stay mono — they're working class */
+
+  /* Slightly softer corners — but still architectural */
+  .ep__art, .featured__art, .featured, .about__portrait, .panel { border-radius: 4px; }
+  .ep__play, .featured__play { border-radius: 999px; }
+
+  /* Footer — DARK cognac, the heaviest anchor at the page bottom.
+     RULE: yellow against brown, rust against cream. */
+  body .ds-footer { background: var(--soft-ink-soft) !important; color: var(--soft-bg) !important; }
+  body .ds-footer h5 { color: var(--soft-yellow) !important; }
+  body .ds-footer a { color: rgba(244,242,239,0.92) !important; } /* whiter, more legible */
+  body .ds-footer a:hover { color: var(--soft-yellow) !important; }
+  body .ds-footer__tag { color: rgba(244,242,239,0.7) !important; }
+  body .ds-footer__base { color: rgba(244,242,239,0.55) !important; }
+  body .ds-footer__base span { color: rgba(244,242,239,0.55) !important; }
+  body .ds-footer__tag { color: rgba(244,242,239,0.6) !important; }
+
+  /* Footer wordmark — switches to MAIN brand identity (Hege Christine personally,
+     not The Edit). Archivo Black "Hege" + Newsreader italic "Christine". */
+  body .ds-footer__wordmark {
+    font-family: 'Archivo', sans-serif !important;
+    font-weight: 900 !important;
+    font-size: clamp(2.5rem, 5vw, 4.5rem) !important;
+    letter-spacing: -0.02em !important;
+    line-height: 0.95 !important;
+    color: var(--soft-bg) !important;
+  }
+  body .ds-footer__wordmark em {
+    font-family: 'Newsreader', serif !important;
+    font-style: italic !important;
+    font-weight: 500 !important;
+    font-variation-settings: "opsz" 96;
+    color: var(--soft-yellow) !important; /* yellow against the dark footer */
+    letter-spacing: -0.015em !important;
+    margin-left: 0.05em;
+  }
+
+  /* Newsletter — light cream, ties into the page flow above; footer below carries the dark weight */
+  body .newsletter { background: var(--soft-bg-deep) !important; color: var(--soft-ink) !important; }
+  body .newsletter__eyebrow { color: var(--soft-rust) !important; }
+  body .newsletter__h { color: var(--soft-ink) !important; }
+  body .newsletter__h em {
+    color: var(--soft-rust) !important;
+    font-family: 'Cormorant Garamond', serif !important;
+    font-style: italic !important;
+    font-weight: 500 !important;
+  }
+  body .newsletter__p { color: var(--soft-ink-soft) !important; }
+  body .newsletter__form input {
+    background: var(--soft-bg) !important;
+    border-color: rgba(58,42,30,0.18) !important;
+    color: var(--soft-ink) !important;
+  }
+  body .newsletter__form input::placeholder { color: rgba(58,42,30,0.45) !important; }
+  body .newsletter__form input:focus {
+    border-color: var(--soft-rust) !important;
+    background: #fff !important;
+  }
+  body .newsletter__form button {
+    background: var(--soft-rust) !important;
+    color: var(--soft-bg) !important;
+    border: 2px solid var(--soft-rust) !important;
+    padding: 14px 22px !important;
+    font-weight: 600 !important;
+  }
+  body .newsletter__form button:hover {
+    background: var(--soft-ink) !important;
+    color: var(--soft-bg) !important;
+    border-color: var(--soft-ink) !important;
+  }
+
+  body .hero__grid { background-image: none !important; }
+  .featured__art { background: var(--soft-ink); }
+  .ep__art { background: var(--soft-ink); }
+  .ep__art--rust  { background: var(--soft-accent); }
+  .ep__art--olive { background: var(--soft-warm); color: var(--soft-cream); }
+  .ep__art--sage  { background: #C9B998; color: var(--soft-ink); }
+  .ep__art--sand  { background: var(--soft-sand); color: var(--soft-ink); }
+
+  /* Platforms strip — warm brown to bridge cream + dark footer.
+     RULE: yellow against brown. */
+  body .platforms { background: var(--soft-ink-soft) !important; color: var(--soft-bg) !important; }
+  body .platforms__label { color: var(--soft-bg) !important; }
+  body .platforms__label::before { background: var(--soft-yellow) !important; }
+  body .plat-btn { color: var(--soft-bg) !important; border-color: rgba(244,242,239,0.25) !important; }
+  body .plat-btn:hover { background: var(--soft-yellow) !important; color: var(--soft-ink) !important; border-color: var(--soft-yellow) !important; }
+
+  /* Player */
+  .player { background: var(--soft-bg-alt); }
+  .player__art { background: var(--soft-ink); }
+
+  /* Hero featured tag — keep accent */
+  .featured__tag { background: var(--soft-accent); }
+
+  .page { max-width: 1320px; margin: 0 auto; }
+
+  /* ---------- TOP BAR ---------- */
+  .topbar {
+    border-bottom: 1px solid var(--ink-600);
+    background: var(--cream-200);
+    position: sticky; top: 0; z-index: 30;
+  }
+  .topbar__inner {
+    max-width: 1320px; margin: 0 auto;
+    display: grid; grid-template-columns: auto 1fr auto;
+    align-items: center; gap: var(--space-6);
+    padding: 14px var(--space-7);
+  }
+  .topbar__brand {
+    display: flex; align-items: center; gap: var(--space-3);
+    text-decoration: none;
+  }
+  .topbar__nav { display: flex; gap: var(--space-6); justify-self: center; }
+  .topbar__nav a {
+    text-decoration: none; color: var(--ink-600);
+    font-size: var(--text-sm); font-weight: 500;
+    padding: 6px 0; position: relative;
+  }
+  .topbar__nav a.is-active::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: -2px;
+    height: 2px; background: var(--rust-400);
+  }
+  .topbar__nav a:hover { color: var(--rust-400); }
+  .topbar__right {
+    display: flex; align-items: center; gap: var(--space-4);
+    font-family: var(--font-mono); font-size: 11px;
+    letter-spacing: 0.1em; text-transform: uppercase; color: var(--olive-600);
+  }
+  @keyframes pulse {
+    0%   { box-shadow: 0 0 0 0 rgba(197,82,44,0.55); }
+    70%  { box-shadow: 0 0 0 10px rgba(197,82,44,0); }
+    100% { box-shadow: 0 0 0 0 rgba(197,82,44,0); }
+  }
+
+  /* ---------- HERO / FEATURED EPISODE ---------- */
+  .hero {
+    border-bottom: 1px solid var(--ink-600);
+    padding: var(--space-9) var(--space-7) var(--space-8);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero__grid {
+    position: absolute; inset: 0; pointer-events: none;
+    background-image:
+      linear-gradient(rgba(46,50,48,0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(46,50,48,0.07) 1px, transparent 1px);
+    background-size: 64px 64px;
+  }
+  .hero__inner {
+    position: relative;
+    display: grid; grid-template-columns: 1.4fr 1fr;
+    gap: var(--space-8); align-items: end;
+    max-width: 1320px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+  }
+  .hero__kicker {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--rust-400); font-weight: 600;
+    display: flex; align-items: center; gap: var(--space-3);
+    margin-bottom: var(--space-5);
+  }
+  .hero__kicker::before { content: ""; width: 36px; height: 2px; background: var(--rust-400); }
+  .hero__h {
+    font-family: var(--font-display);
+    font-size: clamp(3.5rem, 8vw, 7rem);
+    font-weight: 800; line-height: 0.9;
+    letter-spacing: -0.04em;
+    margin: 0 0 var(--space-5);
+    text-wrap: balance; max-width: 12ch;
+  }
+  .hero__h em {
+    font-family: var(--font-editorial); font-style: italic;
+    font-weight: 500; color: var(--rust-400);
+  }
+  .hero__lede {
+    font-family: var(--font-editorial);
+    font-style: italic; font-size: var(--text-xl);
+    color: var(--olive-700); max-width: 48ch; margin: 0 0 var(--space-6);
+    line-height: var(--lh-normal);
+  }
+  .hero__meta {
+    display: flex; flex-wrap: wrap; gap: var(--space-5);
+    padding-top: var(--space-4); border-top: 1px solid var(--ink-600);
+    font-family: var(--font-mono); font-size: 11px;
+    letter-spacing: 0.1em; text-transform: uppercase; color: var(--olive-600);
+  }
+  .hero__meta b { color: var(--ink-600); font-weight: 600; }
+
+  /* Featured episode card (right column of hero) */
+  .featured {
+    border: 2px solid var(--ink-600);
+    background: var(--cream-50);
+    padding: var(--space-5);
+    display: flex; flex-direction: column; gap: var(--space-4);
+    position: relative;
+  }
+  .featured__tag {
+    position: absolute; top: -10px; left: var(--space-4);
+    background: var(--rust-400); color: var(--cream-100);
+    font-family: var(--font-mono); font-size: 10px; font-weight: 600;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    padding: 5px 9px;
+  }
+  .featured__art {
+    aspect-ratio: 1 / 1;
+    background: var(--ink-600);
+    color: var(--cream-100);
+    position: relative; overflow: hidden;
+    display: grid; grid-template-rows: 1fr auto;
+    padding: var(--space-4);
+  }
+  .featured__art::before {
+    content: ""; position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(239,230,212,0.08) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(239,230,212,0.08) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+  .featured__art-num {
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em;
+    color: var(--sand-200); font-weight: 600; position: relative;
+    align-self: start; justify-self: end;
+  }
+  .featured__art-title {
+    font-family: var(--font-display);
+    font-weight: 800; line-height: 0.95; letter-spacing: -0.025em;
+    font-size: var(--text-2xl);
+    color: var(--cream-100);
+    position: relative;
+    text-wrap: balance;
+  }
+  .featured__art-title em { font-family: var(--font-editorial); font-style: italic; font-weight: 500; color: var(--sand-200); }
+  .featured__row {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: var(--space-4);
+  }
+  .featured__row .meta {
+    font-family: var(--font-mono); font-size: 11px;
+    letter-spacing: 0.1em; text-transform: uppercase; color: var(--olive-600);
+  }
+  .featured__play {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: var(--font-body); font-size: var(--text-sm); font-weight: 600;
+    background: var(--rust-400); color: var(--cream-100);
+    border: 0; padding: 12px 18px; cursor: pointer;
+    transition: background var(--dur-fast);
+  }
+  .featured__play:hover { background: var(--rust-500); }
+  .featured__play .glyph {
+    width: 0; height: 0;
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+    border-left: 9px solid var(--cream-100);
+  }
+
+  /* ---------- LIST CONTROLS ---------- */
+  .list-head {
+    padding: var(--space-7) var(--space-8) var(--space-4);
+    display: grid; grid-template-columns: 1fr auto;
+    gap: var(--space-5); align-items: end;
+    border-bottom: 1px solid var(--ink-600);
+    max-width: 1320px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .list-head h2 {
+    font-family: var(--font-display);
+    font-size: var(--text-3xl); font-weight: 800;
+    letter-spacing: -0.025em; margin: 0;
+  }
+  .list-head h2 em { font-family: var(--font-editorial); font-style: italic; font-weight: 500; color: var(--rust-400); }
+  .list-head__sub {
+    font-family: var(--font-mono); font-size: 11px;
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--olive-600);
+    margin-top: 6px;
+  }
+  .controls { display: flex; align-items: center; gap: var(--space-3); }
+  .search {
+    position: relative;
+  }
+  .search input {
+    background: var(--cream-50);
+    border: 1.5px solid var(--ink-600);
+    color: var(--ink-600);
+    font-family: var(--font-body); font-size: var(--text-base);
+    padding: 12px 16px 12px 42px;
+    width: 320px;
+    border-radius: var(--radius-1);
+    outline: none;
+  }
+  .search input:focus { border-color: var(--rust-400); background: #fff; }
+  .search svg { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--olive-600); pointer-events: none; }
+
+  .filter-pills {
+    display: flex; gap: 4px; padding: 3px;
+    border: 1.5px solid var(--ink-600); background: var(--cream-50);
+  }
+  .filter-pills button {
+    background: transparent; border: 0; cursor: pointer;
+    font-family: var(--font-mono); font-size: 11px; font-weight: 600;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--olive-600);
+    padding: 7px 12px;
+    transition: all var(--dur-fast);
+  }
+  .filter-pills button.is-active {
+    background: var(--ink-600); color: var(--cream-100);
+  }
+  .filter-pills button:not(.is-active):hover { color: var(--ink-600); }
+
+  /* ---------- EPISODE LIST ---------- */
+  .ep-list {
+    padding: 0 var(--space-8) var(--space-9);
+    max-width: 1320px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .ep {
+    display: grid;
+    grid-template-columns: 80px 88px 1fr auto;
+    gap: var(--space-5);
+    align-items: center;
+    padding: var(--space-5) 0;
+    border-bottom: 1px solid var(--ink-600);
+    cursor: pointer;
+    transition: background var(--dur-fast);
+    position: relative;
+  }
+  .ep:hover { background: rgba(255,255,255,0.4); }
+  .ep:hover .ep__art { transform: translate(-2px, -2px); box-shadow: 4px 4px 0 var(--ink-600); }
+  .ep:first-child { border-top: 1px solid var(--ink-600); }
+
+  .ep__num {
+    font-family: var(--font-mono); font-size: 11px; font-weight: 600;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--rust-400);
+    align-self: start; padding-top: 6px;
+  }
+  .ep__num span { display: block; color: var(--olive-500); margin-top: 4px; font-size: 10px; }
+
+  .ep__art {
+    width: 88px; height: 88px;
+    background: var(--ink-600);
+    color: var(--cream-100);
+    display: grid; place-items: center;
+    font-family: var(--font-display); font-weight: 800;
+    font-size: var(--text-xl); letter-spacing: -0.02em;
+    position: relative; overflow: hidden;
+    border: 1px solid rgba(58, 42, 30, 0.18);
+    transition: transform var(--dur-med) var(--ease-out), box-shadow var(--dur-med) var(--ease-out);
+  }
+  .ep__art::after {
+    content: ""; position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(239,230,212,0.1) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(239,230,212,0.1) 1px, transparent 1px);
+    background-size: 14px 14px;
+  }
+  .ep__art--sage  { background: var(--sage-300); color: var(--ink-600); }
+  .ep__art--sand  { background: var(--sand-200); color: var(--ink-600); }
+  .ep__art--rust  { background: var(--rust-400); color: var(--cream-100); }
+  .ep__art--olive { background: var(--olive-600); color: var(--cream-100); }
+  .ep__art-glyph { position: relative; z-index: 1; line-height: 1; }
+  .ep__new-top {
+    color: var(--soft-rust);
+    display: none;
+    align-items: center;
+    gap: 5px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    justify-self: start;
+    align-self: end;
+  }
+  .ep__new-top::before {
+    content: "";
+    width: 6px; height: 6px;
+    background: var(--soft-rust);
+    border-radius: 999px;
+    animation: pulse 1.8s var(--ease-out) infinite;
+  }
+  .ep__meta .ep__new-inline {
+    color: var(--soft-rust);
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .ep__meta .ep__new-inline::before {
+    content: "";
+    width: 6px; height: 6px;
+    background: var(--soft-rust);
+    border-radius: 999px;
+    animation: pulse 1.8s var(--ease-out) infinite;
+  }
+
+  .ep__body { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+  .ep__title {
+    font-family: var(--font-display);
+    font-size: var(--text-xl); font-weight: 700;
+    letter-spacing: -0.02em; line-height: 1.15;
+    margin: 0; color: var(--ink-600);
+  }
+  .ep__title em { font-family: var(--font-editorial); font-style: italic; font-weight: 500; color: var(--rust-400); }
+  .ep__desc {
+    font-size: var(--text-sm); color: var(--olive-700);
+    margin: 0; line-height: var(--lh-normal);
+    max-width: 70ch;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  }
+  .ep__meta {
+    display: flex; gap: var(--space-4);
+    font-family: var(--font-mono); font-size: 10px;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--olive-600); font-weight: 600;
+    margin-top: 4px;
+  }
+  .ep__meta .guest { color: var(--ink-600); }
+  .ep__meta .new {
+    color: var(--rust-400);
+    display: inline-flex; align-items: center; gap: 5px;
+  }
+  .ep__meta .new::before {
+    content: ""; width: 6px; height: 6px; background: var(--rust-400);
+    border-radius: 999px;
+  }
+
+  .ep__actions { display: flex; align-items: center; gap: var(--space-3); }
+  .ep__play {
+    width: 52px; height: 52px;
+    border-radius: var(--radius-pill);
+    background: var(--cream-50);
+    color: var(--ink-600);
+    border: 1.5px solid var(--ink-600);
+    display: grid; place-content: center;
+    cursor: pointer;
+    transition: all var(--dur-fast);
+  }
+  .ep__play:hover { background: var(--rust-400); border-color: var(--rust-400); color: var(--cream-100); }
+  .ep__play .glyph {
+    width: 0; height: 0;
+    border-top: 7px solid transparent;
+    border-bottom: 7px solid transparent;
+    border-left: 11px solid currentColor;
+    margin-left: 3px;
+  }
+  .ep__play.is-playing .glyph {
+    border: 0; width: 12px; height: 12px;
+    background:
+      linear-gradient(currentColor, currentColor) left/3px 100% no-repeat,
+      linear-gradient(currentColor, currentColor) right/3px 100% no-repeat;
+    margin-left: 0;
+  }
+  .ep.is-active { background: rgba(197,82,44,0.04); }
+  .ep.is-active .ep__title { color: var(--rust-400); }
+
+  /* Expanded show notes */
+  .ep__expand {
+    grid-column: 1 / -1;
+    display: grid; grid-template-columns: 168px 1fr;
+    gap: var(--space-5);
+    padding: var(--space-5) 0 var(--space-3);
+    border-top: 1px dashed var(--olive-300);
+    margin-top: var(--space-4);
+  }
+  .ep__expand h4 {
+    font-family: var(--font-mono); font-size: 11px; font-weight: 600;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--olive-600);
+    margin: 0 0 var(--space-3);
+  }
+  .ep__expand p {
+    font-size: var(--text-base); line-height: var(--lh-relaxed);
+    color: var(--ink-600); margin: 0 0 var(--space-3); max-width: 64ch;
+  }
+  .ep__expand ul { margin: 0; padding-left: var(--space-5); color: var(--olive-700); font-size: var(--text-sm); line-height: var(--lh-relaxed); }
+  .ep__expand .links { display: flex; gap: var(--space-3); flex-wrap: wrap; margin-top: var(--space-4); }
+  .ep__expand .ext-link {
+    display: inline-flex; align-items: center; gap: 8px;
+    text-decoration: none; color: var(--ink-600);
+    border: 1.5px solid var(--ink-600); padding: 8px 12px;
+    font-family: var(--font-mono); font-size: 11px; font-weight: 600;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    transition: all var(--dur-fast);
+  }
+  .ep__expand .ext-link:hover { background: var(--ink-600); color: var(--cream-100); }
+  .ep__expand .dot { width: 6px; height: 6px; border-radius: 999px; background: currentColor; }
+
+  /* ---------- PLATFORMS STRIP ---------- */
+  .platforms {
+    border-top: 1px solid var(--ink-600);
+    border-bottom: 1px solid var(--ink-600);
+    background: var(--olive-600);
+    color: var(--cream-100);
+    padding: var(--space-5) var(--space-7);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: var(--space-5);
+    position: relative; overflow: hidden;
+  }
+  .platforms::before {
+    content: ""; position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(239,230,212,0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(239,230,212,0.07) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+  .platforms__label {
+    font-family: var(--font-mono); font-size: 11px;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--sand-200); font-weight: 600;
+    position: relative;
+    display: flex; align-items: center; justify-content: center; gap: var(--space-3);
+  }
+  .platforms__label::before { content: ""; width: 30px; height: 2px; background: var(--sand-200); }
+  .platforms__list {
+    display: flex; gap: var(--space-3); flex-wrap: wrap;
+    position: relative;
+    justify-content: center;
+  }
+  .plat-btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    text-decoration: none; color: var(--cream-100);
+    border: 1.5px solid rgba(239,230,212,0.4);
+    padding: 10px 14px;
+    font-family: var(--font-body); font-size: var(--text-sm); font-weight: 500;
+    transition: all var(--dur-fast);
+  }
+  .plat-btn:hover { background: var(--cream-100); color: var(--ink-600); border-color: var(--cream-100); }
+  .plat-btn .icon { width: 16px; height: 16px; display: grid; place-items: center; }
+
+  /* ---------- ABOUT BLOCK ---------- */
+  .about {
+    padding: var(--space-9) var(--space-8);
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: var(--space-8); align-items: start;
+    border-bottom: 1px solid var(--ink-600);
+    position: relative;
+    max-width: 1320px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .about__portrait {
+    aspect-ratio: 4/5;
+    background: var(--sage-300);
+    overflow: hidden; position: relative;
+    border: 1.5px solid var(--ink-600);
+  }
+  .about__portrait img {
+    width: 100%; height: 100%;
+    object-fit: cover; display: block;
+    filter: contrast(1.02) saturate(0.95);
+  }
+  .about__portrait-frame {
+    position: absolute; inset: var(--space-4);
+    border: 1px solid var(--cream-100);
+    pointer-events: none;
+  }
+  .about__portrait-tag {
+    position: absolute; top: var(--space-4); right: var(--space-4);
+    background: var(--cream-100); color: var(--ink-600);
+    border: 1.5px solid var(--ink-600);
+    padding: 6px 10px;
+    font-family: var(--font-mono); font-size: 10px; font-weight: 600;
+    letter-spacing: 0.14em; text-transform: uppercase;
+  }
+  .about__text { padding-top: var(--space-5); }
+  .about__eyebrow {
+    font-family: var(--font-mono); font-size: 11px; font-weight: 600;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--rust-400);
+    margin-bottom: var(--space-4);
+    display: flex; align-items: center; gap: var(--space-3);
+  }
+  .about__eyebrow::before { content: ""; width: 30px; height: 2px; background: var(--rust-400); }
+  .about__h {
+    font-family: var(--font-display);
+    font-size: var(--text-4xl); font-weight: 800;
+    letter-spacing: -0.03em; line-height: 1; margin: 0 0 var(--space-5);
+    text-wrap: balance;
+  }
+  .about__h em { font-family: var(--font-editorial); font-style: italic; font-weight: 500; color: var(--rust-400); }
+  .about__p { font-size: var(--text-lg); line-height: var(--lh-relaxed); color: var(--olive-700); margin: 0 0 var(--space-5); max-width: 52ch; }
+  .about__stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-5); margin-top: var(--space-6); }
+  .about__stats .stat__num { font-size: var(--text-5xl); }
+
+  /* ---------- NEWSLETTER ---------- */
+  .newsletter {
+    padding: var(--space-8) var(--space-8);
+    background: var(--ink-600); color: var(--cream-100);
+    width: 100%;
+    box-sizing: border-box;
+    position: relative; overflow: hidden;
+  }
+  .newsletter::before {
+    content: ""; position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(239,230,212,0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(239,230,212,0.06) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+  .newsletter__inner {
+    max-width: 1080px;
+    margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: var(--space-6);
+    align-items: center;
+    position: relative;
+  }
+  .newsletter__text { position: relative; }
+  .newsletter__eyebrow {
+    font-family: var(--font-mono); font-size: 11px; font-weight: 600;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--sand-200); margin-bottom: var(--space-3);
+  }
+  .newsletter__h {
+    font-family: var(--font-display);
+    font-size: var(--text-4xl); font-weight: 800;
+    line-height: 0.95; letter-spacing: -0.03em;
+    margin: 0 0 var(--space-3); text-wrap: balance;
+  }
+  .newsletter__h em { font-family: var(--font-editorial); font-style: italic; font-weight: 500; color: var(--sand-200); }
+  .newsletter__p { font-family: var(--font-editorial); font-style: italic; font-size: var(--text-lg); color: var(--cream-200); max-width: 50ch; margin: 0; }
+  .newsletter__form { position: relative; display: flex; gap: var(--space-3); }
+  .newsletter__form input {
+    flex: 1; background: var(--cream-100); border: 2px solid var(--cream-100);
+    color: var(--ink-600); font-family: var(--font-body); font-size: var(--text-base);
+    padding: 14px 16px; outline: none; min-width: 0;
+  }
+  .newsletter__form input::placeholder { color: var(--olive-500); }
+  .newsletter__form input:focus { border-color: var(--rust-400); }
+  .newsletter__form button {
+    background: var(--rust-400); color: var(--cream-100);
+    border: 2px solid var(--rust-400);
+    font-family: var(--font-body); font-size: var(--text-base); font-weight: 600;
+    padding: 14px 20px; cursor: pointer; white-space: nowrap;
+    transition: all var(--dur-fast);
+  }
+  .newsletter__form button:hover { background: var(--rust-500); border-color: var(--rust-500); }
+
+  /* ---------- FIXED PLAYER (bottom) ---------- */
+  .player {
+    position: fixed; left: 0; right: 0; bottom: 0;
+    z-index: 40;
+    background: var(--cream-50);
+    border-top: 1.5px solid var(--ink-600);
+    padding: 14px var(--space-6);
+    display: grid; grid-template-columns: minmax(240px, 320px) 1fr auto;
+    gap: var(--space-5); align-items: center;
+    box-shadow: 0 -8px 24px rgba(46,50,48,0.08);
+    transform: translateY(120%);
+    transition: transform var(--dur-med) var(--ease-out);
+  }
+  .player.is-open { transform: translateY(0); }
+  .player__now { display: flex; align-items: center; gap: var(--space-3); min-width: 0; }
+  .player__art {
+    width: 48px; height: 48px; flex-shrink: 0;
+    background: var(--ink-600); color: var(--cream-100);
+    display: grid; place-items: center;
+    font-family: var(--font-display); font-weight: 800; font-size: 14px;
+    border: 1.5px solid var(--ink-600);
+  }
+  .player__art--sage  { background: var(--sage-300); color: var(--ink-600); }
+  .player__art--sand  { background: var(--sand-200); color: var(--ink-600); }
+  .player__art--rust  { background: var(--rust-400); color: var(--cream-100); }
+  .player__art--olive { background: var(--olive-600); color: var(--cream-100); }
+  .player__info { display: flex; flex-direction: column; min-width: 0; }
+  .player__title {
+    font-family: var(--font-display); font-size: var(--text-sm); font-weight: 700;
+    color: var(--ink-600); margin: 0; letter-spacing: -0.01em;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .player__sub {
+    font-family: var(--font-mono); font-size: 10px; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--olive-600);
+    margin-top: 2px;
+  }
+  .player__center {
+    display: flex; flex-direction: column; gap: 6px; align-items: center;
+    width: 100%;
+  }
+  .player__controls {
+    display: flex; align-items: center; gap: var(--space-3);
+  }
+  .player__btn {
+    background: transparent; border: 0; cursor: pointer;
+    width: 32px; height: 32px;
+    display: grid; place-content: center;
+    color: var(--olive-600);
+    transition: color var(--dur-fast);
+  }
+  .player__btn:hover { color: var(--ink-600); }
+  .player__play {
+    background: var(--ink-600); color: var(--cream-100);
+    border: 0; cursor: pointer;
+    width: 40px; height: 40px;
+    border-radius: var(--radius-pill);
+    display: grid; place-content: center;
+    transition: background var(--dur-fast);
+  }
+  .player__play:hover { background: var(--rust-400); }
+  .player__play .glyph {
+    width: 0; height: 0;
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+    border-left: 9px solid currentColor;
+    margin-left: 2px;
+  }
+  .player__play.is-playing .glyph {
+    border: 0; width: 10px; height: 10px;
+    background:
+      linear-gradient(currentColor, currentColor) left/3px 100% no-repeat,
+      linear-gradient(currentColor, currentColor) right/3px 100% no-repeat;
+    margin-left: 0;
+  }
+  .player__progress {
+    display: grid; grid-template-columns: 38px 1fr 38px;
+    gap: var(--space-3); align-items: center;
+    width: 100%; max-width: 540px;
+    font-family: var(--font-mono); font-size: 10px; font-weight: 600;
+    color: var(--olive-600); letter-spacing: 0.06em;
+  }
+  .player__bar {
+    height: 4px; background: var(--olive-200);
+    position: relative; cursor: pointer;
+  }
+  .player__bar-fill {
+    position: absolute; left: 0; top: 0; bottom: 0;
+    background: var(--rust-400);
+  }
+  .player__bar-fill::after {
+    content: ""; position: absolute; right: -5px; top: 50%;
+    width: 10px; height: 10px; border-radius: 999px;
+    background: var(--rust-400); transform: translateY(-50%);
+    border: 2px solid var(--cream-50);
+  }
+  .player__right { display: flex; align-items: center; gap: var(--space-3); }
+  .player__close {
+    background: transparent; border: 1.5px solid var(--ink-600);
+    width: 32px; height: 32px;
+    display: grid; place-content: center;
+    cursor: pointer; color: var(--ink-600);
+    font-size: 16px; line-height: 1;
+  }
+  .player__close:hover { background: var(--ink-600); color: var(--cream-100); }
+
+  body.has-player { padding-bottom: 88px; }
+
+  /* ---------- FOOTER ---------- */
+  .ds-footer { margin-top: 0; }
+  body.has-player .ds-footer { margin-bottom: 0; }
+
+  /* Responsive */
+  @media (max-width: 980px) {
+    .hero__inner { grid-template-columns: 1fr; }
+    .about { grid-template-columns: 1fr; }
+    .newsletter__inner { grid-template-columns: 1fr; }
+    .newsletter__form-wrap { justify-self: stretch; max-width: 100%; }
+    .topbar__nav { display: none; }
+    .ep { grid-template-columns: 64px 1fr auto; }
+    .ep__num { display: none; }
+    .player { grid-template-columns: 1fr auto; padding: 12px; }
+    .player__center { grid-row: 2; grid-column: 1 / -1; }
+  }
+
+  /* Mobile (≤640px) — stack alt for å unngå at thumbnail klemmer tittelen */
+  @media (max-width: 640px) {
+    /* Topbar — mindre logo + brand */
+    .topbar__inner { padding: 10px var(--space-5); gap: var(--space-3); }
+    .topbar__brand .hc-mark { width: 32px; height: 32px; font-size: 13px; }
+    .topbar__brand .wordmark { font-size: 17px; }
+    .topbar__right { font-size: 10px; }
+
+    /* Hero — mindre tittel */
+    .hero { padding: var(--space-7) var(--space-5) var(--space-6); }
+    .hero__h { font-size: var(--text-4xl); }
+    .hero__lede { font-size: var(--text-base); }
+    .hero__meta { gap: var(--space-3); }
+
+    /* Episodeliste — stable kortet vertikalt */
+    .ep-list { padding: 0 var(--space-5) var(--space-7); }
+    .list-head { padding: var(--space-6) var(--space-5) var(--space-4); grid-template-columns: 1fr; }
+    .list-head h2 { font-size: var(--text-2xl); }
+    .controls { flex-wrap: wrap; }
+    .search input { width: 100%; }
+
+    .ep {
+      grid-template-columns: 72px 1fr auto;
+      grid-template-rows: auto auto auto;
+      grid-template-areas:
+        "badge .        ."
+        "art   title    actions"
+        "meta  meta     meta";
+      column-gap: var(--space-4);
+      row-gap: var(--space-2);
+      padding: var(--space-4) 0;
       align-items: center;
-      gap: 12px;
-      margin-bottom: 2rem;
     }
-    .eyebrow::before {
-      content: "";
-      width: 36px;
-      height: 2px;
-      background: var(--rust-400);
+    .ep__new-top {
+      display: inline-flex;
+      grid-area: badge;
+      margin-bottom: 2px;
     }
-    h1 {
-      font-family: 'Archivo Black', system-ui, sans-serif;
-      font-size: clamp(3rem, 8vw, 5.5rem);
-      font-weight: 900;
-      line-height: 0.95;
-      letter-spacing: -0.04em;
-      margin: 0 0 1.5rem;
+    .ep__meta .ep__new-inline { display: none; }
+    .ep__art {
+      grid-area: art;
+      width: 72px; height: 72px;
+      max-width: 72px;
+      aspect-ratio: 1;
+      margin: 0;
+      align-self: center;
+      font-size: var(--text-sm);
     }
-    h1 em {
-      font-family: 'Newsreader', serif;
-      font-style: italic;
-      font-weight: 500;
-      color: var(--rust-400);
-      letter-spacing: -0.01em;
+    .ep__body { display: contents; }
+    .ep__title {
+      grid-area: title;
+      font-size: 11px;
+      line-height: 1.3;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      align-self: center;
     }
-    a {
-      font-family: 'JetBrains Mono', monospace;
+    .ep__desc { display: none; }
+    .ep__meta {
+      grid-area: meta;
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-3);
+      font-size: 9px;
+      padding-top: var(--space-3);
+      border-top: 1px dashed rgba(58, 42, 30, 0.18);
+      margin-top: 0;
+    }
+    .ep__actions { grid-area: actions; justify-self: end; align-self: center; }
+    .ep__play { width: 36px; height: 36px; }
+
+    /* Utvidet episode-visning — stable kolonner */
+    .ep__expand {
+      grid-template-columns: 1fr;
+      gap: var(--space-4);
+      padding: var(--space-4) 0 var(--space-3);
+    }
+    .ep__expand p {
+      font-size: var(--text-sm);
+      max-width: 100%;
+      word-wrap: break-word;
+    }
+    .ep__expand .links { gap: var(--space-2); }
+    .ep__expand .ext-link {
+      font-size: 10px;
+      padding: 7px 10px;
+    }
+
+    /* Platforms — venstrestilt stripe + label, knapper på én linje */
+    .platforms {
+      padding: var(--space-5) var(--space-5);
+      justify-content: flex-start;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-4);
+    }
+    .platforms__list {
+      width: 100%;
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      gap: 6px;
+    }
+    .plat-btn {
+      flex: 1;
+      justify-content: center;
+      padding: 9px 8px;
       font-size: 12px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--ink-600);
-      text-decoration: none;
-      border-bottom: 2px solid var(--rust-400);
-      padding-bottom: 4px;
-      transition: color 140ms ease;
+      gap: 6px;
+      min-width: 0;
     }
-    a:hover { color: var(--rust-400); }
-  </style>
+    .plat-btn .icon { width: 14px; height: 14px; flex-shrink: 0; }
+
+    /* Bli gjest — venstrestilt stripe + label, mindre side-padding */
+    .guest-cta { padding: var(--space-6) var(--space-5); }
+    .guest-cta__inner {
+      flex-wrap: wrap;
+      gap: var(--space-4);
+      justify-content: flex-start;
+    }
+    .guest-cta__prompt { flex-basis: 100%; font-size: var(--text-base); }
+    .guest-cta__link { align-self: flex-start; }
+
+    /* About — mindre side-padding */
+    .about { padding: var(--space-7) var(--space-5); }
+    .about__h { font-size: var(--text-3xl); }
+
+    /* Nyhetsbrev — mindre side-padding */
+    .newsletter { padding: var(--space-7) var(--space-5); }
+    .newsletter__h { font-size: var(--text-3xl); }
+    .newsletter__form-wrap { justify-self: stretch; max-width: 100%; }
+
+    /* Footer — stable kolonner */
+    .ds-footer { padding: var(--space-7) var(--space-5) var(--space-5); }
+    .ds-footer__grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-5);
+    }
+    .ds-footer__base {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-3);
+    }
+    .ds-footer__wordmark { font-size: var(--text-3xl); }
+  }
+
+  /* ============== KAJABI-SKJEMA-OVERRIDE ============== */
+  .newsletter__form-wrap {
+    position: relative;
+    max-width: 420px;
+    width: 100%;
+    justify-self: end;
+  }
+
+  body .newsletter__form.hc-kajabi-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    align-items: stretch;
+  }
+  body .newsletter__form.hc-kajabi-form input[type="text"],
+  body .newsletter__form.hc-kajabi-form input[type="email"] {
+    flex: initial;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  body .newsletter__form.hc-kajabi-form button {
+    grid-column: 1 / -1;
+    width: 100%;
+    cursor: pointer;
+    transition: background var(--dur-fast,140ms), color var(--dur-fast,140ms), border-color var(--dur-fast,140ms);
+  }
+  body .newsletter__form.hc-kajabi-form button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  body .newsletter__form.hc-kajabi-form .newsletter__msg {
+    grid-column: 1 / -1;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    text-align: center;
+    min-height: 1em;
+    color: var(--soft-rust);
+  }
+
+  @media (max-width: 640px) {
+    body .newsletter__form.hc-kajabi-form { grid-template-columns: 1fr; }
+  }
+
+  /* Skjult Kajabi embed + iframe */
+  .kajabi-hidden-wrap {
+    position: absolute;
+    left: -9999px;
+    top: -9999px;
+    visibility: hidden;
+    pointer-events: none;
+  }
+  .kajabi-response-frame {
+    display: none;
+  }
+
+  /* Success state */
+  .newsletter__success {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-3, 12px);
+    text-align: center;
+    padding: var(--space-5, 24px) var(--space-3, 12px);
+    border-radius: 6px;
+    background: rgba(160, 82, 45, 0.08);
+    border: 1.5px dashed rgba(160, 82, 45, 0.4);
+  }
+  .newsletter__success.is-shown { display: flex; }
+  .newsletter__success.is-shown ~ .newsletter__form { display: none !important; }
+
+  .newsletter__success-mark {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--soft-rust);
+    color: var(--soft-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 3px 0 var(--soft-ink-soft);
+  }
+  .newsletter__success-mark svg { width: 28px; height: 28px; }
+
+  .newsletter__success-text {
+    font-family: 'Cormorant Garamond', 'Newsreader', serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    line-height: 1.4;
+    color: var(--soft-ink);
+    max-width: 32ch;
+    margin: 0;
+  }
+
+  .newsletter__form-wrap form.is-hidden { display: none; }
+
+  /* ============== EPISODE-ART MED EKTE BILDE ============== */
+  .ep__art--has-image {
+    position: relative;
+    overflow: hidden;
+  }
+  .ep__art-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .ep__art--has-image .ep__art-glyph { display: none; }
+
+  /* Player-art med ekte cover */
+  .player__art--has-image {
+    background-color: var(--soft-ink) !important;
+    color: transparent !important;
+  }
+
+  /* "Bli gjest"-CTA-seksjon — flex-row layout som platforms */
+  .guest-cta {
+    border-top: 1px solid var(--ink-600);
+    border-bottom: 1px solid var(--ink-600);
+    padding: var(--space-6) var(--space-8);
+    background: var(--soft-bg-deep);
+  }
+  .guest-cta__inner {
+    max-width: 880px;
+    margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: var(--space-5);
+  }
+  .guest-cta__label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--soft-ink-soft);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    flex-shrink: 0;
+  }
+  .guest-cta__label::before {
+    content: "";
+    width: 30px;
+    height: 2px;
+    background: var(--soft-yellow);
+  }
+  .guest-cta__prompt {
+    font-family: 'Newsreader', 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: var(--text-lg);
+    line-height: 1.4;
+    color: var(--soft-ink);
+    margin: 0;
+    flex: 1;
+    min-width: 0;
+    text-wrap: balance;
+  }
+  @media (max-width: 768px) {
+    .guest-cta__inner {
+      flex-wrap: wrap;
+      gap: var(--space-4);
+    }
+    .guest-cta__prompt { flex-basis: 100%; }
+  }
+  .guest-cta__prompt em {
+    color: var(--soft-rust);
+    font-weight: 500;
+  }
+  .guest-cta__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--soft-ink);
+    text-decoration: none;
+    padding: 10px 16px;
+    border: 1.5px solid var(--soft-ink);
+    border-radius: 3px;
+    transition: all 0.18s ease;
+    flex-shrink: 0;
+    letter-spacing: 0.02em;
+  }
+  .guest-cta__link:hover {
+    background: var(--soft-rust);
+    border-color: var(--soft-rust);
+    color: var(--soft-bg);
+  }
+
+  /* Footer legal-lenker (personvern/cookies) */
+  .ds-footer__legal {
+    display: inline-flex;
+    gap: var(--space-4, 16px);
+  }
+  .ds-footer__legal a {
+    text-decoration: none;
+    transition: color 0.18s ease;
+  }
+  .ds-footer__legal a:hover {
+    color: var(--soft-yellow) !important;
+  }
+
+  /* About-stats: gul stripe på toppen + sentrert innhold + stjerne-styling */
+  body .about__stats .stat {
+    border-top-color: var(--soft-yellow) !important;
+    border-top-width: 3px !important;
+    align-items: center;
+    text-align: center;
+  }
+  body .about__stats .stat__label { max-width: none; }
+  .stat__star {
+    font-size: 0.6em;
+    color: var(--soft-ink);
+    margin-left: 0.15em;
+    vertical-align: 0.2em;
+    font-family: 'Archivo', sans-serif;
+  }
+
+  /* "Vis mer"-knapp */
+  .show-more-btn {
+    width: 100%;
+    margin-top: var(--space-5);
+    padding: 16px 24px;
+    background: transparent;
+    color: var(--soft-ink-soft);
+    border: 1.5px dashed rgba(80, 61, 48, 0.4);
+    border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    cursor: pointer;
+    transition: all 0.18s ease;
+  }
+  .show-more-btn:hover {
+    border-color: var(--soft-rust);
+    color: var(--soft-rust);
+    background: rgba(160, 82, 45, 0.06);
+  }
+
+  /* Show notes-formatering */
+  .ep__shownotes p {
+    margin: 0 0 var(--space-3, 12px);
+    line-height: 1.55;
+  }
+  .ep__shownotes p:last-child { margin-bottom: 0; }
+  .ep__shownotes a {
+    color: var(--soft-rust);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    text-decoration-thickness: 1px;
+  }
+  .ep__shownotes a:hover { color: var(--soft-rust-deep); }
+  .ep__shownotes strong { font-weight: 600; }
+  .ep__shownotes em {
+    font-family: 'Cormorant Garamond', 'Newsreader', serif;
+    font-style: italic;
+    font-weight: 500;
+  }
+  .ep__shownotes hr {
+    border: none;
+    height: 1px;
+    background: rgba(46, 50, 48, 0.18);
+    margin: var(--space-4, 16px) 0;
+  }
+  .ep__shownotes ul, .ep__shownotes ol {
+    margin: 0 0 var(--space-3, 12px);
+    padding-left: 1.4em;
+  }
+  .ep__shownotes li { margin-bottom: 4px; }
+</style>
 </head>
 <body>
-  <main>
-    <div class="eyebrow">podcast · the edit</div>
-    <h1>Sender deg <em>videre</em></h1>
-    <a href="https://hegechristine.github.io/podcast/">hegechristine.github.io/podcast →</a>
-  </main>
+
+<!-- ========== TOP BAR ========== -->
+<header class="topbar">
+  <div class="topbar__inner">
+    <a href="#" class="topbar__brand">
+      <div class="hc-mark hc-mark--md hc-mark--filled hc-mark--ink"><span>HC</span></div>
+      <span class="wordmark wordmark--sm">Hege<em>Christine</em></span>
+    </a>
+    <nav class="topbar__nav" aria-label="Hovednavigasjon">
+      <a href="#" class="is-active" aria-current="page">Podcast</a>
+      <a href="#about">Om</a>
+      <a href="#newsletter">Nyhetsbrev</a>
+      <a href="https://hegechristine.no" rel="noopener">Hovedside ↗</a>
+    </nav>
+    <div class="topbar__right">
+      <span>Sesong 03</span>
+    </div>
+  </div>
+</header>
+
+<!-- ========== HERO ========== -->
+<section class="hero">
+  <div class="hero__grid"></div>
+  <div class="hero__inner">
+    <div>
+      <div class="hero__kicker"><span>Episodearkiv · Oppdatert ukentlig</span></div>
+      <h1 class="hero__h">Edit, don't <em>add</em>.</h1>
+      <p class="hero__lede">Podkasten for deg som vil bygge en business som passer livet du vil leve — uten at alt hviler på deg. Praktiske strategier, ærlige refleksjoner og dypere samtaler med folk som har gått sin egen vei.</p>
+      <div class="hero__meta">
+        <span><b id="ep-count">42</b> episoder</span>
+        <span>Siden <b>2024</b></span>
+        <span>Ny episode <b>tirsdager</b></span>
+        <span><b>00:42:18</b> snittlengde</span>
+      </div>
+    </div>
+
+    <!-- Featured / latest -->
+    <div class="featured" id="featured">
+      <div class="featured__tag">Siste episode</div>
+      <div class="featured__art" id="featured-art">
+        <div class="featured__art-num">EP&nbsp;42 · Sesong 03</div>
+        <div class="featured__art-title" id="featured-art-title">Når <em>nok</em> er nok</div>
+      </div>
+      <div class="featured__row">
+        <div class="meta" id="featured-meta">5. mai 2026 · 47 min</div>
+        <button class="featured__play" data-play-id="ep-42">
+          <span class="glyph"></span> Spill av
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== PLATFORMS (moved up — listen anywhere, before browsing) ========== -->
+<section class="platforms">
+  <div class="platforms__label"><span>Hør hvor du vil</span></div>
+  <div class="platforms__list">
+    <a class="plat-btn" href="https://open.spotify.com/show/286EpL6ZfSuJVB47nXSQbZ" target="_blank" rel="noopener"><span class="icon">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><circle cx="7" cy="7" r="7"/></svg>
+    </span>Spotify</a>
+    <a class="plat-btn" href="https://podcasts.apple.com/us/podcast/the-edit/id1857930330" target="_blank" rel="noopener"><span class="icon">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="6.25"/><path d="M7 1.5v11M1.5 7h11" /></svg>
+    </span>Apple Podcasts</a>
+    <a class="plat-btn" href="https://anchor.fm/s/4f734584/podcast/rss" target="_blank" rel="noopener"><span class="icon">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="2.5" cy="11.5" r="1.5"/><path d="M2.5 7.5 A4 4 0 0 1 6.5 11.5 M2.5 3.5 A8 8 0 0 1 10.5 11.5"/></svg>
+    </span>RSS-feed</a>
+  </div>
+</section>
+
+<!-- ========== LIST CONTROLS ========== -->
+<section class="list-head">
+  <div>
+    <h2>Alle <em>episoder</em></h2>
+    <div class="list-head__sub" id="list-meta">Nyeste øverst</div>
+  </div>
+  <div class="controls">
+    <div class="search">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+        <circle cx="6" cy="6" r="4.5" stroke="currentColor" stroke-width="1.5"/>
+        <line x1="9.5" y1="9.5" x2="13" y2="13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <input type="text" placeholder="Søk episoder…" id="search" />
+    </div>
+    <div class="filter-pills" role="tablist">
+      <button class="is-active" data-filter="all">Alle</button>
+      <button data-filter="solo">Solo</button>
+      <button data-filter="guest">Gjester</button>
+      <button data-filter="series">Serie</button>
+    </div>
+  </div>
+</section>
+
+<!-- ========== EPISODE LIST ========== -->
+<section class="ep-list" id="ep-list">
+  <!-- Episodes injected by JS -->
+</section>
+
+<!-- ========== NEWSLETTER ========== -->
+<section class="newsletter" id="newsletter">
+  <div class="newsletter__inner">
+    <div class="newsletter__text">
+      <div class="newsletter__eyebrow">Nyhetsbrev</div>
+      <h2 class="newsletter__h">Hold deg <em>oppdatert.</em></h2>
+      <p class="newsletter__p">Få beskjed når en ny episode slippes — og noen ærlige tanker rett i innboksen hver uke.</p>
+    </div>
+
+    <div class="newsletter__form-wrap" id="podcast-newsletter-wrap">
+      <form class="newsletter__form hc-kajabi-form" id="podcast-newsletter-form" data-kajabi-form-id="349307" novalidate>
+        <input type="text" name="name" placeholder="Navn" required autocomplete="name" />
+        <input type="email" name="email" placeholder="navn@e-post.no" required autocomplete="email" />
+        <button type="submit">Meld meg på</button>
+        <div class="newsletter__msg" data-form-message></div>
+      </form>
+
+      <div class="newsletter__success" id="podcast-newsletter-success" aria-live="polite">
+        <div class="newsletter__success-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <p class="newsletter__success-text">Takk! Du er på listen — sjekk innboksen din om litt.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Skjult Kajabi-embed (genererer authenticity_token) -->
+  <div class="kajabi-hidden-wrap" aria-hidden="true">
+    <script src="https://www.hegechristine.no/forms/349307/embed.js"></script>
+  </div>
+
+  <!-- Skjult iframe for å fange Kajabi sin response -->
+  <iframe name="kajabi-response-frame" class="kajabi-response-frame" aria-hidden="true"></iframe>
+</section>
+
+<!-- ========== ABOUT (moved down — after newsletter, before footer) ========== -->
+<section class="about" id="about">
+  <div class="about__portrait">
+    <img src="assets/hege-portrait.jpg" alt="Hege Christine" />
+    <div class="about__portrait-frame"></div>
+    <div class="about__portrait-tag">Vert · Hege C.</div>
+  </div>
+  <div class="about__text">
+    <div class="about__eyebrow"><span>Om podcasten</span></div>
+    <h2 class="about__h">Mindre, mer <em>presist</em>.</h2>
+    <p class="about__p">The Edit er for deg som vil bygge en business som passer livet du vil leve — uten at alt hviler på deg. Korte solo-episoder om strategi, systemer, salg og smart arbeid, og dypere samtaler med gjester som deler sine valg, reiser og erfaringer.</p>
+    <p class="about__p">Strategisk. Ærlig. Praktisk.</p>
+    <div class="about__stats">
+      <div class="stat">
+        <div class="stat__num stat__num--rust">12k</div>
+        <div class="stat__label">Lyttere per episode</div>
+      </div>
+      <div class="stat">
+        <div class="stat__num">42</div>
+        <div class="stat__label">Episoder, tre sesonger</div>
+      </div>
+      <div class="stat">
+        <div class="stat__num">4.9</div>
+        <div class="stat__label">På Apple Podcasts</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== GJEST CTA ========== -->
+<section class="guest-cta" id="bli-gjest">
+  <div class="guest-cta__inner">
+    <div class="guest-cta__label"><span>Bli gjest</span></div>
+    <p class="guest-cta__prompt">Send meg en e-post med noen ord om hvem du er og hva vi kunne snakket om.</p>
+    <a class="guest-cta__link" href="mailto:hegechristine@hegechristine.no?subject=S%C3%B8knad%20om%20%C3%A5%20v%C3%A6re%20gjest%20p%C3%A5%20The%20Edit">hegechristine@hegechristine.no <span aria-hidden="true">→</span></a>
+  </div>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<footer class="ds-footer">
+  <div style="max-width:1320px; margin:0 auto;">
+    <div class="ds-footer__grid">
+      <div>
+        <div class="ds-footer__wordmark">Hege<em>Christine</em></div>
+        <p class="ds-footer__tag">Strategi og samtaler for de som vil bygge noe som varer.</p>
+      </div>
+      <div>
+        <h5>Podcast</h5>
+        <ul>
+          <li><a href="#ep-list">Alle episoder</a></li>
+          <li><a href="#bli-gjest">Bli gjest</a></li>
+          <li><a href="https://feeds.transistor.fm/hege-christine" target="_blank" rel="noopener">RSS-feed</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Hege Christine</h5>
+        <ul>
+          <li><a href="https://hegechristine.no" rel="noopener">Hovedside</a></li>
+          <li><a href="#about">Om podcasten</a></li>
+          <li><a href="mailto:hegechristine@hegechristine.no">Kontakt</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Følg</h5>
+        <ul>
+          <li><a href="https://www.instagram.com/hegechristine.no/" target="_blank" rel="noopener">Instagram</a></li>
+          <li><a href="https://www.linkedin.com/in/hegechristine/" target="_blank" rel="noopener">LinkedIn</a></li>
+          <li><a href="https://www.youtube.com/@hegechristine" target="_blank" rel="noopener">YouTube</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="ds-footer__base">
+      <span>© 2026 hegechristine.no</span>
+      <span class="ds-footer__legal">
+        <a href="https://hegechristine.no/personvern" rel="noopener">Personvern</a>
+        <a href="https://hegechristine.no/cookies" rel="noopener">Cookies</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+<!-- ========== FIXED PLAYER ========== -->
+<div class="player" id="player" role="region" aria-label="Avspiller">
+  <audio id="player-audio" preload="none"></audio>
+  <div class="player__now">
+    <div class="player__art" id="player-art">42</div>
+    <div class="player__info">
+      <p class="player__title" id="player-title">Når nok er nok</p>
+      <span class="player__sub" id="player-sub">EP 42 · Sesong 03 · 47 min</span>
+    </div>
+  </div>
+  <div class="player__center">
+    <div class="player__controls">
+      <button class="player__btn" title="Tilbake 15 sek">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 4 L4 4 L4 8" /><path d="M4 4 A6 6 0 1 1 3.5 12" /><text x="9" y="13" font-size="6" font-family="JetBrains Mono" font-weight="600" fill="currentColor" stroke="none" text-anchor="middle">15</text>
+        </svg>
+      </button>
+      <button class="player__play" id="player-play"><span class="glyph"></span></button>
+      <button class="player__btn" title="Frem 30 sek">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 4 L14 4 L14 8" /><path d="M14 4 A6 6 0 1 0 14.5 12" /><text x="9" y="13" font-size="6" font-family="JetBrains Mono" font-weight="600" fill="currentColor" stroke="none" text-anchor="middle">30</text>
+        </svg>
+      </button>
+    </div>
+    <div class="player__progress">
+      <span id="player-cur">12:04</span>
+      <div class="player__bar" id="player-bar">
+        <div class="player__bar-fill" id="player-fill" style="width:26%"></div>
+      </div>
+      <span id="player-dur">47:00</span>
+    </div>
+  </div>
+  <div class="player__right">
+    <button class="player__close" id="player-close" title="Lukk">×</button>
+  </div>
+</div>
+
+<div class="page-scroll-spacer"></div>
+
+
+<!-- ========================================================
+     SCRIPTS
+     ======================================================== -->
+<script>
+/* ---------- Episode data: synced fra RSS via .github/scripts/sync-podcast.mjs ---------- */
+let EPISODES = [];
+
+const ART_VARIANTS = ['rust', 'sage', 'sand', 'olive'];
+const ART_GLYPHS = {
+  rust: ['◆','◢','■','▲'],
+  sage: ['◐','○','◑','◇'],
+  sand: ['◈','◉','□','◊'],
+  olive: ['◮','▣','◧','▦']
+};
+
+function mapEpisode(raw, idx) {
+  return {
+    id: raw.id,
+    n: raw.n,
+    season: parseSeasonFromDate(raw.pubDate),
+    type: raw.guest ? 'guest' : 'solo',
+    title: raw.title,
+    desc: raw.desc,
+    date: raw.date,
+    pubDate: raw.pubDate,
+    dur: raw.dur,
+    durSec: raw.durationSeconds || 0,
+    art: ART_VARIANTS[idx % ART_VARIANTS.length],
+    glyph: String(raw.n || idx + 1),
+    notes: raw.fullDesc,
+    notesHtml: raw.descriptionHtml || '',
+    chapters: [],
+    isNew: !!raw.isNew,
+    guest: raw.guest || null,
+    episodeUrl: raw.episodeUrl || '',
+    appleEpisodeUrl: raw.appleEpisodeUrl || '',
+    audioUrl: raw.audioUrl || '',
+    imageUrl: raw.imageUrl || '',
+  };
+}
+
+function parseSeasonFromDate(pubDate) {
+  const d = new Date(pubDate);
+  if (isNaN(d.getTime())) return 1;
+  // The Edit startet i 2025 (få episoder), 2026 ble egen sesong 2
+  const launchYear = 2025;
+  return Math.max(1, d.getFullYear() - launchYear + 1);
+}
+
+function updateHeroStats(episodes, channel = {}) {
+  const epCount = document.getElementById('ep-count');
+  if (epCount) epCount.textContent = String(episodes.length);
+
+  const valid = episodes.filter(e => e.durSec > 0);
+  if (valid.length) {
+    const avg = Math.round(valid.reduce((a, e) => a + e.durSec, 0) / valid.length);
+    const h = Math.floor(avg / 3600);
+    const m = Math.floor((avg % 3600) / 60);
+    const s = avg % 60;
+    const display = `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+    const heroMeta = document.querySelectorAll('.hero__meta b');
+    if (heroMeta.length >= 4) heroMeta[3].textContent = display;
+  }
+
+  // "Siden YYYY" — fra eldste episode
+  const dated = episodes.map(e => new Date(e.pubDate || 0)).filter(d => !isNaN(d.getTime()));
+  if (dated.length) {
+    const launchYear = Math.min(...dated.map(d => d.getFullYear()));
+    const sinceEl = document.querySelectorAll('.hero__meta b')[1];
+    if (sinceEl) sinceEl.textContent = String(launchYear);
+  }
+
+  // Topbar "Sesong XX"
+  if (episodes.length) {
+    const latestSeason = episodes[0].season;
+    const topbarRight = document.querySelectorAll('.topbar__right span');
+    if (topbarRight.length >= 2) {
+      topbarRight[1].textContent = `Sesong ${String(latestSeason).padStart(2,'0')}`;
+    }
+  }
+
+  // About-stats: 3 stats — timer med innhold, episoder, rating
+  const aboutStats = document.querySelectorAll('.about__stats .stat');
+
+  // Stat 0: Total timer innhold (auto fra RSS)
+  if (aboutStats[0]) {
+    const totalSec = episodes.reduce((a, e) => a + (e.durSec || 0), 0);
+    const totalHours = Math.max(1, Math.round(totalSec / 3600));
+    const num = aboutStats[0].querySelector('.stat__num');
+    const label = aboutStats[0].querySelector('.stat__label');
+    if (num) num.textContent = String(totalHours);
+    if (label) label.textContent = totalHours === 1 ? 'Time med innhold' : 'Timer med innhold';
+  }
+
+  // Stat 1: Episode count + sesonger (auto)
+  if (aboutStats[1]) {
+    const seasonCount = new Set(episodes.map(e => e.season)).size;
+    const num = aboutStats[1].querySelector('.stat__num');
+    const label = aboutStats[1].querySelector('.stat__label');
+    if (num) num.textContent = String(episodes.length);
+    if (label) {
+      const seasonWord = seasonCount === 1 ? 'sesong' : 'sesonger';
+      label.textContent = `Episoder, ${seasonCount} ${seasonWord}`;
+    }
+  }
+
+  // Stat 2: Rating (manuell, fra feed.config.json)
+  if (aboutStats[2] && channel.stats) {
+    const num = aboutStats[2].querySelector('.stat__num');
+    const label = aboutStats[2].querySelector('.stat__label');
+    if (num && channel.stats.rating) {
+      num.innerHTML = `${channel.stats.rating}<span class="stat__star" aria-hidden="true">★</span>`;
+    }
+    if (label && channel.stats.ratingPlatform) {
+      label.textContent = `Vurdering på ${channel.stats.ratingPlatform}`;
+    }
+  }
+}
+
+function updateFeatured(latest) {
+  if (!latest) return;
+  const titleEl = document.getElementById('featured-art-title');
+  const metaEl = document.getElementById('featured-meta');
+  const artEl = document.getElementById('featured-art');
+  const artNum = document.querySelector('.featured__art-num');
+  const playBtn = document.querySelector('.featured__play');
+
+  if (titleEl) titleEl.textContent = latest.title;
+  if (metaEl) metaEl.textContent = `${latest.date} · ${latest.dur}`;
+  if (artNum) {
+    const label = latest.n ? `EP ${String(latest.n).padStart(2,'0')}` : 'TRAILER';
+    artNum.textContent = `${label} · Sesong ${String(latest.season).padStart(2,'0')}`;
+  }
+  if (playBtn) playBtn.dataset.playId = latest.id;
+
+  // Sett episode-art som bakgrunn, gi den en mørk overlay så teksten leser
+  if (artEl && latest.imageUrl) {
+    artEl.style.backgroundImage =
+      `linear-gradient(135deg, rgba(48,48,48,0.55), rgba(80,61,48,0.65)), url('${latest.imageUrl}')`;
+    artEl.style.backgroundSize = 'cover';
+    artEl.style.backgroundPosition = 'center';
+  }
+}
+
+async function loadEpisodes() {
+  try {
+    const res = await fetch('episodes.json?t=' + Date.now());
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    EPISODES = (data.episodes || []).map(mapEpisode);
+    updateHeroStats(EPISODES, data.channel || {});
+    if (EPISODES.length) updateFeatured(EPISODES[0]);
+    renderList();
+  } catch (err) {
+    console.error('Could not load episodes:', err);
+    const list = document.getElementById('ep-list');
+    if (list) {
+      list.innerHTML = `<div style="padding: var(--space-7); text-align:center; color: var(--olive-600); font-family: var(--font-editorial); font-style: italic; font-size: var(--text-xl);">Kunne ikke laste episoder akkurat nå.</div>`;
+    }
+  }
+}
+
+/* ---------- Render episode list ---------- */
+const list = document.getElementById('ep-list');
+const epCountEl = document.getElementById('ep-count');
+
+function fmtTime(sec) {
+  const m = Math.floor(sec / 60);
+  const s = Math.floor(sec % 60);
+  return `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+}
+
+/* Paginering — vis 10 episoder ad gangen, last flere ved klikk */
+const INITIAL_VISIBLE = 10;
+const PAGE_SIZE = 10;
+let visibleCount = INITIAL_VISIBLE;
+
+function renderList(filter='all', q='') {
+  list.innerHTML = '';
+  const ql = q.trim().toLowerCase();
+  const filtered = EPISODES.filter(ep => {
+    if (filter !== 'all' && ep.type !== filter) return false;
+    if (ql && !(ep.title + ' ' + ep.desc + ' ' + (ep.guest || '')).toLowerCase().includes(ql)) return false;
+    return true;
+  });
+
+  const visible = filtered.slice(0, visibleCount);
+  visible.forEach(ep => {
+    const el = document.createElement('article');
+    el.className = 'ep';
+    el.dataset.id = ep.id;
+    const newBadge = ep.isNew ? `<span class="new">NY</span>` : '';
+    const guestBit = ep.guest ? `<span class="guest">m/ ${ep.guest}</span>` : '';
+
+    const artInner = ep.imageUrl
+      ? `<img src="${ep.imageUrl}" alt="${ep.title}" class="ep__art-img" loading="lazy" />`
+      : `<span class="ep__art-glyph">${ep.glyph}</span>`;
+
+    const epLabel = ep.n ? `EP ${String(ep.n).padStart(2,'0')}` : 'TRAILER';
+
+    const newTop = ep.isNew ? `<span class="new ep__new-top">NY</span>` : '';
+    const newInline = ep.isNew ? `<span class="new ep__new-inline">NY</span>` : '';
+
+    el.innerHTML = `
+      <div class="ep__num">${epLabel}</div>
+      ${newTop}
+      <div class="ep__art ep__art--${ep.art}${ep.imageUrl ? ' ep__art--has-image' : ''}">
+        ${artInner}
+      </div>
+      <div class="ep__body">
+        <h3 class="ep__title">${ep.title}</h3>
+        <p class="ep__desc">${ep.desc}</p>
+        <div class="ep__meta">
+          ${newInline}
+          <span>${ep.date}</span>
+          <span>${ep.dur}</span>
+          ${guestBit}
+        </div>
+      </div>
+      <div class="ep__actions">
+        <button class="ep__play" data-play="${ep.id}" title="Spill av">
+          <span class="glyph"></span>
+        </button>
+      </div>
+    `;
+    list.appendChild(el);
+  });
+
+  if (!filtered.length) {
+    list.innerHTML = `<div style="padding: var(--space-7); text-align:center; color: var(--olive-600); font-family: var(--font-editorial); font-style: italic; font-size: var(--text-xl);">Ingen episoder matcher.</div>`;
+  } else if (filtered.length > visibleCount) {
+    const remaining = filtered.length - visibleCount;
+    const showMore = document.createElement('button');
+    showMore.type = 'button';
+    showMore.className = 'show-more-btn';
+    showMore.textContent = `Vis ${Math.min(remaining, PAGE_SIZE)} flere · ${remaining} igjen`;
+    showMore.addEventListener('click', () => {
+      visibleCount += PAGE_SIZE;
+      renderList(currentFilter, document.getElementById('search').value);
+    });
+    list.appendChild(showMore);
+  }
+
+  epCountEl.textContent = EPISODES.length;
+}
+
+function resetPagination() {
+  visibleCount = INITIAL_VISIBLE;
+}
+
+loadEpisodes();
+
+/* ---------- Filter pills + search ---------- */
+let currentFilter = 'all';
+document.querySelectorAll('.filter-pills button').forEach(b => {
+  b.addEventListener('click', () => {
+    document.querySelectorAll('.filter-pills button').forEach(x => x.classList.remove('is-active'));
+    b.classList.add('is-active');
+    currentFilter = b.dataset.filter;
+    resetPagination();
+    renderList(currentFilter, document.getElementById('search').value);
+  });
+});
+document.getElementById('search').addEventListener('input', e => {
+  resetPagination();
+  renderList(currentFilter, e.target.value);
+});
+
+/* ---------- Expansion + play ---------- */
+let activeEpId = null;
+let expandedId = null;
+
+function expandEpisode(id) {
+  // collapse previous
+  document.querySelectorAll('.ep__expand').forEach(x => x.remove());
+  if (expandedId === id) { expandedId = null; return; }
+  const ep = EPISODES.find(e => e.id === id);
+  const epEl = document.querySelector(`.ep[data-id="${id}"]`);
+  if (!ep || !epEl) return;
+  const expand = document.createElement('div');
+  expand.className = 'ep__expand';
+  const notesHtml = ep.notesHtml
+    ? `<div class="ep__shownotes">${ep.notesHtml}</div>`
+    : (ep.notes
+        ? `<div class="ep__shownotes"><p>${ep.notes}</p></div>`
+        : '<p style="color: var(--olive-500); font-style: italic;">Show notes legges automatisk til når episoden synker neste gang.</p>');
+  const chapHtml = ep.chapters?.length ? `<h4>Kapitler</h4><ul>${ep.chapters.map(c => `<li>${c}</li>`).join('')}</ul>` : '';
+  const SPOTIFY_SHOW = 'https://open.spotify.com/show/286EpL6ZfSuJVB47nXSQbZ';
+  const APPLE_SHOW = 'https://podcasts.apple.com/us/podcast/the-edit/id1857930330';
+  const appleHref = ep.appleEpisodeUrl || APPLE_SHOW;
+
+  expand.innerHTML = `
+    <div>
+      <div class="links" style="flex-direction: column; align-items: flex-start;">
+        <a class="ext-link" href="${SPOTIFY_SHOW}" target="_blank" rel="noopener"><span class="dot"></span>Spotify</a>
+        <a class="ext-link" href="${appleHref}" target="_blank" rel="noopener"><span class="dot"></span>Apple Podcasts</a>
+      </div>
+    </div>
+    <div>
+      ${notesHtml}
+      ${chapHtml}
+    </div>
+  `;
+  epEl.appendChild(expand);
+  expandedId = id;
+}
+
+list.addEventListener('click', (e) => {
+  const playBtn = e.target.closest('[data-play]');
+  if (playBtn) {
+    e.stopPropagation();
+    playEpisode(playBtn.dataset.play);
+    return;
+  }
+  const epEl = e.target.closest('.ep');
+  if (epEl) expandEpisode(epEl.dataset.id);
+});
+
+document.querySelectorAll('[data-play-id]').forEach(b => {
+  b.addEventListener('click', e => { e.stopPropagation(); playEpisode(b.dataset.playId); });
+});
+
+/* ---------- Player (ekte HTML5 audio) ---------- */
+const player = document.getElementById('player');
+const audio = document.getElementById('player-audio');
+const playerPlay = document.getElementById('player-play');
+const playerArt = document.getElementById('player-art');
+const playerTitle = document.getElementById('player-title');
+const playerSub = document.getElementById('player-sub');
+const playerCur = document.getElementById('player-cur');
+const playerDur = document.getElementById('player-dur');
+const playerFill = document.getElementById('player-fill');
+const playerBar = document.getElementById('player-bar');
+
+let isPlaying = false;
+let totalSec = 0;
+
+function setPlayerEpisode(ep) {
+  if (ep.imageUrl) {
+    playerArt.style.backgroundImage = `url('${ep.imageUrl}')`;
+    playerArt.style.backgroundSize = 'cover';
+    playerArt.style.backgroundPosition = 'center';
+    playerArt.textContent = '';
+    playerArt.className = 'player__art player__art--has-image';
+  } else {
+    playerArt.style.backgroundImage = '';
+    playerArt.className = `player__art player__art--${ep.art}`;
+    playerArt.textContent = ep.glyph;
+  }
+  playerTitle.textContent = ep.title.replace(/<[^>]*>/g, '');
+  playerSub.textContent = `EP ${ep.n} · Sesong 0${ep.season} · ${ep.dur}`;
+  totalSec = ep.durSec || 0;
+  playerDur.textContent = ep.durSec ? fmtTime(ep.durSec) : '–:––';
+  playerCur.textContent = '00:00';
+  playerFill.style.width = '0%';
+
+  // Last ekte audio
+  audio.src = ep.audioUrl || '';
+  audio.load();
+}
+
+function playEpisode(id) {
+  const ep = EPISODES.find(e => e.id === id);
+  if (!ep) return;
+  if (!ep.audioUrl) {
+    // Ingen direkte mp3 — fall tilbake til Spotify
+    if (ep.episodeUrl) window.open(ep.episodeUrl, '_blank', 'noopener');
+    return;
+  }
+  if (activeEpId !== id) {
+    setPlayerEpisode(ep);
+    activeEpId = id;
+  }
+  document.body.classList.add('has-player');
+  player.classList.add('is-open');
+  audio.play().catch(err => {
+    console.error('Audio playback failed:', err);
+  });
+}
+
+function syncEpButtons() {
+  document.querySelectorAll('.ep__play').forEach(b => {
+    const isAct = b.dataset.play === activeEpId;
+    b.classList.toggle('is-playing', isAct && isPlaying);
+  });
+  document.querySelectorAll('.ep').forEach(el => {
+    el.classList.toggle('is-active', el.dataset.id === activeEpId);
+  });
+  playerPlay.classList.toggle('is-playing', isPlaying);
+}
+
+function togglePlay() {
+  if (audio.paused) {
+    audio.play().catch(() => {});
+  } else {
+    audio.pause();
+  }
+}
+
+audio.addEventListener('play', () => { isPlaying = true; syncEpButtons(); });
+audio.addEventListener('pause', () => { isPlaying = false; syncEpButtons(); });
+audio.addEventListener('timeupdate', () => {
+  if (!audio.duration || !isFinite(audio.duration)) return;
+  const ratio = audio.currentTime / audio.duration;
+  playerFill.style.width = (ratio * 100).toFixed(2) + '%';
+  playerCur.textContent = fmtTime(audio.currentTime);
+});
+audio.addEventListener('loadedmetadata', () => {
+  if (audio.duration && isFinite(audio.duration)) {
+    totalSec = Math.floor(audio.duration);
+    playerDur.textContent = fmtTime(audio.duration);
+  }
+});
+audio.addEventListener('ended', () => {
+  isPlaying = false;
+  syncEpButtons();
+});
+
+playerPlay.addEventListener('click', togglePlay);
+playerBar.addEventListener('click', (e) => {
+  if (!audio.duration || !isFinite(audio.duration)) return;
+  const rect = playerBar.getBoundingClientRect();
+  const ratio = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+  audio.currentTime = audio.duration * ratio;
+});
+
+// 15s tilbake / 30s frem-knapper
+const playerControlBtns = document.querySelectorAll('.player__controls .player__btn');
+if (playerControlBtns.length >= 2) {
+  playerControlBtns[0].addEventListener('click', () => {
+    audio.currentTime = Math.max(0, audio.currentTime - 15);
+  });
+  playerControlBtns[1].addEventListener('click', () => {
+    if (audio.duration) audio.currentTime = Math.min(audio.duration, audio.currentTime + 30);
+  });
+}
+
+document.getElementById('player-close').addEventListener('click', () => {
+  audio.pause();
+  player.classList.remove('is-open');
+  document.body.classList.remove('has-player');
+  activeEpId = null;
+  syncEpButtons();
+});
+</script>
+
+<!-- ===== KAJABI NEWSLETTER FORM ===== -->
+<script>
+(function() {
+  const customForm = document.getElementById('podcast-newsletter-form');
+  const success = document.getElementById('podcast-newsletter-success');
+  if (!customForm || !success) return;
+
+  const button = customForm.querySelector('button[type="submit"]');
+  const message = customForm.querySelector('[data-form-message]');
+  const originalButtonText = button.textContent;
+
+  function setMessage(text) {
+    if (message) message.textContent = text || '';
+  }
+
+  function findKajabiForm() {
+    return document.querySelector('#kajabi-form form, .kajabi-hidden-wrap form');
+  }
+
+  customForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const kajabiForm = findKajabiForm();
+    if (!kajabiForm) {
+      setMessage('Skjemaet laster fortsatt — prøv igjen om et øyeblikk.');
+      return;
+    }
+
+    const userName = customForm.querySelector('input[name="name"]').value.trim();
+    const userEmail = customForm.querySelector('input[name="email"]').value.trim();
+    if (!userName || !userEmail) return;
+
+    button.disabled = true;
+    button.textContent = 'Sender...';
+    setMessage('');
+
+    const emailInput = kajabiForm.querySelector('input[type="email"]');
+    if (emailInput) emailInput.value = userEmail;
+
+    const textInputs = kajabiForm.querySelectorAll('input[type="text"]');
+    for (let i = 0; i < textInputs.length; i++) {
+      const inp = textInputs[i];
+      if (inp.name && inp.name.toLowerCase().indexOf('name') !== -1) {
+        inp.value = userName;
+        break;
+      }
+    }
+
+    kajabiForm.target = 'kajabi-response-frame';
+
+    try {
+      kajabiForm.submit();
+      setTimeout(function() {
+        success.classList.add('is-shown');
+        customForm.reset();
+        button.disabled = false;
+        button.textContent = originalButtonText;
+      }, 800);
+    } catch (err) {
+      setMessage('Noe gikk galt. Prøv igjen om litt.');
+      button.disabled = false;
+      button.textContent = originalButtonText;
+    }
+  });
+})();
+</script>
 </body>
 </html>

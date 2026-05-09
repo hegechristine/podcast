@@ -1,0 +1,61 @@
+name: Sync podcast episodes
+
+on:
+  schedule:
+    # 06:00 UTC daily (07:00 norsk vintertid / 08:00 sommertid)
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+  push:
+    paths:
+      - 'feed.config.json'
+      - '.github/scripts/sync-podcast.mjs'
+      - '.github/workflows/sync-podcast.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-podcast
+  cancel-in-progress: false
+
+env:
+  # Opt inn til Node.js 24 før det blir tvunget i juni 2026
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Install deps
+        working-directory: .github/scripts
+        run: npm install --no-audit --no-fund
+
+      - name: Run sync
+        run: node .github/scripts/sync-podcast.mjs
+
+      - name: Commit changes
+        run: |
+          if git diff --quiet episodes.json 2>/dev/null && [ ! -f episodes.json.new ]; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          if ! git ls-files --error-unmatch episodes.json > /dev/null 2>&1; then
+            # File is new, untracked
+            git add episodes.json
+          else
+            git add episodes.json
+          fi
+          if git diff --cached --quiet; then
+            echo "Nothing staged"
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m "Sync podcast episodes [skip ci]"
+          git push

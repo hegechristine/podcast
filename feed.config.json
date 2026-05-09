@@ -1,0 +1,15 @@
+{
+  "rssUrl": "https://anchor.fm/s/4f734584/podcast/rss",
+  "spotifyShowUrl": "https://open.spotify.com/show/286EpL6ZfSuJVB47nXSQbZ",
+  "appleShowId": "1857930330",
+  "appleShowUrl": "https://podcasts.apple.com/us/podcast/the-edit/id1857930330",
+  "maxEpisodes": 50,
+  "guestOverrides": {
+    "17": "Ane Hagen"
+  },
+  "stats": {
+    "rating": "5",
+    "ratingPlatform": "Spotify"
+  },
+  "_comment": "guestOverrides: episode-nr som key. stats.rating: oppdater manuelt når den endres."
+}

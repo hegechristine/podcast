@@ -1,0 +1,184 @@
+/* ============================================================
+   HEGE CHRISTINE — DESIGN TOKENS
+   Rooted in "Can You Design Your Life?" deck
+   ============================================================ */
+
+:root {
+  /* -------- PALETTE: OLIVE (primary neutral / brand) -------- */
+  --olive-50:  #F4F4EF;
+  --olive-100: #E7E7DE;
+  --olive-200: #CFCFBD;
+  --olive-300: #B3B39B;
+  --olive-400: #94957A;
+  --olive-500: #76775F;
+  --olive-600: #5E5F4C;   /* deck background */
+  --olive-700: #4A4B3C;
+  --olive-800: #3A3B30;
+  --olive-900: #2B2C23;
+  --olive-950: #1B1C16;
+
+  /* -------- SAGE (secondary surface) -------- */
+  --sage-50:  #F1F4EC;
+  --sage-100: #E3E9D8;
+  --sage-200: #C8D4B2;
+  --sage-300: #AFBEA0;     /* deck sage */
+  --sage-400: #8FA180;
+  --sage-500: #738564;
+  --sage-600: #5C6C50;
+  --sage-700: #47543E;
+  --sage-800: #343E2E;
+  --sage-900: #232A1F;
+
+  /* -------- CREAM (paper) -------- */
+  --cream-50:  #FBF8F0;
+  --cream-100: #F4EFDF;
+  --cream-200: #EFE6D4;    /* deck cream */
+  --cream-300: #E6D9BA;
+  --cream-400: #D8C597;
+  --cream-500: #C3AB73;
+
+  /* -------- RUST (accent / action) -------- */
+  --rust-50:  #FAEDE6;
+  --rust-100: #F4D6C6;
+  --rust-200: #E9AC91;
+  --rust-300: #DB835E;
+  --rust-400: #C5522C;     /* deck terracotta */
+  --rust-500: #A94221;
+  --rust-600: #8B361B;
+  --rust-700: #6D2915;
+  --rust-800: #4F1D10;
+  --rust-900: #2F110A;
+
+  /* -------- CHARCOAL (ink) -------- */
+  --ink-50:  #EDEEEC;
+  --ink-100: #D4D6D1;
+  --ink-200: #A6AAA2;
+  --ink-300: #777D73;
+  --ink-400: #4E5350;
+  --ink-500: #383B39;
+  --ink-600: #2E3230;      /* deck charcoal */
+  --ink-700: #22251F;
+  --ink-800: #17190E;
+  --ink-900: #0C0D08;
+
+  /* -------- SAND (warm highlight) -------- */
+  --sand-100: #F6EAD0;
+  --sand-200: #F0D9A8;     /* deck sand */
+  --sand-300: #E6C37D;
+
+  /* -------- SEMANTIC -------- */
+  --bg:            var(--cream-200);
+  --bg-alt:        var(--cream-50);
+  --bg-dark:       var(--ink-600);
+  --bg-olive:      var(--olive-600);
+  --bg-sage:       var(--sage-300);
+  --fg:            var(--ink-600);
+  --fg-muted:      var(--olive-500);
+  --fg-soft:       var(--olive-400);
+  --fg-on-dark:    var(--cream-100);
+  --accent:        var(--rust-400);
+  --accent-strong: var(--rust-500);
+  --border:        var(--ink-600);
+  --border-soft:   var(--olive-300);
+
+  /* -------- TYPOGRAPHY -------- */
+  --font-display: 'Archivo', 'Söhne', 'Neue Haas Grotesk Display', system-ui, sans-serif;
+  --font-body:    'Archivo', 'Söhne', system-ui, sans-serif;
+  --font-editorial: 'Newsreader', 'Times New Roman', serif;
+  --font-mono:    'JetBrains Mono', ui-monospace, 'SF Mono', monospace;
+
+  /* Type scale — editorial, high contrast */
+  --text-xs:    0.75rem;   /* 12 */
+  --text-sm:    0.875rem;  /* 14 */
+  --text-base:  1rem;      /* 16 */
+  --text-lg:    1.125rem;  /* 18 */
+  --text-xl:    1.375rem;  /* 22 */
+  --text-2xl:   1.75rem;   /* 28 */
+  --text-3xl:   2.25rem;   /* 36 */
+  --text-4xl:   3rem;      /* 48 */
+  --text-5xl:   4rem;      /* 64 */
+  --text-6xl:   5.5rem;    /* 88 */
+  --text-7xl:   7.5rem;    /* 120 */
+
+  --lh-tight:   0.95;
+  --lh-snug:    1.1;
+  --lh-normal:  1.35;
+  --lh-relaxed: 1.55;
+
+  --tracking-tight:  -0.025em;
+  --tracking-normal: 0;
+  --tracking-wide:   0.08em;
+  --tracking-caps:   0.14em;
+
+  /* -------- SPACING -------- */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  24px;
+  --space-6:  32px;
+  --space-7:  48px;
+  --space-8:  64px;
+  --space-9:  96px;
+  --space-10: 128px;
+
+  /* -------- RADIUS (minimal — architectural) -------- */
+  --radius-0: 0px;
+  --radius-1: 2px;
+  --radius-2: 4px;
+  --radius-3: 8px;
+  --radius-pill: 999px;
+
+  /* -------- BORDERS -------- */
+  --border-w-1: 1px;
+  --border-w-2: 2px;
+  --border-w-3: 3px;
+
+  /* -------- SHADOWS (restrained) -------- */
+  --shadow-sm: 0 1px 2px rgba(44,46,42,0.06), 0 1px 0 rgba(44,46,42,0.04);
+  --shadow-md: 0 4px 12px rgba(44,46,42,0.08);
+  --shadow-lg: 0 12px 32px rgba(44,46,42,0.12);
+  --shadow-hard: 4px 4px 0 var(--ink-600);
+
+  /* -------- MOTION -------- */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 140ms;
+  --dur-med:  240ms;
+  --dur-slow: 420ms;
+
+  /* -------- GRID MOTIF -------- */
+  --grid-line: rgba(46, 50, 48, 0.08);
+  --grid-size: 48px;
+}
+
+/* ============================================================
+   BASE
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: var(--lh-normal);
+  color: var(--fg);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: 'ss01', 'cv11';
+}
+
+/* ============================================================
+   UTILITY: grid-paper background
+   ============================================================ */
+.grid-paper {
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: var(--grid-size) var(--grid-size);
+}
+.grid-paper-fine {
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 24px 24px;
+}

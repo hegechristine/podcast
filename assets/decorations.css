@@ -1,0 +1,169 @@
+/* ============================================================
+   DECORATIONS — grid backgrounds, line dividers, progress
+   ============================================================ */
+
+/* ---------- GRID BACKGROUNDS ----------
+   Tre nivåer av tilstedeværelse.
+   Bruk: <section class="bg-grid bg-grid--accent">…</section>
+*/
+.bg-grid {
+  background-image:
+    linear-gradient(rgba(46, 50, 48, 0.10) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(46, 50, 48, 0.10) 1px, transparent 1px);
+  background-size: var(--grid-size) var(--grid-size);
+}
+
+.bg-grid--fine {
+  background-size: 24px 24px;
+}
+
+.bg-grid--strong {
+  background-image:
+    linear-gradient(rgba(46, 50, 48, 0.18) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(46, 50, 48, 0.18) 1px, transparent 1px);
+}
+
+/* Grid + rust accent line */
+.bg-grid--accent {
+  position: relative;
+}
+.bg-grid--accent::after {
+  content: "";
+  position: absolute;
+  left: var(--grid-size);
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--rust-400);
+  pointer-events: none;
+}
+
+/* Diagonal lines */
+.bg-diag {
+  background-image:
+    linear-gradient(135deg, transparent calc(50% - 0.5px), rgba(46, 50, 48, 0.10) 50%, transparent calc(50% + 0.5px));
+  background-size: 64px 64px;
+}
+
+/* Dot pattern */
+.bg-dots {
+  background-image: radial-gradient(circle, rgba(46, 50, 48, 0.18) 1px, transparent 1.5px);
+  background-size: 24px 24px;
+}
+
+/* On dark surfaces, switch to cream lines */
+.on-dark .bg-grid,
+.bg-grid--on-dark {
+  background-image:
+    linear-gradient(rgba(239, 230, 212, 0.10) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(239, 230, 212, 0.10) 1px, transparent 1px);
+}
+.on-dark .bg-grid--strong,
+.bg-grid--on-dark.bg-grid--strong {
+  background-image:
+    linear-gradient(rgba(239, 230, 212, 0.18) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(239, 230, 212, 0.18) 1px, transparent 1px);
+}
+.on-dark .bg-dots,
+.bg-dots--on-dark {
+  background-image: radial-gradient(circle, rgba(239, 230, 212, 0.22) 1px, transparent 1.5px);
+}
+
+/* ---------- LINE DIVIDERS ----------
+   Bruk: <hr class="line line--accent" />
+*/
+.line {
+  display: block;
+  width: 100%;
+  height: 1px;
+  background: var(--ink-600);
+  border: 0;
+  margin: 0;
+  position: relative;
+}
+.line--soft   { background: var(--olive-200); }
+.line--cream  { background: rgba(239, 230, 212, 0.30); }
+.line--accent::after {
+  content: "";
+  position: absolute;
+  right: 30%; top: -3px;
+  width: 60px; height: 5px;
+  background: var(--rust-400);
+}
+.line--ticked {
+  background: transparent;
+  height: 14px;
+  background-image:
+    linear-gradient(var(--ink-600), var(--ink-600));
+  background-size: 100% 1px;
+  background-position: 0 50%;
+  background-repeat: no-repeat;
+}
+.line--ticked::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(90deg, var(--ink-600) 1px, transparent 1px);
+  background-size: 12.5% 100%;
+}
+
+/* ---------- PROGRESS / STEPS ----------
+   Bruk: <ol class="steps"><li class="is-current">…</li>…</ol>
+*/
+.steps {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  align-items: center;
+}
+.steps > li {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--olive-500);
+  font-weight: 600;
+  position: relative;
+  padding: 0 0 0 18px;
+}
+.steps > li::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 50%;
+  transform: translateY(-50%);
+  width: 8px; height: 8px;
+  background: var(--olive-300);
+}
+.steps > li::after {
+  content: "";
+  position: absolute;
+  left: 36px;
+  right: 0;
+  top: 50%;
+  height: 1px;
+  background: rgba(46, 50, 48, 0.18);
+}
+.steps > li:last-child::after { display: none; }
+
+.steps > li.is-current {
+  color: var(--ink-600);
+}
+.steps > li.is-current::before { background: var(--rust-400); }
+.steps > li.is-current::after  { background: var(--rust-400); height: 2px; }
+
+.steps > li.is-done {
+  color: var(--olive-700);
+}
+.steps > li.is-done::before { background: var(--ink-600); }
+.steps > li.is-done::after  { background: var(--ink-600); }
+
+/* On dark */
+.on-dark .steps > li { color: rgba(239, 230, 212, 0.55); }
+.on-dark .steps > li::before { background: rgba(239, 230, 212, 0.30); }
+.on-dark .steps > li::after  { background: rgba(239, 230, 212, 0.20); }
+.on-dark .steps > li.is-current { color: var(--cream-100); }
+.on-dark .steps > li.is-current::before { background: var(--rust-400); }
+.on-dark .steps > li.is-current::after  { background: var(--rust-400); }
