@@ -123,22 +123,26 @@ em, .italic {
   text-decoration: none;
   color: inherit;
 }
+/* HC-mark: matcher .hc-mark.hc-mark--md.hc-mark--filled.hc-mark--ink fra marks.css */
 .hc-mark {
-  width: 36px; height: 36px;
+  width: 44px; height: 44px;
   background: var(--ink-600);
   color: var(--cream-50);
   display: inline-flex;
   align-items: center;
   justify-content: center;
   font-family: 'Archivo Black', sans-serif;
-  font-size: 14px;
+  font-weight: 900;
+  font-size: 16px;
   letter-spacing: -0.04em;
+  border: 1.5px solid var(--ink-600);
   border-radius: 2px;
 }
 .wordmark {
   font-family: 'Archivo Black', sans-serif;
-  font-size: 1.1rem;
-  letter-spacing: -0.01em;
+  font-weight: 900;
+  font-size: 1.375rem;
+  letter-spacing: -0.02em;
   color: var(--ink-600);
 }
 .wordmark em {
@@ -176,8 +180,8 @@ em, .italic {
 @media (max-width: 720px) {
   .topbar__nav { display: none; }
   .topbar__inner { grid-template-columns: auto 1fr; padding: 12px 20px; gap: 16px; }
-  .hc-mark { width: 32px; height: 32px; font-size: 13px; }
-  .wordmark { font-size: 1rem; }
+  .hc-mark { width: 32px; height: 32px; font-size: 13px; border-width: 1px; }
+  .wordmark { font-size: 1.125rem; }
   .topbar__right { font-size: 0.62rem; }
 }
 
@@ -925,15 +929,7 @@ em, .italic {
   color: var(--soft-bg);
   overflow: hidden;
 }
-.ds-footer::before {
-  content: "";
-  position: absolute; inset: 0;
-  background-image:
-    linear-gradient(rgba(244,242,239,0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(244,242,239,0.05) 1px, transparent 1px);
-  background-size: 48px 48px;
-  pointer-events: none;
-}
+.ds-footer::before { display: none; }
 .ds-footer__inner {
   position: relative;
   z-index: 1;
