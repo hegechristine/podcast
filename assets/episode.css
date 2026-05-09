@@ -244,25 +244,19 @@ em, .italic {
   }
 }
 .ep-hero__cover {
-  align-self: stretch;
+  align-self: start;
   position: relative;
+  aspect-ratio: 1;
   border-radius: 4px;
   overflow: hidden;
   border: 2px solid var(--soft-ink);
-  background: var(--soft-bg-deep);
-  min-height: 360px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background: var(--soft-rust);
 }
 .ep-hero__cover img {
   width: 100%;
-  aspect-ratio: 1;
-  height: auto;
-  object-fit: contain;
+  height: 100%;
+  object-fit: cover;
   display: block;
-  position: relative;
-  z-index: 2;
 }
 /* Subtilt grid-overlay over coveret — matcher .featured__art på showsiden */
 .ep-hero__cover::after {

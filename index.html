@@ -706,8 +706,6 @@
   /* Expanded show notes */
   .ep__expand {
     grid-column: 1 / -1;
-    display: flex;
-    justify-content: flex-end;
     padding: var(--space-4) 0 var(--space-3);
     border-top: 1px dashed var(--olive-300);
     margin-top: var(--space-4);
@@ -734,10 +732,17 @@
   }
   .ep__expand .ext-link:hover { background: var(--ink-600); color: var(--cream-100); }
   .ep__expand .dot { width: 6px; height: 6px; border-radius: 999px; background: currentColor; }
+  .ep__expand-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3);
+    width: 100%;
+    justify-content: flex-end;
+  }
   .ep__expand-cta {
     display: inline-flex;
     align-items: center;
-    margin-top: var(--space-4);
     padding: 10px 16px;
     background: var(--soft-rust);
     color: var(--soft-bg-alt);
@@ -748,8 +753,22 @@
     letter-spacing: 0.14em;
     text-transform: uppercase;
     transition: background var(--dur-fast);
+    margin-right: auto; /* push CTA to left, links cluster right */
   }
   .ep__expand-cta:hover { background: var(--soft-rust-deep); }
+  .ep__expand-link {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--soft-muted);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    padding-bottom: 2px;
+    transition: color var(--dur-fast), border-color var(--dur-fast);
+  }
+  .ep__expand-link:hover { color: var(--soft-rust); border-bottom-color: var(--soft-rust); }
 
   /* ---------- PLATFORMS STRIP ---------- */
   .platforms {
@@ -2022,14 +2041,21 @@ function expandEpisode(id) {
   const expand = document.createElement('div');
   expand.className = 'ep__expand';
 
+  const SPOTIFY_SHOW = 'https://open.spotify.com/show/286EpL6ZfSuJVB47nXSQbZ';
+  const APPLE_SHOW = 'https://podcasts.apple.com/us/podcast/the-edit/id1857930330';
+  const RSS_URL = 'https://anchor.fm/s/4f734584/podcast/rss';
+  const appleHref = ep.appleEpisodeUrl || APPLE_SHOW;
   const epPageHref = ep.slug ? `/${ep.slug}/` : null;
 
-  // Preview-teksten (~320 tegn) vises allerede på selve kortet med
-  // line-clamp: 4. Utvidet visning er bare en CTA til dedikert episode-
-  // side — så rent som mulig, null redundans.
-  expand.innerHTML = epPageHref
-    ? `<a class="ep__expand-cta" href="${epPageHref}">Les hele episoden →</a>`
-    : '';
+  // Alle lenker på én horisontal linje: prominent CTA + lytte-platforms
+  expand.innerHTML = `
+    <div class="ep__expand-row">
+      ${epPageHref ? `<a class="ep__expand-cta" href="${epPageHref}">Les hele episoden →</a>` : ''}
+      <a class="ep__expand-link" href="${SPOTIFY_SHOW}" target="_blank" rel="noopener">Spotify</a>
+      <a class="ep__expand-link" href="${appleHref}" target="_blank" rel="noopener">Apple Podcasts</a>
+      <a class="ep__expand-link" href="${RSS_URL}" target="_blank" rel="noopener">RSS</a>
+    </div>
+  `;
   epEl.appendChild(expand);
   expandedId = id;
 }
