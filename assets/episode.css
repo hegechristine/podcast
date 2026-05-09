@@ -249,15 +249,13 @@ em, .italic {
     min-height: 0;
   }
 }
-/* HERO BODY — kicker → title → lede → meta-rad nederst (matcher .hero på showsiden) */
+/* HERO BODY — bare tittel + audio-spiller. Resten lever i shownotes/about under */
 .ep-hero__body {
   min-width: 0;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-self: stretch;
-}
-.ep-hero__body .kicker {
-  margin-bottom: 24px;
 }
 .ep-hero__title {
   font-family: var(--font-display);
@@ -265,7 +263,7 @@ em, .italic {
   font-size: clamp(2.5rem, 5.5vw, 4rem);
   line-height: 1.05;
   letter-spacing: 0.005em;
-  margin: 0 0 20px;
+  margin: 0 0 32px;
   color: var(--soft-ink);
   text-wrap: balance;
   max-width: 22ch;
@@ -276,40 +274,13 @@ em, .italic {
   font-weight: 500;
   color: var(--soft-rust);
 }
-.ep-hero__lede {
-  font-family: var(--font-display);
-  font-style: italic;
-  font-size: 1.375rem;
-  line-height: 1.45;
-  font-weight: 500;
-  color: var(--soft-ink-soft);
-  max-width: 48ch;
-  margin: 0 0 32px;
-}
-.ep-hero__meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 24px;
-  margin-top: auto;
-  padding-top: 16px;
-  border-top: 1px solid var(--soft-ink);
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--soft-muted);
-}
-.ep-hero__meta b {
-  color: var(--soft-ink);
-  font-weight: 600;
-}
 
 /* PLATFORMS BAND — warm-brown stripe under hero (matcher .platforms på showsiden) */
 .ep-platforms {
   position: relative;
   background: var(--soft-ink-soft);
   color: var(--soft-bg);
-  padding: 28px 48px;
+  padding: 24px 48px;
   margin: 0 -96px 48px;
   border-top: 1px solid var(--soft-ink);
   border-bottom: 1px solid var(--soft-ink);
@@ -327,79 +298,14 @@ em, .italic {
   position: relative;
   max-width: 1128px;
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1.4fr 1fr;
-  gap: 40px;
-  align-items: center;
-}
-@media (max-width: 860px) {
-  .ep-platforms { padding: 24px 24px; margin: 0 -24px 32px; }
-  .ep-platforms__inner { grid-template-columns: 1fr; gap: 24px; }
-}
-
-/* Custom audio player */
-.ep-player {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 16px;
+  justify-content: center;
+  gap: 24px;
 }
-.ep-player audio { display: none; }
-.ep-player__play {
-  flex-shrink: 0;
-  width: 48px; height: 48px;
-  border-radius: 999px;
-  border: 0;
-  background: var(--soft-yellow);
-  color: var(--soft-ink);
-  cursor: pointer;
-  display: grid;
-  place-items: center;
-  transition: background 0.18s ease, transform 0.18s ease;
-}
-.ep-player__play:hover { background: var(--soft-bg); transform: scale(1.05); }
-.ep-player__icon { width: 18px; height: 18px; }
-.ep-player__icon--pause { display: none; }
-.ep-player.is-playing .ep-player__icon--play { display: none; }
-.ep-player.is-playing .ep-player__icon--pause { display: block; }
-.ep-player__progress {
-  flex: 1;
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: center;
-  gap: 12px;
-}
-.ep-player__time {
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.08em;
-  color: var(--soft-bg);
-  font-variant-numeric: tabular-nums;
-}
-.ep-player__bar {
-  height: 4px;
-  background: rgba(244,242,239,0.18);
-  border-radius: 999px;
-  cursor: pointer;
-  position: relative;
-}
-.ep-player__bar:focus { outline: 2px solid var(--soft-yellow); outline-offset: 4px; }
-.ep-player__fill {
-  height: 100%;
-  width: 0%;
-  background: var(--soft-yellow);
-  border-radius: 999px;
-  transition: width 0.1s linear;
-}
-
-/* Listen-platforms (right side of band) */
-.ep-platforms__listen {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 12px;
-}
-@media (max-width: 860px) {
-  .ep-platforms__listen { align-items: flex-start; }
+@media (max-width: 720px) {
+  .ep-platforms { padding: 24px; margin: 0 -24px 32px; }
 }
 .ep-platforms__label {
   font-family: var(--font-mono);
@@ -422,6 +328,7 @@ em, .italic {
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
+  justify-content: center;
 }
 .ep-plat-btn {
   display: inline-flex;
@@ -444,6 +351,65 @@ em, .italic {
 }
 .ep-plat-btn__icon { width: 14px; height: 14px; flex-shrink: 0; }
 .ep-plat-btn--ghost { padding: 10px 12px; }
+
+/* Custom audio player — sitter i hero (cream-bg), ikke på den brune banden */
+.ep-player {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: var(--soft-bg-alt);
+  border: 1.5px solid var(--soft-ink);
+  border-radius: 4px;
+  padding: 14px 18px;
+  max-width: 520px;
+}
+.ep-player audio { display: none; }
+.ep-player__play {
+  flex-shrink: 0;
+  width: 44px; height: 44px;
+  border-radius: 999px;
+  border: 0;
+  background: var(--soft-rust);
+  color: var(--soft-bg-alt);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: background 0.18s ease, transform 0.18s ease;
+}
+.ep-player__play:hover { background: var(--soft-rust-deep); transform: scale(1.05); }
+.ep-player__icon { width: 16px; height: 16px; }
+.ep-player__icon--pause { display: none; }
+.ep-player.is-playing .ep-player__icon--play { display: none; }
+.ep-player.is-playing .ep-player__icon--pause { display: block; }
+.ep-player__progress {
+  flex: 1;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 12px;
+}
+.ep-player__time {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  color: var(--soft-muted);
+  font-variant-numeric: tabular-nums;
+}
+.ep-player__bar {
+  height: 4px;
+  background: rgba(48,48,48,0.12);
+  border-radius: 999px;
+  cursor: pointer;
+  position: relative;
+}
+.ep-player__bar:focus { outline: 2px solid var(--soft-rust); outline-offset: 4px; }
+.ep-player__fill {
+  height: 100%;
+  width: 0%;
+  background: var(--soft-rust);
+  border-radius: 999px;
+  transition: width 0.1s linear;
+}
 
 /* LAYOUT (main + sidebar) — innstrammet til ~10/12 av container for lesbarhet */
 .ep-layout {

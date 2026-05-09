@@ -434,20 +434,8 @@ function renderEpisode(ep, campaign, allEpisodes) {
       <img src="${escAttr(ep.imageUrl)}" alt="${escAttr(ep.title)} — episode-cover" loading="eager" />
     </div>` : ''}
     <div class="ep-hero__body">
-      <span class="kicker">${escHtml(epSeasonLabel)}</span>
       <h1 class="ep-hero__title">${escHtml(ep.title)}</h1>
-      ${lede ? `<p class="ep-hero__lede">${escHtml(lede)}</p>` : ''}
-      <div class="ep-hero__meta">
-        <span><b>${escHtml(date)}</b></span>
-        ${duration ? `<span><b>${escHtml(duration)}</b></span>` : ''}
-        ${parsed.guest ? `<span>Med <b>${escHtml(parsed.guest.name)}</b></span>` : ''}
-      </div>
-    </div>
-  </section>
-
-  ${ep.audioUrl ? `<section class="ep-platforms">
-    <div class="ep-platforms__inner">
-      <div class="ep-player" data-audio-src="${escAttr(ep.audioUrl)}">
+      ${ep.audioUrl ? `<div class="ep-player" data-audio-src="${escAttr(ep.audioUrl)}">
         <button class="ep-player__play" type="button" aria-label="Spill av episoden">
           <svg class="ep-player__icon ep-player__icon--play" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5l12 7-12 7V5z" fill="currentColor"/></svg>
           <svg class="ep-player__icon ep-player__icon--pause" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="5" width="4" height="14" fill="currentColor"/><rect x="14" y="5" width="4" height="14" fill="currentColor"/></svg>
@@ -460,26 +448,29 @@ function renderEpisode(ep, campaign, allEpisodes) {
           <span class="ep-player__time" data-duration>${escHtml(duration || '')}</span>
         </div>
         <audio preload="metadata" src="${escAttr(ep.audioUrl)}"></audio>
-      </div>
-      <div class="ep-platforms__listen">
-        <span class="ep-platforms__label">Hør hvor du vil</span>
-        <div class="ep-platforms__list">
-          <a class="ep-plat-btn" href="${escAttr(SHOW.spotifyShow)}" target="_blank" rel="noopener">
-            <svg class="ep-plat-btn__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.84-.179-.96-.6-.122-.418.179-.842.6-.961 4.561-1.039 8.52-.6 11.64 1.32.42.18.479.659.302 1.142zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.42 1.56-.302.421-1.02.599-1.56.3z"/></svg>
-            Spotify
-          </a>
-          <a class="ep-plat-btn" href="${escAttr(SHOW.appleShow)}" target="_blank" rel="noopener">
-            <svg class="ep-plat-btn__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2.4c-5.31 0-9.6 4.3-9.6 9.6 0 5.3 4.29 9.6 9.6 9.6 5.3 0 9.6-4.3 9.6-9.6 0-5.3-4.3-9.6-9.6-9.6zm0 17.04c-1.6 0-2.92-1.31-2.92-2.92 0-1.6 1.32-2.92 2.92-2.92s2.92 1.32 2.92 2.92c0 1.61-1.32 2.92-2.92 2.92zM10.04 11c-.36-1.32-.56-2.66-.56-3.79 0-1.36.78-2.45 2.56-2.45 1.78 0 2.56 1.09 2.56 2.45 0 1.13-.2 2.47-.56 3.79l-.5 1.84c-.15.55-.62.95-1.5.95s-1.35-.4-1.5-.95L10.04 11z"/></svg>
-            Apple Podcasts
-          </a>
-          <a class="ep-plat-btn ep-plat-btn--ghost" href="${escAttr(SHOW.rssUrl)}" target="_blank" rel="noopener" title="RSS-feed">
-            <svg class="ep-plat-btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11a9 9 0 0 1 9 9M4 4a16 16 0 0 1 16 16M6 19a2 2 0 1 1-4 0 2 2 0 0 1 4 0z"/></svg>
-            RSS
-          </a>
-        </div>
+      </div>` : ''}
+    </div>
+  </section>
+
+  <section class="ep-platforms">
+    <div class="ep-platforms__inner">
+      <span class="ep-platforms__label">Hør hvor du vil</span>
+      <div class="ep-platforms__list">
+        <a class="ep-plat-btn" href="${escAttr(SHOW.spotifyShow)}" target="_blank" rel="noopener">
+          <svg class="ep-plat-btn__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.84-.179-.96-.6-.122-.418.179-.842.6-.961 4.561-1.039 8.52-.6 11.64 1.32.42.18.479.659.302 1.142zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.42 1.56-.302.421-1.02.599-1.56.3z"/></svg>
+          Spotify
+        </a>
+        <a class="ep-plat-btn" href="${escAttr(SHOW.appleShow)}" target="_blank" rel="noopener">
+          <svg class="ep-plat-btn__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2.4c-5.31 0-9.6 4.3-9.6 9.6 0 5.3 4.29 9.6 9.6 9.6 5.3 0 9.6-4.3 9.6-9.6 0-5.3-4.3-9.6-9.6-9.6zm0 17.04c-1.6 0-2.92-1.31-2.92-2.92 0-1.6 1.32-2.92 2.92-2.92s2.92 1.32 2.92 2.92c0 1.61-1.32 2.92-2.92 2.92zM10.04 11c-.36-1.32-.56-2.66-.56-3.79 0-1.36.78-2.45 2.56-2.45 1.78 0 2.56 1.09 2.56 2.45 0 1.13-.2 2.47-.56 3.79l-.5 1.84c-.15.55-.62.95-1.5.95s-1.35-.4-1.5-.95L10.04 11z"/></svg>
+          Apple Podcasts
+        </a>
+        <a class="ep-plat-btn ep-plat-btn--ghost" href="${escAttr(SHOW.rssUrl)}" target="_blank" rel="noopener" title="RSS-feed">
+          <svg class="ep-plat-btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11a9 9 0 0 1 9 9M4 4a16 16 0 0 1 16 16M6 19a2 2 0 1 1-4 0 2 2 0 0 1 4 0z"/></svg>
+          RSS
+        </a>
       </div>
     </div>
-  </section>` : ''}
+  </section>
 
   <div class="ep-layout">
     <article class="ep-content">
