@@ -636,21 +636,18 @@ em, .italic {
 @media (max-width: 720px) { .ep-more { margin-bottom: 64px; } }
 .ep-more__head {
   display: flex;
-  align-items: end;
-  justify-content: space-between;
-  gap: 24px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
   margin-bottom: 32px;
   padding-bottom: 20px;
   border-bottom: 1px solid rgba(48, 48, 48, 0.18);
 }
-.ep-more__head > div:first-child {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
 .ep-more__nav {
   display: flex;
   gap: 8px;
+  justify-content: flex-end;
+  margin-top: 24px;
 }
 .ep-more__arrow {
   width: 40px; height: 40px;
