@@ -5,6 +5,7 @@ import path from 'path';
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..', '..');
 const EPISODES_PATH = path.join(ROOT, 'episodes.json');
 const CAMPAIGN_PATH = path.join(ROOT, 'data', 'campaign.json');
+const RESOURCE_LINKS_PATH = path.join(ROOT, 'data', 'resource-links.json');
 
 const SHOW = {
   title: 'The Edit',
@@ -52,7 +53,7 @@ function episodeSlug(ep) {
 
 // Parse fullDesc into structured sections.
 // Pattern: sections separated by long dash-runs (---...). Each section identified by header keyword.
-function parseShowNotes(fullDesc) {
+function parseShowNotes(fullDesc, linkMap) {
   if (!fullDesc) return { hook: '', guest: null, resources: [], hostSection: null, disclaimer: null };
 
   // Split on lines of 10+ dashes (RSS often collapses to spaces)
@@ -73,13 +74,13 @@ function parseShowNotes(fullDesc) {
     if (/gjest:/i.test(firstLine)) {
       result.guest = parseGuestSection(sec);
     } else if (/ressurser|lenker\s*&\s*ressurser|^lenker\b/i.test(firstLine)) {
-      result.resources = parseResourcesSection(sec);
+      result.resources = parseResourcesSection(sec, linkMap);
     } else if (/bli bedre kjent med hege/i.test(firstLine)) {
       result.hostSection = sec; // we ignore for rendering — replaced by static Host & Show block
     } else if (/disclaimer/i.test(firstLine)) {
       result.disclaimer = sec;
     } else if (/lenker & ressurser|lenker og ressurser/i.test(firstLine)) {
-      result.resources = parseResourcesSection(sec);
+      result.resources = parseResourcesSection(sec, linkMap);
     }
   }
 
@@ -140,7 +141,7 @@ function makeLinkHref(label, value) {
   return '#';
 }
 
-function parseResourcesSection(sec) {
+function parseResourcesSection(sec, linkMap) {
   // Format: "Ressurser: 📙 Skattekutt for gründere 🎓 30K Skattekutt Challenge 🎓 Test Kajabi gratis..."
   // Items separated by emojis at start of each item
   const cleaned = sec.replace(/^[^:]*:\s*/i, '').replace(/\s+/g, ' ').trim();
@@ -149,14 +150,26 @@ function parseResourcesSection(sec) {
   // Heuristic: split on space-emoji-space pattern
   const parts = cleaned.split(/(?=[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}])/u).map(s => s.trim()).filter(Boolean);
 
+  // Pre-sort link-map keys longest-first so "30K Skattekutt Challenge" wins over "Skattekutt"
+  const linkEntries = Object.entries(linkMap || {})
+    .filter(([k]) => !k.startsWith('_'))
+    .sort((a, b) => b[0].length - a[0].length);
+
   return parts.map(p => {
     const m = p.match(/^(\S)\s*(.+)$/u); // first char is emoji
     if (!m) return { emoji: '', text: p, href: null };
     const emoji = m[1];
     const text = m[2].trim();
-    // Try to extract URL from text
+    // First: try to extract URL from text directly
     const urlMatch = text.match(/(https?:\/\/\S+|[\w.-]+\.(com|no|net|org|io|app|fm)\b\S*)/i);
-    const href = urlMatch ? (urlMatch[0].startsWith('http') ? urlMatch[0] : `https://${urlMatch[0]}`) : null;
+    let href = urlMatch ? (urlMatch[0].startsWith('http') ? urlMatch[0] : `https://${urlMatch[0]}`) : null;
+    // Second: fall back to manual mapping in data/resource-links.json
+    if (!href) {
+      const lowerText = text.toLowerCase();
+      for (const [key, url] of linkEntries) {
+        if (lowerText.includes(key.toLowerCase())) { href = url; break; }
+      }
+    }
     return { emoji, text, href };
   })
   // Skip Kajabi-related items — Kajabi has its own block in the campaign sidebar
@@ -208,14 +221,23 @@ async function loadCampaign() {
   }
 }
 
-function renderEpisode(ep, campaign, allEpisodes) {
+async function loadResourceLinks() {
+  try {
+    const raw = await fs.readFile(RESOURCE_LINKS_PATH, 'utf-8');
+    return JSON.parse(raw);
+  } catch {
+    return {};
+  }
+}
+
+function renderEpisode(ep, campaign, allEpisodes, linkMap) {
   const related = (allEpisodes || [])
     .filter(e => e.slug && e.slug !== ep.slug && e.n)
     .sort((a, b) => (b.n || 0) - (a.n || 0))
     .slice(0, 3);
 
   const slug = episodeSlug(ep);
-  const parsed = parseShowNotes(ep.fullDesc || ep.desc || '');
+  const parsed = parseShowNotes(ep.fullDesc || ep.desc || '', linkMap);
   const date = formatDate(ep.pubDate || ep.date);
   const duration = formatDuration(ep.durationSeconds || 0);
   const seasonEp = (ep.season && ep.episode) ? `SESONG ${ep.season} · EP ${String(ep.episode).padStart(2,'0')}` : 'TRAILER';
@@ -267,7 +289,7 @@ function renderEpisode(ep, campaign, allEpisodes) {
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Archivo+Black&family=Newsreader:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=JetBrains+Mono:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Archivo+Black&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=Newsreader:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=JetBrains+Mono:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/episode.css">
 </head>
 <body>
@@ -307,9 +329,18 @@ function renderEpisode(ep, campaign, allEpisodes) {
 
       <div class="ep-subscribe">
         <span class="ep-subscribe__label">Abonnér:</span>
-        <a class="ep-subscribe__btn" href="${escAttr(SHOW.spotifyShow)}" target="_blank" rel="noopener">Spotify</a>
-        <a class="ep-subscribe__btn" href="${escAttr(SHOW.appleShow)}" target="_blank" rel="noopener">Apple Podcasts</a>
-        <a class="ep-subscribe__btn ep-subscribe__btn--rss" href="${escAttr(SHOW.rssUrl)}" target="_blank" rel="noopener">RSS</a>
+        <a class="ep-subscribe__btn" href="${escAttr(SHOW.spotifyShow)}" target="_blank" rel="noopener">
+          <svg class="ep-subscribe__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.84-.179-.96-.6-.122-.418.179-.842.6-.961 4.561-1.039 8.52-.6 11.64 1.32.42.18.479.659.302 1.142zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.42 1.56-.302.421-1.02.599-1.56.3z"/></svg>
+          Spotify
+        </a>
+        <a class="ep-subscribe__btn" href="${escAttr(SHOW.appleShow)}" target="_blank" rel="noopener">
+          <svg class="ep-subscribe__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2.4c-5.31 0-9.6 4.3-9.6 9.6 0 5.3 4.29 9.6 9.6 9.6 5.3 0 9.6-4.3 9.6-9.6 0-5.3-4.3-9.6-9.6-9.6zm0 17.04c-1.6 0-2.92-1.31-2.92-2.92 0-1.6 1.32-2.92 2.92-2.92s2.92 1.32 2.92 2.92c0 1.61-1.32 2.92-2.92 2.92zM10.04 11c-.36-1.32-.56-2.66-.56-3.79 0-1.36.78-2.45 2.56-2.45 1.78 0 2.56 1.09 2.56 2.45 0 1.13-.2 2.47-.56 3.79l-.5 1.84c-.15.55-.62.95-1.5.95s-1.35-.4-1.5-.95L10.04 11z"/></svg>
+          Apple Podcasts
+        </a>
+        <a class="ep-subscribe__rss" href="${escAttr(SHOW.rssUrl)}" target="_blank" rel="noopener" title="RSS-feed for podkast-apper">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4 11a9 9 0 0 1 9 9M4 4a16 16 0 0 1 16 16M6 19a2 2 0 1 1-4 0 2 2 0 0 1 4 0z" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          RSS
+        </a>
       </div>
     </div>
   </section>
@@ -448,9 +479,11 @@ async function main() {
   const parsed = JSON.parse(raw);
   const episodes = Array.isArray(parsed) ? parsed : (parsed.episodes || []);
   const campaign = await loadCampaign();
+  const linkMap = await loadResourceLinks();
 
   console.log(`Building ${episodes.length} episode pages...`);
   if (campaign) console.log(`  campaign: "${campaign.title}"`);
+  console.log(`  resource-links: ${Object.keys(linkMap).filter(k => !k.startsWith('_')).length} mapped`);
 
   // Clean old episode-* directories first (so removed episodes get cleaned up)
   const entries = await fs.readdir(ROOT, { withFileTypes: true });
@@ -469,7 +502,7 @@ async function main() {
 
   let count = 0;
   for (const ep of episodes) {
-    const html = renderEpisode(ep, campaign, episodes);
+    const html = renderEpisode(ep, campaign, episodes, linkMap);
     const dir = path.join(ROOT, ep.slug);
     await fs.mkdir(dir, { recursive: true });
     await fs.writeFile(path.join(dir, 'index.html'), html, 'utf-8');
