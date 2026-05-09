@@ -2004,16 +2004,29 @@ function expandEpisode(id) {
   const expand = document.createElement('div');
   expand.className = 'ep__expand';
 
-  // Vis bare hook/intro (alt før første <hr>) — gjest, ressurser, host-info
-  // og disclaimer hører hjemme på den dedikerte episode-siden
+  // Vis bare en teaser av hook/intro (~250 tegn) — gjest, ressurser, host-info
+  // og full hook hører hjemme på den dedikerte episode-siden
   const hookHtml = (() => {
-    if (!ep.notesHtml) {
-      return ep.notes
-        ? `<div class="ep__shownotes"><p>${ep.notes}</p></div>`
-        : '<p style="color: var(--olive-500); font-style: italic;">Show notes legges automatisk til når episoden synker neste gang.</p>';
+    if (!ep.notesHtml && !ep.notes) {
+      return '<p style="color: var(--olive-500); font-style: italic;">Show notes legges automatisk til når episoden synker neste gang.</p>';
     }
-    const firstSection = ep.notesHtml.split(/<hr\s*\/?\s*>/i)[0].trim();
-    return `<div class="ep__shownotes">${firstSection}</div>`;
+    // Strip HTML til plain text fra første seksjon (alt før første <hr>)
+    const sourceHtml = ep.notesHtml ? ep.notesHtml.split(/<hr\s*\/?\s*>/i)[0] : `<p>${ep.notes}</p>`;
+    const plain = sourceHtml.replace(/<\/p>\s*<p[^>]*>/gi, '\n\n').replace(/<[^>]+>/g, '').replace(/&nbsp;/g, ' ').replace(/\s+/g, ' ').trim();
+    const MAX = 250;
+    let teaser;
+    if (plain.length <= MAX) {
+      teaser = plain;
+    } else {
+      // Trunkere ved siste setningsslutt før MAX, ellers siste mellomrom
+      const slice = plain.slice(0, MAX);
+      const lastSentence = Math.max(slice.lastIndexOf('. '), slice.lastIndexOf('! '), slice.lastIndexOf('? '));
+      const cutAt = lastSentence > 120 ? lastSentence + 1 : (slice.lastIndexOf(' ') > 0 ? slice.lastIndexOf(' ') : MAX);
+      const cut = plain.slice(0, cutAt).trim();
+      // Ikke legg til ellipsis hvis vi allerede endte på setningstegn
+      teaser = /[.!?]$/.test(cut) ? cut : cut + '…';
+    }
+    return `<div class="ep__shownotes"><p>${teaser}</p></div>`;
   })();
 
   const SPOTIFY_SHOW = 'https://open.spotify.com/show/286EpL6ZfSuJVB47nXSQbZ';
