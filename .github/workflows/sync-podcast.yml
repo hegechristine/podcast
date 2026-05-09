@@ -1,4 +1,4 @@
-name: Sync podcast episodes
+name: Sync podcast episodes & build pages
 
 on:
   schedule:
@@ -8,7 +8,10 @@ on:
   push:
     paths:
       - 'feed.config.json'
+      - 'data/campaign.json'
+      - 'assets/episode.css'
       - '.github/scripts/sync-podcast.mjs'
+      - '.github/scripts/build-episode-pages.mjs'
       - '.github/workflows/sync-podcast.yml'
 
 permissions:
@@ -39,23 +42,17 @@ jobs:
       - name: Run sync
         run: node .github/scripts/sync-podcast.mjs
 
+      - name: Build episode pages
+        run: node .github/scripts/build-episode-pages.mjs
+
       - name: Commit changes
         run: |
-          if git diff --quiet episodes.json 2>/dev/null && [ ! -f episodes.json.new ]; then
-            echo "No changes to commit"
-            exit 0
-          fi
-          if ! git ls-files --error-unmatch episodes.json > /dev/null 2>&1; then
-            # File is new, untracked
-            git add episodes.json
-          else
-            git add episodes.json
-          fi
+          git add -A episodes.json 'episode-*' velkommen 2>/dev/null || true
           if git diff --cached --quiet; then
-            echo "Nothing staged"
+            echo "No changes to commit"
             exit 0
           fi
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git commit -m "Sync podcast episodes [skip ci]"
+          git commit -m "Sync podcast & rebuild episode pages [skip ci]"
           git push
