@@ -586,18 +586,30 @@ function renderEpisode(ep, campaign, allEpisodes, showStats) {
 
   ${related.length ? `<section class="ep-more">
     <header class="ep-more__head">
-      <span class="kicker">Mer fra</span>
-      <h2>The <em>Edit</em></h2>
+      <div>
+        <span class="kicker">Mer fra</span>
+        <h2>The <em>Edit</em></h2>
+      </div>
+      <div class="ep-more__nav">
+        <button class="ep-more__arrow" type="button" data-dir="-1" aria-label="Forrige episoder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <button class="ep-more__arrow" type="button" data-dir="1" aria-label="Flere episoder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
     </header>
-    <ul class="ep-more__list">
-      ${related.map(r => `<li><a href="/${escAttr(r.slug)}/" class="ep-more__item">
-        <div class="ep-more__cover">${r.imageUrl ? `<img src="${escAttr(r.imageUrl)}" alt="" loading="lazy" />` : ''}</div>
-        <div class="ep-more__body">
-          <span class="ep-more__num">Episode ${escHtml(String(r.n))}</span>
-          <span class="ep-more__title">${escHtml(r.title)}</span>
-        </div>
-      </a></li>`).join('\n      ')}
-    </ul>
+    <div class="ep-more__viewport">
+      <ul class="ep-more__list">
+        ${related.map(r => `<li><a href="/${escAttr(r.slug)}/" class="ep-more__item">
+          <div class="ep-more__cover">${r.imageUrl ? `<img src="${escAttr(r.imageUrl)}" alt="" loading="lazy" />` : ''}</div>
+          <div class="ep-more__body">
+            <span class="ep-more__num">Episode ${escHtml(String(r.n))}</span>
+            <span class="ep-more__title">${escHtml(r.title)}</span>
+          </div>
+        </a></li>`).join('\n        ')}
+      </ul>
+    </div>
   </section>` : ''}
 
 </main>
@@ -712,6 +724,27 @@ function renderEpisode(ep, campaign, allEpisodes, showStats) {
     if (e.key === 'ArrowLeft')  audio.currentTime = Math.max(0, audio.currentTime - 10);
     if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); playBtn.click(); }
   });
+})();
+
+/* ===== Mer fra The Edit — carousel arrow scroll ===== */
+(function(){
+  const list = document.querySelector('.ep-more__list');
+  if (!list) return;
+  const arrows = document.querySelectorAll('.ep-more__arrow');
+  arrows.forEach(btn => btn.addEventListener('click', () => {
+    const dir = parseInt(btn.dataset.dir, 10) || 1;
+    const item = list.querySelector('li');
+    const step = item ? item.getBoundingClientRect().width + 32 : list.clientWidth * 0.7;
+    list.scrollBy({ left: step * dir, behavior: 'smooth' });
+  }));
+  function updateArrows() {
+    const max = list.scrollWidth - list.clientWidth;
+    arrows[0].disabled = list.scrollLeft <= 4;
+    arrows[1].disabled = list.scrollLeft >= max - 4;
+  }
+  list.addEventListener('scroll', updateArrows, { passive: true });
+  window.addEventListener('resize', updateArrows);
+  updateArrows();
 })();
 </script>
 </body>

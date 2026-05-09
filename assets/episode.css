@@ -632,18 +632,59 @@ em, .italic {
   color: var(--olive-600);
 }
 
-/* MORE FROM THE EDIT — karusell, ligger nå inni .ep (cream-flow), før newsletter */
+/* MORE FROM THE EDIT — karusell ligger nederst i .ep, før footer */
 .ep-more {
-  margin: 56px 0 0;
+  margin: 56px 0 96px;
   padding: 0;
 }
+@media (max-width: 720px) { .ep-more { margin-bottom: 64px; } }
 .ep-more__head {
   display: flex;
-  align-items: baseline;
-  gap: 14px;
+  align-items: end;
+  justify-content: space-between;
+  gap: 24px;
   margin-bottom: 32px;
   padding-bottom: 20px;
   border-bottom: 1px solid rgba(48, 48, 48, 0.18);
+}
+.ep-more__head > div:first-child {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.ep-more__nav {
+  display: flex;
+  gap: 8px;
+}
+.ep-more__arrow {
+  width: 40px; height: 40px;
+  border-radius: 999px;
+  border: 1.5px solid var(--soft-ink);
+  background: transparent;
+  color: var(--soft-ink);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease, opacity 0.18s ease;
+}
+.ep-more__arrow svg { width: 18px; height: 18px; }
+.ep-more__arrow:hover:not(:disabled) {
+  background: var(--soft-ink);
+  color: var(--soft-bg-alt);
+}
+.ep-more__arrow:disabled { opacity: 0.25; cursor: default; }
+/* Viewport wrapper med fade-gradient på høyre kant for å hinte at det er mer */
+.ep-more__viewport {
+  position: relative;
+}
+.ep-more__viewport::after {
+  content: "";
+  position: absolute;
+  top: 0; bottom: 12px; right: 0;
+  width: 80px;
+  pointer-events: none;
+  background: linear-gradient(to right, transparent, var(--soft-bg) 90%);
+  z-index: 1;
 }
 .ep-more__head .kicker { font-size: 0.7rem; }
 .ep-more__head h2 {
