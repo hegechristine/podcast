@@ -323,7 +323,7 @@ function renderEpisode(ep, campaign, allEpisodes) {
   const related = (allEpisodes || [])
     .filter(e => e.slug && e.slug !== ep.slug && e.n)
     .sort((a, b) => (b.n || 0) - (a.n || 0))
-    .slice(0, 3);
+    .slice(0, 8);
 
   const slug = episodeSlug(ep);
   const parsed = parseShowNotes(ep.descriptionHtml || '', ep.fullDesc || ep.desc || '');

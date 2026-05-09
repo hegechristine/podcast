@@ -393,12 +393,14 @@ em, .italic {
 .ep-subscribe__rss:hover { color: var(--soft-rust); border-bottom-color: var(--soft-rust); }
 .ep-subscribe__rss svg { width: 11px; height: 11px; }
 
-/* LAYOUT (main + sidebar) */
+/* LAYOUT (main + sidebar) — innstrammet til ~10/12 av container for lesbarhet */
 .ep-layout {
   display: grid;
   grid-template-columns: 1fr 320px;
   gap: 56px;
   align-items: start;
+  max-width: 960px;
+  margin: 0 auto;
 }
 @media (max-width: 860px) {
   .ep-layout { grid-template-columns: 1fr; }
@@ -622,15 +624,30 @@ em, .italic {
 }
 .ep-more__list {
   list-style: none;
-  padding: 0;
-  margin: 0;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  padding: 0 0 12px 0;
+  margin: 0 -16px;
+  display: flex;
   gap: 32px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: var(--soft-soft) transparent;
 }
+.ep-more__list::-webkit-scrollbar { height: 6px; }
+.ep-more__list::-webkit-scrollbar-track { background: transparent; }
+.ep-more__list::-webkit-scrollbar-thumb { background: var(--soft-soft); border-radius: 3px; }
+.ep-more__list > li {
+  scroll-snap-align: start;
+  flex: 0 0 calc((100% - 64px) / 3 - 16px);
+  min-width: 260px;
+  padding: 0 0 0 16px;
+}
+.ep-more__list > li:first-child { padding-left: 16px; }
+.ep-more__list > li:last-child { padding-right: 16px; }
 @media (max-width: 720px) {
   .ep-more { padding: 0 24px 64px; }
-  .ep-more__list { grid-template-columns: 1fr; gap: 20px; }
+  .ep-more__list > li { flex: 0 0 280px; }
 }
 .ep-more__item {
   display: grid;

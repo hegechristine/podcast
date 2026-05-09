@@ -706,9 +706,9 @@
   /* Expanded show notes */
   .ep__expand {
     grid-column: 1 / -1;
-    display: grid; grid-template-columns: 168px 1fr;
-    gap: var(--space-5);
-    padding: var(--space-5) 0 var(--space-3);
+    display: flex;
+    justify-content: flex-end;
+    padding: var(--space-4) 0 var(--space-3);
     border-top: 1px dashed var(--olive-300);
     margin-top: var(--space-4);
   }
@@ -2022,25 +2022,14 @@ function expandEpisode(id) {
   const expand = document.createElement('div');
   expand.className = 'ep__expand';
 
-  const SPOTIFY_SHOW = 'https://open.spotify.com/show/286EpL6ZfSuJVB47nXSQbZ';
-  const APPLE_SHOW = 'https://podcasts.apple.com/us/podcast/the-edit/id1857930330';
-  const appleHref = ep.appleEpisodeUrl || APPLE_SHOW;
   const epPageHref = ep.slug ? `/${ep.slug}/` : null;
 
   // Preview-teksten (~320 tegn) vises allerede på selve kortet med
-  // line-clamp: 4. Utvidet visning gir bare lytte-platforms + CTA til
-  // dedikert episode-side — null redundans.
-  expand.innerHTML = `
-    <div>
-      <div class="links" style="flex-direction: column; align-items: flex-start;">
-        <a class="ext-link" href="${SPOTIFY_SHOW}" target="_blank" rel="noopener"><span class="dot"></span>Spotify</a>
-        <a class="ext-link" href="${appleHref}" target="_blank" rel="noopener"><span class="dot"></span>Apple Podcasts</a>
-      </div>
-    </div>
-    <div>
-      ${epPageHref ? `<a class="ep__expand-cta" href="${epPageHref}">Les hele episoden →</a>` : ''}
-    </div>
-  `;
+  // line-clamp: 4. Utvidet visning er bare en CTA til dedikert episode-
+  // side — så rent som mulig, null redundans.
+  expand.innerHTML = epPageHref
+    ? `<a class="ep__expand-cta" href="${epPageHref}">Les hele episoden →</a>`
+    : '';
   epEl.appendChild(expand);
   expandedId = id;
 }
