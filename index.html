@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Edit — Hege Christine</title>
+  <meta name="description" content="The Edit — podcast med Hege Christine">
+  <meta http-equiv="refresh" content="0; url=https://hegechristine.github.io/podcast/">
+  <link rel="canonical" href="https://hegechristine.github.io/podcast/">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Archivo+Black&family=Newsreader:ital,wght@1,400;1,500&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --olive-600: #5E5F4C;
+      --cream-200: #EFE6D4;
+      --rust-400:  #C5522C;
+      --ink-600:   #2E3230;
+      --grid-line: rgba(46, 50, 48, 0.08);
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      background: var(--cream-200);
+      color: var(--ink-600);
+      font-family: 'Archivo', system-ui, sans-serif;
+      display: grid;
+      place-items: center;
+      padding: 2rem;
+      background-image:
+        linear-gradient(var(--grid-line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+      background-size: 48px 48px;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+    main {
+      max-width: 640px;
+      text-align: center;
+    }
+    .eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--olive-600);
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 2rem;
+    }
+    .eyebrow::before {
+      content: "";
+      width: 36px;
+      height: 2px;
+      background: var(--rust-400);
+    }
+    h1 {
+      font-family: 'Archivo Black', system-ui, sans-serif;
+      font-size: clamp(3rem, 8vw, 5.5rem);
+      font-weight: 900;
+      line-height: 0.95;
+      letter-spacing: -0.04em;
+      margin: 0 0 1.5rem;
+    }
+    h1 em {
+      font-family: 'Newsreader', serif;
+      font-style: italic;
+      font-weight: 500;
+      color: var(--rust-400);
+      letter-spacing: -0.01em;
+    }
+    a {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-600);
+      text-decoration: none;
+      border-bottom: 2px solid var(--rust-400);
+      padding-bottom: 4px;
+      transition: color 140ms ease;
+    }
+    a:hover { color: var(--rust-400); }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="eyebrow">podcast · the edit</div>
+    <h1>Sender deg <em>videre</em></h1>
+    <a href="https://hegechristine.github.io/podcast/">hegechristine.github.io/podcast →</a>
+  </main>
+</body>
+</html>
