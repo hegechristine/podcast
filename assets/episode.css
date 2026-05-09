@@ -251,6 +251,9 @@ em, .italic {
   border: 2px solid var(--soft-ink);
   background: var(--soft-bg-deep);
   min-height: 360px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .ep-hero__cover img {
   width: 100%;
