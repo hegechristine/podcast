@@ -1907,14 +1907,16 @@ function updateHeroStats(episodes, channel = {}) {
   }
 
   // About-stats: rekkefølge — episoder først, så timer, så rating
+  // Tell kun nummererte episoder — ikke trailer/velkommen
+  const numbered = episodes.filter(e => e.n);
   const aboutStats = document.querySelectorAll('.about__stats .stat');
 
   // Stat 0: Episode count + sesonger (auto)
   if (aboutStats[0]) {
-    const seasonCount = new Set(episodes.map(e => e.season)).size;
+    const seasonCount = new Set(numbered.map(e => e.season)).size;
     const num = aboutStats[0].querySelector('.stat__num');
     const label = aboutStats[0].querySelector('.stat__label');
-    if (num) num.textContent = String(episodes.length);
+    if (num) num.textContent = String(numbered.length);
     if (label) {
       const seasonWord = seasonCount === 1 ? 'sesong' : 'sesonger';
       label.textContent = `Episoder, ${seasonCount} ${seasonWord}`;
@@ -1923,7 +1925,7 @@ function updateHeroStats(episodes, channel = {}) {
 
   // Stat 1: Total timer innhold (auto fra RSS)
   if (aboutStats[1]) {
-    const totalSec = episodes.reduce((a, e) => a + (e.durSec || 0), 0);
+    const totalSec = numbered.reduce((a, e) => a + (e.durSec || 0), 0);
     const totalHours = Math.max(1, Math.round(totalSec / 3600));
     const num = aboutStats[1].querySelector('.stat__num');
     const label = aboutStats[1].querySelector('.stat__label');

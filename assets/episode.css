@@ -643,11 +643,37 @@ em, .italic {
   padding-bottom: 20px;
   border-bottom: 1px solid rgba(48, 48, 48, 0.18);
 }
+.ep-more__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-top: 24px;
+}
+@media (max-width: 480px) {
+  .ep-more__footer { flex-direction: column-reverse; align-items: stretch; gap: 16px; }
+  .ep-more__nav { justify-content: center; }
+  .ep-more__cta { text-align: center; }
+}
+.ep-more__cta {
+  display: inline-flex;
+  align-items: center;
+  padding: 12px 22px;
+  background: var(--soft-rust);
+  color: var(--soft-bg-alt);
+  text-decoration: none;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 0.74rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  border-radius: 3px;
+  transition: background 0.18s ease;
+}
+.ep-more__cta:hover { background: var(--soft-rust-deep); }
 .ep-more__nav {
   display: flex;
   gap: 8px;
-  justify-content: flex-end;
-  margin-top: 24px;
 }
 .ep-more__arrow {
   width: 40px; height: 40px;

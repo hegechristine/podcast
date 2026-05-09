@@ -334,10 +334,12 @@ async function loadFeedConfig() {
 // 2. Episoder + sesonger (unike season-verdier)
 // 3. Rating fra feed.config.json (manuell)
 function computeShowStats(episodes, feedConfig) {
-  const totalSec = episodes.reduce((a, e) => a + (e.durationSeconds || 0), 0);
+  // Tell kun nummererte episoder — ikke trailer/velkommen
+  const numbered = episodes.filter(e => e.n);
+  const totalSec = numbered.reduce((a, e) => a + (e.durationSeconds || 0), 0);
   const totalHours = Math.max(1, Math.round(totalSec / 3600));
-  const seasonCount = new Set(episodes.map(e => e.season).filter(Boolean)).size || 1;
-  const epCount = episodes.length;
+  const seasonCount = new Set(numbered.map(e => e.season).filter(Boolean)).size || 1;
+  const epCount = numbered.length;
   const rating = feedConfig?.stats?.rating || '';
   const ratingPlatform = feedConfig?.stats?.ratingPlatform || 'Spotify';
   return {
@@ -600,13 +602,16 @@ function renderEpisode(ep, campaign, allEpisodes, showStats) {
         </a></li>`).join('\n        ')}
       </ul>
     </div>
-    <div class="ep-more__nav">
-      <button class="ep-more__arrow" type="button" data-dir="-1" aria-label="Forrige episoder">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
-      </button>
-      <button class="ep-more__arrow" type="button" data-dir="1" aria-label="Flere episoder">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
-      </button>
+    <div class="ep-more__footer">
+      <a class="ep-more__cta" href="/">Se alle episoder →</a>
+      <div class="ep-more__nav">
+        <button class="ep-more__arrow" type="button" data-dir="-1" aria-label="Forrige episoder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <button class="ep-more__arrow" type="button" data-dir="1" aria-label="Flere episoder">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
     </div>
   </section>` : ''}
 
