@@ -405,7 +405,6 @@ function renderEpisode(ep, campaign, allEpisodes) {
   <section class="ep-hero">
     <div class="ep-hero__grid" aria-hidden="true"></div>
     ${ep.imageUrl ? `<div class="ep-hero__cover">
-      ${ep.isNew ? `<span class="ep-hero__cover-tag">Ny episode</span>` : ''}
       <img src="${escAttr(ep.imageUrl)}" alt="${escAttr(ep.title)} — episode-cover" loading="eager" />
     </div>` : ''}
     <div class="ep-hero__body">
