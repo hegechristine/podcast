@@ -185,29 +185,21 @@ em, .italic {
 .ep {
   max-width: 1320px;
   margin: 0 auto;
-  padding: 64px 96px 96px;
+  padding: 64px 96px 0;
 }
 @media (max-width: 720px) {
-  .ep { padding: 40px 24px 64px; }
+  .ep { padding: 40px 24px 0; }
 }
 
-/* HERO — cover spenner full høyde av hero (matcher .featured__art-mønsteret på showsiden) */
+/* HERO — 2-col: cover venstre, body høyre (matcher .featured-mønsteret på showsiden) */
 .ep-hero {
   position: relative;
-  background: var(--cream-50);
-  border: 1.5px solid var(--soft-ink);
-  border-radius: 4px;
-  padding: 44px 44px 36px 44px;
-  margin-bottom: 56px;
+  padding: 24px 0 48px;
   display: grid;
   grid-template-columns: 360px 1fr;
-  grid-template-areas:
-    "cover body"
-    "cover subscribe";
   column-gap: 48px;
-  row-gap: 28px;
   align-items: start;
-  overflow: hidden;
+  border-bottom: 1px solid var(--soft-ink);
 }
 .ep-hero__grid {
   position: absolute; inset: 0; pointer-events: none;
@@ -215,34 +207,12 @@ em, .italic {
     linear-gradient(rgba(48,48,48,0.06) 1px, transparent 1px),
     linear-gradient(90deg, rgba(48,48,48,0.06) 1px, transparent 1px);
   background-size: 64px 64px;
-}
-.ep-hero > *:not(.ep-hero__grid) { position: relative; }
-.ep-hero__cover { grid-area: cover; }
-.ep-hero__body { grid-area: body; }
-.ep-hero .ep-subscribe {
-  grid-area: subscribe;
-  padding-top: 22px;
-  border-top: 1px solid rgba(48, 48, 48, 0.18);
+  display: none; /* grid kommer fra body — ikke dupliser */
 }
 @media (max-width: 720px) {
-  .ep-hero {
-    grid-template-columns: 1fr;
-    grid-template-areas:
-      "subscribe"
-      "cover"
-      "body";
-    column-gap: 0;
-    row-gap: 22px;
-    padding: 28px 26px;
-  }
-  .ep-hero .ep-subscribe {
-    padding-top: 0;
-    padding-bottom: 18px;
-    border-top: 0;
-    border-bottom: 1px solid rgba(48, 48, 48, 0.18);
-    justify-content: center;
-  }
+  .ep-hero { grid-template-columns: 1fr; row-gap: 22px; padding: 16px 0 32px; }
 }
+/* Cover som .featured-card: 2px ink-border, cream-bg, kvadratisk, gul tag floating top */
 .ep-hero__cover {
   align-self: start;
   position: relative;
@@ -250,7 +220,7 @@ em, .italic {
   border-radius: 4px;
   overflow: hidden;
   border: 2px solid var(--soft-ink);
-  background: var(--soft-rust);
+  background: var(--soft-bg-alt);
 }
 .ep-hero__cover img {
   width: 100%;
@@ -258,19 +228,8 @@ em, .italic {
   object-fit: cover;
   display: block;
 }
-/* Subtilt grid-overlay over coveret — matcher .featured__art på showsiden */
-.ep-hero__cover::after {
-  content: "";
-  position: absolute; inset: 0;
-  background-image:
-    linear-gradient(rgba(244,242,239,0.12) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(244,242,239,0.12) 1px, transparent 1px);
-  background-size: 28px 28px;
-  pointer-events: none;
-  z-index: 1;
-}
 .ep-hero__cover-tag {
-  position: absolute; top: 12px; left: 12px;
+  position: absolute; top: -10px; left: 16px;
   background: var(--soft-yellow);
   color: var(--soft-ink);
   font-family: var(--font-mono);
@@ -288,22 +247,15 @@ em, .italic {
     min-height: 0;
   }
 }
-.ep-hero__body { min-width: 0; }
-.ep-hero__meta {
+/* HERO BODY — kicker → title → lede → meta-rad nederst (matcher .hero på showsiden) */
+.ep-hero__body {
+  min-width: 0;
   display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 16px;
-  margin-bottom: 20px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid rgba(46, 50, 48, 0.18);
+  flex-direction: column;
+  align-self: stretch;
 }
-.ep-hero__date {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.7rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--olive-600);
+.ep-hero__body .kicker {
+  margin-bottom: 24px;
 }
 .ep-hero__title {
   font-family: var(--font-display);
@@ -311,7 +263,7 @@ em, .italic {
   font-size: clamp(2.5rem, 5.5vw, 4rem);
   line-height: 1.05;
   letter-spacing: 0.005em;
-  margin: 0 0 28px;
+  margin: 0 0 20px;
   color: var(--soft-ink);
   text-wrap: balance;
   max-width: 22ch;
@@ -322,70 +274,174 @@ em, .italic {
   font-weight: 500;
   color: var(--soft-rust);
 }
-
-/* AUDIO PLAYER */
-.ep-player {
-  margin-bottom: 22px;
+.ep-hero__lede {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.375rem;
+  line-height: 1.45;
+  font-weight: 500;
+  color: var(--soft-ink-soft);
+  max-width: 48ch;
+  margin: 0 0 32px;
 }
-.ep-player audio {
-  width: 100%;
-  height: 44px;
-}
-
-/* SUBSCRIBE BUTTONS */
-.ep-subscribe {
+.ep-hero__meta {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
-  gap: 10px;
-}
-.ep-subscribe__label {
+  gap: 24px;
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid var(--soft-ink);
   font-family: var(--font-mono);
   font-size: 0.7rem;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--soft-muted);
-  margin-right: 4px;
 }
-.ep-subscribe__btn {
+.ep-hero__meta b {
+  color: var(--soft-ink);
+  font-weight: 600;
+}
+
+/* PLATFORMS BAND — warm-brown stripe under hero (matcher .platforms på showsiden) */
+.ep-platforms {
+  position: relative;
+  background: var(--soft-ink-soft);
+  color: var(--soft-bg);
+  padding: 28px 48px;
+  margin: 0 -96px 48px;
+  border-top: 1px solid var(--soft-ink);
+  border-bottom: 1px solid var(--soft-ink);
+  overflow: hidden;
+}
+.ep-platforms::before {
+  content: ""; position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(244,242,239,0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(244,242,239,0.07) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
+}
+.ep-platforms__inner {
+  position: relative;
+  max-width: 1128px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 40px;
+  align-items: center;
+}
+@media (max-width: 860px) {
+  .ep-platforms { padding: 24px 24px; margin: 0 -24px 32px; }
+  .ep-platforms__inner { grid-template-columns: 1fr; gap: 24px; }
+}
+
+/* Custom audio player */
+.ep-player {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.ep-player audio { display: none; }
+.ep-player__play {
+  flex-shrink: 0;
+  width: 48px; height: 48px;
+  border-radius: 999px;
+  border: 0;
+  background: var(--soft-yellow);
+  color: var(--soft-ink);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: background 0.18s ease, transform 0.18s ease;
+}
+.ep-player__play:hover { background: var(--soft-bg); transform: scale(1.05); }
+.ep-player__icon { width: 18px; height: 18px; }
+.ep-player__icon--pause { display: none; }
+.ep-player.is-playing .ep-player__icon--play { display: none; }
+.ep-player.is-playing .ep-player__icon--pause { display: block; }
+.ep-player__progress {
+  flex: 1;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 12px;
+}
+.ep-player__time {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  color: var(--soft-bg);
+  font-variant-numeric: tabular-nums;
+}
+.ep-player__bar {
+  height: 4px;
+  background: rgba(244,242,239,0.18);
+  border-radius: 999px;
+  cursor: pointer;
+  position: relative;
+}
+.ep-player__bar:focus { outline: 2px solid var(--soft-yellow); outline-offset: 4px; }
+.ep-player__fill {
+  height: 100%;
+  width: 0%;
+  background: var(--soft-yellow);
+  border-radius: 999px;
+  transition: width 0.1s linear;
+}
+
+/* Listen-platforms (right side of band) */
+.ep-platforms__listen {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 12px;
+}
+@media (max-width: 860px) {
+  .ep-platforms__listen { align-items: flex-start; }
+}
+.ep-platforms__label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--soft-yellow);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.ep-platforms__label::before {
+  content: "";
+  width: 30px;
+  height: 2px;
+  background: var(--soft-yellow);
+}
+.ep-platforms__list {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.ep-plat-btn {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 9px 16px;
-  background: var(--soft-ink-soft);
-  color: var(--soft-bg-alt);
+  padding: 10px 14px;
+  border: 1.5px solid rgba(244,242,239,0.4);
+  color: var(--soft-bg);
   text-decoration: none;
-  font-family: var(--font-mono);
-  font-weight: 600;
-  font-size: 0.72rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.85rem;
   border-radius: 3px;
-  transition: background 0.18s ease, transform 0.18s ease;
+  transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease;
 }
-.ep-subscribe__btn:hover { background: var(--soft-ink); transform: translateY(-1px); }
-.ep-subscribe__icon {
-  width: 14px;
-  height: 14px;
-  flex-shrink: 0;
+.ep-plat-btn:hover {
+  background: var(--soft-bg);
+  color: var(--soft-ink);
+  border-color: var(--soft-bg);
 }
-.ep-subscribe__rss {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  margin-left: 4px;
-  padding: 6px 4px;
-  color: var(--soft-muted);
-  text-decoration: none;
-  font-family: var(--font-mono);
-  font-size: 0.66rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  border-bottom: 1px solid transparent;
-  transition: color 0.18s ease, border-color 0.18s ease;
-}
-.ep-subscribe__rss:hover { color: var(--soft-rust); border-bottom-color: var(--soft-rust); }
-.ep-subscribe__rss svg { width: 11px; height: 11px; }
+.ep-plat-btn__icon { width: 14px; height: 14px; flex-shrink: 0; }
+.ep-plat-btn--ghost { padding: 10px 12px; }
 
 /* LAYOUT (main + sidebar) — innstrammet til ~10/12 av container for lesbarhet */
 .ep-layout {
@@ -586,11 +642,10 @@ em, .italic {
   color: var(--olive-600);
 }
 
-/* MORE FROM THE EDIT — full-bredde-blokk under newsletter */
+/* MORE FROM THE EDIT — karusell, ligger nå inni .ep (cream-flow), før newsletter */
 .ep-more {
-  max-width: 1320px;
-  margin: 64px auto 0;
-  padding: 0 48px 96px;
+  margin: 56px 0 0;
+  padding: 0;
 }
 .ep-more__head {
   display: flex;
@@ -640,7 +695,6 @@ em, .italic {
 .ep-more__list > li:first-child { padding-left: 16px; }
 .ep-more__list > li:last-child { padding-right: 16px; }
 @media (max-width: 720px) {
-  .ep-more { padding: 0 24px 64px; }
   .ep-more__list > li { flex: 0 0 280px; }
 }
 .ep-more__item {
@@ -764,7 +818,7 @@ em, .italic {
 /* NEWSLETTER */
 .ep-newsletter {
   position: relative;
-  margin: 64px 0 32px;
+  margin: 64px 0 0;
   padding: 40px 44px;
   background: var(--soft-ink-soft);
   color: var(--soft-bg-alt);
@@ -879,7 +933,7 @@ em, .italic {
 /* FOOTER — matcher .ds-footer på podcast.hegechristine.no */
 .ds-footer {
   position: relative;
-  margin-top: 48px;
+  margin-top: 0;
   padding: 64px 48px 32px;
   background: var(--soft-ink-soft);
   color: var(--soft-bg);
