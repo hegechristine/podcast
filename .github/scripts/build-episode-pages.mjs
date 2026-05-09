@@ -514,16 +514,30 @@ function renderEpisode(ep, campaign, allEpisodes) {
     </aside>
   </div>
 
-  <section class="ep-host">
-    <div class="ep-host__photo">
+  <section class="about" id="about">
+    <div class="about__portrait">
       <img src="${escAttr(SHOW.hostPhoto)}" alt="${escAttr(SHOW.host)}" loading="lazy" />
+      <div class="about__portrait-frame"></div>
     </div>
-    <div class="ep-host__body">
-      <span class="kicker">Host & Show</span>
-      <h2>${escHtml(SHOW.host)}</h2>
-      <p class="ep-host__bio">${escHtml(SHOW.hostBio)}</p>
-      <h3>Hva er The <em>Edit</em>?</h3>
-      <p>${escHtml(SHOW.showAbout)}</p>
+    <div class="about__text">
+      <div class="about__eyebrow"><span>Vert · Hege Christine</span></div>
+      <h2 class="about__h">Strategisk. Ærlig. <em>Praktisk.</em></h2>
+      <p class="about__p">The Edit er podkasten for deg som vil bygge en smartere business. Ved å redigere bort det som ikke gir de resultatene du ønsker deg.</p>
+      <p class="about__p">Her deler jeg praktiske strategier og ærlige refleksjoner sammen med gjester som har bygget noe på egne premisser. Tema er strategi, systemer, salg og mindset. Målet er at du skal sitte igjen med noe konkret du faktisk kan implementere i egen business.</p>
+      <div class="about__stats">
+        <div class="stat">
+          <div class="stat__num stat__num--rust">12k</div>
+          <div class="stat__label">Lyttere per episode</div>
+        </div>
+        <div class="stat">
+          <div class="stat__num">42</div>
+          <div class="stat__label">Episoder, tre sesonger</div>
+        </div>
+        <div class="stat">
+          <div class="stat__num">4.9</div>
+          <div class="stat__label">På Apple Podcasts</div>
+        </div>
+      </div>
     </div>
   </section>
 
