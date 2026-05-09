@@ -208,7 +208,12 @@ async function loadCampaign() {
   }
 }
 
-function renderEpisode(ep, campaign) {
+function renderEpisode(ep, campaign, allEpisodes) {
+  const related = (allEpisodes || [])
+    .filter(e => e.slug && e.slug !== ep.slug && e.n)
+    .sort((a, b) => (b.n || 0) - (a.n || 0))
+    .slice(0, 3);
+
   const slug = episodeSlug(ep);
   const parsed = parseShowNotes(ep.fullDesc || ep.desc || '');
   const date = formatDate(ep.pubDate || ep.date);
@@ -339,6 +344,20 @@ function renderEpisode(ep, campaign) {
         <p>${escHtml(campaign.body)}</p>
         <a href="${escAttr(campaign.href)}" target="_blank" rel="noopener" class="btn btn--primary">${escHtml(campaign.cta)}</a>
       </section>` : ''}
+
+      ${related.length ? `<section class="ep-more">
+        <span class="kicker">Mer fra</span>
+        <h3>The <em>Edit</em></h3>
+        <ul class="ep-more__list">
+          ${related.map(r => `<li><a href="/${escAttr(r.slug)}/" class="ep-more__item">
+            <div class="ep-more__cover">${r.imageUrl ? `<img src="${escAttr(r.imageUrl)}" alt="" loading="lazy" />` : ''}</div>
+            <div class="ep-more__body">
+              <span class="ep-more__num">EP ${escHtml(String(r.n))}</span>
+              <span class="ep-more__title">${escHtml(r.title)}</span>
+            </div>
+          </a></li>`).join('\n          ')}
+        </ul>
+      </section>` : ''}
     </aside>
   </div>
 
@@ -441,13 +460,17 @@ async function main() {
     }
   }
 
-  let count = 0;
+  // Pre-compute slugs so renderEpisode can link to siblings even on first pass
   let slugChanged = false;
   for (const ep of episodes) {
     const slug = episodeSlug(ep);
     if (ep.slug !== slug) { ep.slug = slug; slugChanged = true; }
-    const html = renderEpisode(ep, campaign);
-    const dir = path.join(ROOT, slug);
+  }
+
+  let count = 0;
+  for (const ep of episodes) {
+    const html = renderEpisode(ep, campaign, episodes);
+    const dir = path.join(ROOT, ep.slug);
     await fs.mkdir(dir, { recursive: true });
     await fs.writeFile(path.join(dir, 'index.html'), html, 'utf-8');
     count++;
