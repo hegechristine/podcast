@@ -643,71 +643,6 @@ em, .italic {
   padding-bottom: 20px;
   border-bottom: 1px solid rgba(48, 48, 48, 0.18);
 }
-.ep-more__head > div:first-child {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-.ep-more__footer {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  margin-top: 24px;
-}
-@media (max-width: 480px) {
-  .ep-more__footer { justify-content: stretch; }
-  .ep-more__cta { width: 100%; justify-content: center; }
-}
-.ep-more__cta {
-  display: inline-flex;
-  align-items: center;
-  padding: 12px 22px;
-  background: var(--soft-rust);
-  color: var(--soft-bg-alt);
-  text-decoration: none;
-  font-family: var(--font-mono);
-  font-weight: 600;
-  font-size: 0.74rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  border-radius: 3px;
-  transition: background 0.18s ease;
-}
-.ep-more__cta:hover { background: var(--soft-rust-deep); }
-.ep-more__nav {
-  display: flex;
-  gap: 8px;
-}
-.ep-more__arrow {
-  width: 40px; height: 40px;
-  border-radius: 999px;
-  border: 1.5px solid var(--soft-ink);
-  background: transparent;
-  color: var(--soft-ink);
-  cursor: pointer;
-  display: grid;
-  place-items: center;
-  transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease, opacity 0.18s ease;
-}
-.ep-more__arrow svg { width: 18px; height: 18px; }
-.ep-more__arrow:hover:not(:disabled) {
-  background: var(--soft-ink);
-  color: var(--soft-bg-alt);
-}
-.ep-more__arrow:disabled { opacity: 0.25; cursor: default; }
-/* Viewport wrapper med fade-gradient på høyre kant for å hinte at det er mer */
-.ep-more__viewport {
-  position: relative;
-}
-.ep-more__viewport::after {
-  content: "";
-  position: absolute;
-  top: 0; bottom: 12px; right: 0;
-  width: 80px;
-  pointer-events: none;
-  background: linear-gradient(to right, transparent, var(--soft-bg) 90%);
-  z-index: 1;
-}
 .ep-more__head .kicker { font-size: 0.7rem; }
 .ep-more__head h2 {
   font-family: var(--font-display);
@@ -726,29 +661,14 @@ em, .italic {
 }
 .ep-more__list {
   list-style: none;
-  padding: 0 0 12px 0;
-  margin: 0 -16px;
-  display: flex;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 32px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: thin;
-  scrollbar-color: var(--soft-soft) transparent;
 }
-.ep-more__list::-webkit-scrollbar { height: 6px; }
-.ep-more__list::-webkit-scrollbar-track { background: transparent; }
-.ep-more__list::-webkit-scrollbar-thumb { background: var(--soft-soft); border-radius: 3px; }
-.ep-more__list > li {
-  scroll-snap-align: start;
-  flex: 0 0 calc((100% - 64px) / 3 - 16px);
-  min-width: 260px;
-  padding: 0 0 0 16px;
-}
-.ep-more__list > li:first-child { padding-left: 16px; }
-.ep-more__list > li:last-child { padding-right: 16px; }
 @media (max-width: 720px) {
-  .ep-more__list > li { flex: 0 0 280px; }
+  .ep-more__list { grid-template-columns: 1fr; gap: 20px; }
 }
 .ep-more__item {
   display: grid;
@@ -772,6 +692,15 @@ em, .italic {
   flex-shrink: 0;
 }
 .ep-more__cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
+/* CTA-card (tredje kort i griden) — rust bg med arrow-ikon */
+.ep-more__cover--cta {
+  background: var(--soft-rust);
+  color: var(--soft-bg-alt);
+  display: grid;
+  place-items: center;
+}
+.ep-more__cover--cta svg { width: 32px; height: 32px; }
+.ep-more__item--cta:hover .ep-more__cover--cta { background: var(--soft-rust-deep); }
 .ep-more__body { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
 .ep-more__num {
   font-family: var(--font-mono);

@@ -353,7 +353,7 @@ function renderEpisode(ep, campaign, allEpisodes, showStats) {
   const related = (allEpisodes || [])
     .filter(e => e.slug && e.slug !== ep.slug && e.n)
     .sort((a, b) => (b.n || 0) - (a.n || 0))
-    .slice(0, 10);
+    .slice(0, 2);
 
   const slug = episodeSlug(ep);
   const parsed = parseShowNotes(ep.descriptionHtml || '', ep.fullDesc || ep.desc || '');
@@ -588,33 +588,27 @@ function renderEpisode(ep, campaign, allEpisodes, showStats) {
 
   ${related.length ? `<section class="ep-more">
     <header class="ep-more__head">
-      <div>
-        <span class="kicker">Mer fra</span>
-        <h2>The <em>Edit</em></h2>
-      </div>
-      <div class="ep-more__nav">
-        <button class="ep-more__arrow" type="button" data-dir="-1" aria-label="Forrige episoder">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
-        </button>
-        <button class="ep-more__arrow" type="button" data-dir="1" aria-label="Flere episoder">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
-        </button>
-      </div>
+      <span class="kicker">Mer fra</span>
+      <h2>The <em>Edit</em></h2>
     </header>
-    <div class="ep-more__viewport">
-      <ul class="ep-more__list">
-        ${related.map(r => `<li><a href="/${escAttr(r.slug)}/" class="ep-more__item">
-          <div class="ep-more__cover">${r.imageUrl ? `<img src="${escAttr(r.imageUrl)}" alt="" loading="lazy" />` : ''}</div>
-          <div class="ep-more__body">
-            <span class="ep-more__num">Episode ${escHtml(String(r.n))}</span>
-            <span class="ep-more__title">${escHtml(r.title)}</span>
-          </div>
-        </a></li>`).join('\n        ')}
-      </ul>
-    </div>
-    <div class="ep-more__footer">
-      <a class="ep-more__cta" href="/">Se alle episoder →</a>
-    </div>
+    <ul class="ep-more__list">
+      ${related.map(r => `<li><a href="/${escAttr(r.slug)}/" class="ep-more__item">
+        <div class="ep-more__cover">${r.imageUrl ? `<img src="${escAttr(r.imageUrl)}" alt="" loading="lazy" />` : ''}</div>
+        <div class="ep-more__body">
+          <span class="ep-more__num">Episode ${escHtml(String(r.n))}</span>
+          <span class="ep-more__title">${escHtml(r.title)}</span>
+        </div>
+      </a></li>`).join('\n      ')}
+      <li><a href="/" class="ep-more__item ep-more__item--cta">
+        <div class="ep-more__cover ep-more__cover--cta">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </div>
+        <div class="ep-more__body">
+          <span class="ep-more__num">Alle episoder</span>
+          <span class="ep-more__title">Se hele arkivet</span>
+        </div>
+      </a></li>
+    </ul>
   </section>` : ''}
 
 </main>
@@ -731,26 +725,6 @@ function renderEpisode(ep, campaign, allEpisodes, showStats) {
   });
 })();
 
-/* ===== Mer fra The Edit — carousel arrow scroll ===== */
-(function(){
-  const list = document.querySelector('.ep-more__list');
-  if (!list) return;
-  const arrows = document.querySelectorAll('.ep-more__arrow');
-  arrows.forEach(btn => btn.addEventListener('click', () => {
-    const dir = parseInt(btn.dataset.dir, 10) || 1;
-    const item = list.querySelector('li');
-    const step = item ? item.getBoundingClientRect().width + 32 : list.clientWidth * 0.7;
-    list.scrollBy({ left: step * dir, behavior: 'smooth' });
-  }));
-  function updateArrows() {
-    const max = list.scrollWidth - list.clientWidth;
-    arrows[0].disabled = list.scrollLeft <= 4;
-    arrows[1].disabled = list.scrollLeft >= max - 4;
-  }
-  list.addEventListener('scroll', updateArrows, { passive: true });
-  window.addEventListener('resize', updateArrows);
-  updateArrows();
-})();
 </script>
 </body>
 </html>
