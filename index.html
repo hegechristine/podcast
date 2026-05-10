@@ -32,6 +32,9 @@
 
 <link rel="alternate" type="application/rss+xml" title="The Edit – Podcast med Hege Christine" href="https://anchor.fm/s/4f734584/podcast/rss" />
 
+<!-- LCP: preload latest episode cover (refreshed by generate-cover-images.mjs) -->
+<link rel="preload" as="image" href="/covers/_latest.webp" fetchpriority="high" />
+
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -59,7 +62,7 @@
 <style>
 @font-face {
   font-family: 'CS Calory';
-  src: url('assets/fonts/CSCalory-Regular.ttf') format('truetype');
+  src: url('assets/fonts/CSCalory-Regular.woff2') format('woff2');
   font-weight: 400; font-style: normal; font-display: swap;
 }
 </style>
@@ -1779,7 +1782,7 @@
 <!-- ========== ABOUT (moved down — after newsletter, before footer) ========== -->
 <section class="about" id="about">
   <div class="about__portrait">
-    <img src="assets/hege-portrait.jpg" alt="Hege Christine" />
+    <img src="assets/hege-portrait.webp" alt="Hege Christine" width="800" height="800" loading="lazy" />
     <div class="about__portrait-frame"></div>
   </div>
   <div class="about__text">
@@ -1935,6 +1938,8 @@ function mapEpisode(raw, idx) {
     audioUrl: raw.audioUrl || '',
     imageUrl: raw.imageUrl || '',
     slug: raw.slug || '',
+    cover: raw.imageUrl && raw.slug ? `covers/${raw.slug}.webp` : '',
+    coverThumb: raw.imageUrl && raw.slug ? `covers/${raw.slug}-thumb.webp` : '',
   };
 }
 
@@ -2034,10 +2039,12 @@ function updateFeatured(latest) {
   }
   if (playBtn) playBtn.dataset.playId = latest.id;
 
-  // Sett episode-art som bakgrunn, gi den en mørk overlay så teksten leser
-  if (artEl && latest.imageUrl) {
+  // Sett episode-art som bakgrunn, gi den en mørk overlay så teksten leser.
+  // Bruker /covers/_latest.webp (kopi av nyeste episode, oppdatert av build) slik
+  // at <link rel="preload"> i head treffer riktig URL og LCP-bildet er klart før JS kjører.
+  if (artEl && latest.cover) {
     artEl.style.backgroundImage =
-      `linear-gradient(135deg, rgba(48,48,48,0.55), rgba(80,61,48,0.65)), url('${latest.imageUrl}')`;
+      `linear-gradient(135deg, rgba(48,48,48,0.55), rgba(80,61,48,0.65)), url('/covers/_latest.webp')`;
     artEl.style.backgroundSize = 'cover';
     artEl.style.backgroundPosition = 'center';
   }
@@ -2093,8 +2100,8 @@ function renderList(filter='all', q='') {
     const newBadge = ep.isNew ? `<span class="new">NY</span>` : '';
     const guestBit = ep.guest ? `<span class="guest">m/ ${ep.guest}</span>` : '';
 
-    const artInner = ep.imageUrl
-      ? `<img src="${ep.imageUrl}" alt="${ep.title}" class="ep__art-img" loading="lazy" />`
+    const artInner = ep.coverThumb
+      ? `<img src="${ep.coverThumb}" alt="${ep.title}" class="ep__art-img" loading="lazy" width="70" height="70" />`
       : `<span class="ep__art-glyph">${ep.glyph}</span>`;
 
     const epLabel = ep.n ? `EP ${String(ep.n).padStart(2,'0')}` : 'TRAILER';
@@ -2249,8 +2256,8 @@ let isPlaying = false;
 let totalSec = 0;
 
 function setPlayerEpisode(ep) {
-  if (ep.imageUrl) {
-    playerArt.style.backgroundImage = `url('${ep.imageUrl}')`;
+  if (ep.cover) {
+    playerArt.style.backgroundImage = `url('${ep.cover}')`;
     playerArt.style.backgroundSize = 'cover';
     playerArt.style.backgroundPosition = 'center';
     playerArt.textContent = '';

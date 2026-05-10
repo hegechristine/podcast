@@ -15,7 +15,7 @@ const SHOW = {
   spotifyShow: 'https://open.spotify.com/show/286EpL6ZfSuJVB47nXSQbZ',
   appleShow: 'https://podcasts.apple.com/us/podcast/the-edit/id1857930330',
   rssUrl: 'https://anchor.fm/s/4f734584/podcast/rss',
-  hostPhoto: '/assets/hege-portrait.jpg',
+  hostPhoto: '/assets/hege-portrait.webp',
   newsletterFormId: '349307',
   newsletterEmbedUrl: 'https://www.hegechristine.no/forms/349307/embed.js',
 };
@@ -512,7 +512,7 @@ function renderEpisode(ep, campaign, allEpisodes, showStats) {
   <section class="ep-hero">
     <div class="ep-hero__grid" aria-hidden="true"></div>
     ${ep.imageUrl ? `<div class="ep-hero__cover">
-      <img src="${escAttr(ep.imageUrl)}" alt="${escAttr(ep.title)} — episode-cover" loading="eager" />
+      <img src="/covers/${escAttr(ep.slug)}.webp" alt="${escAttr(ep.title)} — episode-cover" loading="eager" fetchpriority="high" width="1200" height="1200" />
     </div>` : ''}
     <div class="ep-hero__body">
       <span class="kicker">${escHtml(epSeasonLabel)}</span>
@@ -591,7 +591,7 @@ function renderEpisode(ep, campaign, allEpisodes, showStats) {
 
   <section class="about" id="about">
     <div class="about__portrait">
-      <img src="${escAttr(SHOW.hostPhoto)}" alt="${escAttr(SHOW.host)}" loading="lazy" />
+      <img src="${escAttr(SHOW.hostPhoto)}" alt="${escAttr(SHOW.host)}" loading="lazy" width="800" height="800" />
       <div class="about__portrait-frame"></div>
     </div>
     <div class="about__text">
@@ -648,7 +648,7 @@ function renderEpisode(ep, campaign, allEpisodes, showStats) {
     <div class="ep-more__row">
       <ul class="ep-more__list">
         ${related.map(r => `<li><a href="/${escAttr(r.slug)}/" class="ep-more__item">
-          <div class="ep-more__cover">${r.imageUrl ? `<img src="${escAttr(r.imageUrl)}" alt="" loading="lazy" />` : ''}</div>
+          <div class="ep-more__cover">${r.imageUrl ? `<img src="/covers/${escAttr(r.slug)}-thumb.webp" alt="" loading="lazy" width="400" height="400" />` : ''}</div>
           <div class="ep-more__body">
             <span class="ep-more__num">Episode ${escHtml(String(r.n))}</span>
             <span class="ep-more__title">${escHtml(r.title)}</span>
