@@ -2,8 +2,11 @@ name: Sync podcast episodes & build pages
 
 on:
   schedule:
-    # 05:00 UTC daily (06:00 norsk vintertid / 07:00 sommertid)
-    - cron: '0 5 * * *'
+    # Mål: live senest kl 07:00 norsk tid på publiseringsdag.
+    # Build + Pages-deploy tar ~5–10 min, så cron må være ferdig før kl 06:50.
+    # To kjøringer fanger episoder publisert opp til ~03:00 UTC:
+    - cron: '0 3 * * *'   # 03:00 UTC = 04:00 vinter / 05:00 sommer norsk
+    - cron: '0 4 * * *'   # 04:00 UTC = 05:00 vinter / 06:00 sommer norsk (backup)
   workflow_dispatch:
   push:
     paths:
