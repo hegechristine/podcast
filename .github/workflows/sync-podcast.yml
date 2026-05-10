@@ -2,8 +2,8 @@ name: Sync podcast episodes & build pages
 
 on:
   schedule:
-    # 06:00 UTC daily (07:00 norsk vintertid / 08:00 sommertid)
-    - cron: '0 6 * * *'
+    # 05:00 UTC daily (06:00 norsk vintertid / 07:00 sommertid)
+    - cron: '0 5 * * *'
   workflow_dispatch:
   push:
     paths:
