@@ -10,7 +10,7 @@ const FEED_CONFIG_PATH = path.join(ROOT, 'feed.config.json');
 const SHOW = {
   title: 'The Edit',
   host: 'Hege Christine',
-  hostBio: 'Online business strategist, mentor og tech founder. Hjelper gründere bygge en smartere business — ved å redigere bort det som ikke gir resultater.',
+  hostBio: 'Online business strategist og mentor for digitale grundere. Hjelper deg bygge en smart, kunnskapsbasert business du lever godt av og med.',
   showAbout: 'Podkasten for deg som vil bygge en smartere business — ved å redigere bort det som ikke gir de resultatene du ønsker. Praktiske strategier, ærlige refleksjoner og samtaler med gjester som har bygget noe på egne premisser.',
   spotifyShow: 'https://open.spotify.com/show/286EpL6ZfSuJVB47nXSQbZ',
   appleShow: 'https://podcasts.apple.com/us/podcast/the-edit/id1857930330',
