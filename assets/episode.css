@@ -583,6 +583,13 @@ em, .italic {
   color: var(--soft-ink);
 }
 .stat__num--rust { color: var(--soft-rust); }
+.stat__star {
+  font-size: 0.6em;
+  color: var(--soft-ink);
+  margin-left: 0.15em;
+  vertical-align: 0.2em;
+  font-family: 'Archivo', sans-serif;
+}
 .stat__label {
   font-family: var(--font-mono);
   font-size: 10px;
