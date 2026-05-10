@@ -44,14 +44,13 @@ function escapeHtml(s) {
     .replace(/'/g, '&#39;');
 }
 
-// Italicize the guest name in titles like "Susanne Todnem om …" or "Ane Hagen bygde …"
-// We don't try to be too clever — just bold the first proper-noun pair after a colon.
+// Wrap a guest name in <em> when title matches "<intro>: <First Last> <verb>".
+// Lets the cover-image render in italic-rust (matches brand voice).
 function styleTitle(rawTitle) {
-  let t = escapeHtml(rawTitle);
-  // Pattern: ": <First Last> <verb/preposition>" — italicize the name
-  t = t.replace(/(:\s*)([A-ZÆØÅ][a-zæøå]+(?:\s+[A-ZÆØÅ][a-zæøå]+)?)(\s+(?:om|bygde|deler|forteller|gikk|valgte|på|som|og|med|i|–))/,
-    '$1<em>$2</em>$3');
-  return t;
+  return escapeHtml(rawTitle).replace(
+    /(:\s*)([A-ZÆØÅ][a-zæøå]+(?:\s+[A-ZÆØÅ][a-zæøå]+)?)(\s+(?:om|bygde|deler|forteller|gikk|valgte|på|som|og|med|i|–))/,
+    '$1<em>$2</em>$3'
+  );
 }
 
 function buildHtml(ep) {
@@ -72,12 +71,11 @@ function buildHtml(ep) {
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
-    --cream:        #F4F2EF;
-    --cream-deep:   #E8E4DC;
-    --ink:          #303030;
-    --brown:        #503D30;
-    --yellow:       #FFCC00;
-    --rust:         #A0522D;
+    --cream: #F4F2EF;
+    --ink:   #303030;
+    --brown: #503D30;
+    --yellow:#FFCC00;
+    --rust:  #A0522D;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { width: 1200px; height: 630px; overflow: hidden; background: var(--cream); }
@@ -120,9 +118,7 @@ function buildHtml(ep) {
     color: var(--ink);
     font-weight: 500;
     letter-spacing: -0.015em;
-    /* tittel kan være lang — skalér ned hvis nødvendig via JS */
   }
-  /* Titler over ~60 tegn: mindre font automatisk */
   .og__title.is-long { font-size: 52px; line-height: 1.04; }
   .og__title.is-vlong { font-size: 44px; line-height: 1.06; }
   .og__title em {
@@ -194,7 +190,6 @@ function buildHtml(ep) {
   </div>
 </div>
 <script>
-  // Auto-skalering: hvis tittel-blokken er høyere enn boksen tillater, skru ned font.
   const t = document.getElementById('title');
   const len = t.textContent.length;
   if (len > 80) t.classList.add('is-vlong');
@@ -222,7 +217,6 @@ async function main() {
   const manifest = FORCE ? {} : await loadManifest();
   const newManifest = {};
 
-  // Determine work
   const todo = [];
   for (const ep of episodes) {
     const slug = ep.slug;
@@ -239,7 +233,7 @@ async function main() {
 
   if (todo.length === 0) {
     console.log('All OG-images up to date — skipping.');
-    // Still rewrite manifest in case episode list changed
+    // Manifest may still have changed (episodes added/removed) — rewrite it.
     await fs.writeFile(MANIFEST_PATH, JSON.stringify(newManifest, null, 2) + '\n');
     return;
   }
@@ -258,18 +252,16 @@ async function main() {
     for (const ep of todo) {
       const html = buildHtml(ep);
       await page.setContent(html, { waitUntil: 'load', timeout: 30000 });
-      // Vent på fonts + alle bilder (decode eller error — vi vil ikke henge for evig)
+      // Wait for fonts + cover-image; resolve on error too so a flaky cloudfront
+      // can't hang the whole build. 8s per image is a hard cap.
       await page.evaluate(async () => {
         await document.fonts.ready;
-        const imgs = Array.from(document.images);
-        await Promise.all(imgs.map(img => {
+        await Promise.all(Array.from(document.images).map(img => {
           if (img.complete && img.naturalWidth > 0) return null;
           return new Promise(resolve => {
-            const done = () => resolve();
-            img.addEventListener('load', done, { once: true });
-            img.addEventListener('error', done, { once: true });
-            // Hard cap per image
-            setTimeout(done, 8000);
+            img.addEventListener('load', resolve, { once: true });
+            img.addEventListener('error', resolve, { once: true });
+            setTimeout(resolve, 8000);
           });
         }));
       });
@@ -281,7 +273,6 @@ async function main() {
     await browser.close();
   }
 
-  // Clean up stale PNGs (episodes that no longer exist)
   const existing = await fs.readdir(OG_DIR);
   const knownSlugs = new Set(episodes.map(e => e.slug).filter(Boolean));
   for (const f of existing) {

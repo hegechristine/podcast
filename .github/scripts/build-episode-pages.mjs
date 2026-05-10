@@ -311,26 +311,19 @@ function buildSeoDescription(text, maxLen = 155) {
     }
   }
 
-  // Try to fill remaining budget with a partial of the next sentence (+"…").
   const remainder = clean.slice(consumed).trim();
-  if (remainder) {
-    const budget = maxLen - (acc ? acc.length + 1 : 0) - 1; // -1 for ellipsis
-    if (budget >= 20) {
-      const slice = remainder.slice(0, budget);
-      const lastSpace = slice.lastIndexOf(' ');
-      const partial = (lastSpace > 0 ? slice.slice(0, lastSpace) : slice)
-        .replace(/[,;:.!?–—\-]+$/, '');
-      if (partial) {
-        return (acc ? `${acc} ${partial}` : partial) + '…';
-      }
-    }
-  }
+  if (!remainder) return acc;
 
-  return acc || (() => {
-    const cut = clean.slice(0, maxLen - 1);
-    const lastSpace = cut.lastIndexOf(' ');
-    return (lastSpace > 0 ? cut.slice(0, lastSpace) : cut).replace(/[,;:.!?]+$/, '') + '…';
-  })();
+  // Fill remaining budget with a partial of the next sentence (+"…").
+  // Need ≥20 chars left to fit a meaningful word, else just return acc.
+  const budget = maxLen - (acc ? acc.length + 1 : 0) - 1;
+  if (budget < 20) return acc;
+
+  const slice = remainder.slice(0, budget);
+  const lastSpace = slice.lastIndexOf(' ');
+  const partial = (lastSpace > 0 ? slice.slice(0, lastSpace) : slice)
+    .replace(/[,;:.!?–—\-]+$/, '');
+  return (acc ? `${acc} ${partial}` : partial) + '…';
 }
 
 function paragraphize(text) {
