@@ -426,7 +426,6 @@
   .topbar {
     border-bottom: 1px solid var(--ink-600);
     background: var(--cream-200);
-    position: sticky; top: 0; z-index: 30;
   }
   .topbar__inner {
     max-width: 1320px; margin: 0 auto;
@@ -1504,14 +1503,34 @@
     color: var(--soft-yellow) !important;
   }
 
-  /* About-stats: gul stripe på toppen + sentrert innhold + stjerne-styling */
+  /* About-stats: pixel-perfekt parity med episode-side */
   body .about__stats .stat {
-    border-top-color: var(--soft-yellow) !important;
-    border-top-width: 3px !important;
-    align-items: center;
-    text-align: center;
+    border-top: 0 !important;
+    padding: 0 !important;
+    align-items: flex-start;
+    text-align: left;
+    gap: 8px !important;
   }
-  body .about__stats .stat__label { max-width: none; }
+  body .about__stats .stat__num {
+    font-family: 'Cormorant Garamond', serif !important;
+    font-weight: 500 !important;
+    font-size: clamp(2.5rem, 4.5vw, 4rem) !important;
+    line-height: 1 !important;
+    letter-spacing: 0.005em !important;
+    color: var(--soft-ink) !important;
+  }
+  body .about__stats .stat__num--rust { color: var(--soft-rust) !important; }
+  body .about__stats .stat__label {
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 10px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.14em !important;
+    text-transform: uppercase !important;
+    color: var(--soft-muted) !important;
+    margin-top: 8px !important;
+    line-height: 1.3 !important;
+    max-width: none !important;
+  }
   .stat__star {
     font-size: 0.6em;
     color: var(--soft-ink);
