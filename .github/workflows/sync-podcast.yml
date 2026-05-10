@@ -46,11 +46,11 @@ jobs:
       - name: Run sync
         run: node .github/scripts/sync-podcast.mjs
 
-      - name: Generate cover-images (resized WebP)
-        run: node .github/scripts/generate-cover-images.mjs
-
       - name: Build episode pages
         run: node .github/scripts/build-episode-pages.mjs
+
+      - name: Generate cover-images (resized WebP)
+        run: node .github/scripts/generate-cover-images.mjs
 
       - name: Generate OG-images
         run: node .github/scripts/generate-og-images.mjs
