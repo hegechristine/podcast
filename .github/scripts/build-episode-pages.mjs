@@ -289,9 +289,9 @@ function formatDuration(seconds) {
   return `${m} min`;
 }
 
-// Build SEO meta description: take whole sentences from text, up to ~155 chars.
-// Never cuts mid-word. If first sentence already exceeds the budget, fall back to
-// trimming on the last whitespace before the limit and append "…".
+// Build SEO meta description: fill up to ~155 chars from text, never cutting
+// mid-word. Take whole sentences when they fit; if the next sentence is too long,
+// trim it at the last whitespace within the budget and add "…".
 function buildSeoDescription(text, maxLen = 155) {
   const clean = (text || '').replace(/\s+/g, ' ').trim();
   if (!clean) return '';
@@ -299,18 +299,38 @@ function buildSeoDescription(text, maxLen = 155) {
 
   const sentences = clean.match(/[^.!?]+[.!?]+/g) || [clean];
   let acc = '';
-  for (const s of sentences) {
-    const next = (acc + s).trim();
-    if (next.length > maxLen) break;
-    acc = next + ' ';
+  let consumed = 0;
+  for (const raw of sentences) {
+    const s = raw.trim();
+    const candidate = acc ? `${acc} ${s}` : s;
+    if (candidate.length <= maxLen) {
+      acc = candidate;
+      consumed += raw.length;
+    } else {
+      break;
+    }
   }
-  acc = acc.trim();
-  if (acc) return acc;
 
-  // First sentence is too long — trim on whitespace and ellipsize.
-  const cut = clean.slice(0, maxLen);
-  const lastSpace = cut.lastIndexOf(' ');
-  return (lastSpace > 0 ? cut.slice(0, lastSpace) : cut).replace(/[,;:.!?]+$/, '') + '…';
+  // Try to fill remaining budget with a partial of the next sentence (+"…").
+  const remainder = clean.slice(consumed).trim();
+  if (remainder) {
+    const budget = maxLen - (acc ? acc.length + 1 : 0) - 1; // -1 for ellipsis
+    if (budget >= 20) {
+      const slice = remainder.slice(0, budget);
+      const lastSpace = slice.lastIndexOf(' ');
+      const partial = (lastSpace > 0 ? slice.slice(0, lastSpace) : slice)
+        .replace(/[,;:.!?–—\-]+$/, '');
+      if (partial) {
+        return (acc ? `${acc} ${partial}` : partial) + '…';
+      }
+    }
+  }
+
+  return acc || (() => {
+    const cut = clean.slice(0, maxLen - 1);
+    const lastSpace = cut.lastIndexOf(' ');
+    return (lastSpace > 0 ? cut.slice(0, lastSpace) : cut).replace(/[,;:.!?]+$/, '') + '…';
+  })();
 }
 
 function paragraphize(text) {
@@ -411,7 +431,9 @@ function renderEpisode(ep, campaign, allEpisodes, showStats) {
     return (acc || sentences[0] || text.slice(0, 200)).trim();
   })();
   const canonical = `https://podcast.hegechristine.no/${slug}/`;
-  const ogImage = ep.imageUrl || 'https://podcast.hegechristine.no/assets/hege-portrait.jpg';
+  // Auto-generert OG-bilde (1200×630, brand-Variant C). Skrives av generate-og-images.mjs
+  // i samme workflow-kjøring og pushes i samme commit.
+  const ogImage = `https://podcast.hegechristine.no/og/${slug}.png`;
 
   // SEO description: take whole sentences from hook up to ~155 chars (never mid-word).
   // Falls back to ep.desc → ep.title if hook is empty.

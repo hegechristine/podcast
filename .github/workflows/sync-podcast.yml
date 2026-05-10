@@ -12,6 +12,8 @@ on:
       - 'assets/episode.css'
       - '.github/scripts/sync-podcast.mjs'
       - '.github/scripts/build-episode-pages.mjs'
+      - '.github/scripts/generate-og-images.mjs'
+      - '.github/scripts/package.json'
       - '.github/workflows/sync-podcast.yml'
 
 permissions:
@@ -45,9 +47,12 @@ jobs:
       - name: Build episode pages
         run: node .github/scripts/build-episode-pages.mjs
 
+      - name: Generate OG-images
+        run: node .github/scripts/generate-og-images.mjs
+
       - name: Commit changes
         run: |
-          git add -A episodes.json 'episode-*' velkommen 2>/dev/null || true
+          git add -A episodes.json 'episode-*' velkommen og 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "No changes to commit"
             exit 0
