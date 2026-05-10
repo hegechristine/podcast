@@ -593,8 +593,7 @@ function renderEpisode(ep, campaign, allEpisodes, showStats) {
 
   ${related.length ? `<section class="ep-more">
     <header class="ep-more__head">
-      <span class="kicker">Siste episoder fra</span>
-      <h2>The <em>Edit</em></h2>
+      <h2>Siste episoder fra The <em>Edit</em></h2>
     </header>
     <div class="ep-more__row">
       <ul class="ep-more__list">
