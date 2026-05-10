@@ -363,23 +363,39 @@
     body .ds-footer__wordmark { font-size: 1.85rem !important; }
   }
 
-  /* Newsletter — light cream, ties into the page flow above; footer below carries the dark weight */
-  body .newsletter { background: var(--soft-bg-deep) !important; color: var(--soft-ink) !important; }
-  body .newsletter__eyebrow { color: var(--soft-rust) !important; }
-  body .newsletter__h { color: var(--soft-ink) !important; }
+  /* Newsletter — warm-brown med grid + gul dryss (matcher episode-side) */
+  body .newsletter { background: var(--soft-ink-soft) !important; color: var(--soft-bg) !important; }
+  body .newsletter::before {
+    background-image:
+      linear-gradient(rgba(244,242,239,0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(244,242,239,0.06) 1px, transparent 1px) !important;
+  }
+  body .newsletter__eyebrow {
+    color: var(--soft-yellow) !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+  }
+  body .newsletter__eyebrow::before {
+    content: "";
+    width: 30px; height: 3px;
+    background: var(--soft-yellow);
+    flex-shrink: 0;
+  }
+  body .newsletter__h { color: var(--soft-bg) !important; }
   body .newsletter__h em {
-    color: var(--soft-rust) !important;
+    color: var(--soft-yellow) !important;
     font-family: 'Cormorant Garamond', serif !important;
     font-style: italic !important;
     font-weight: 500 !important;
   }
-  body .newsletter__p { color: var(--soft-ink-soft) !important; }
+  body .newsletter__p { color: rgba(244,242,239,0.85) !important; }
   body .newsletter__form input {
-    background: var(--soft-bg) !important;
-    border-color: rgba(58,42,30,0.18) !important;
+    background: var(--soft-bg-alt) !important;
+    border-color: rgba(48,48,48,0.18) !important;
     color: var(--soft-ink) !important;
   }
-  body .newsletter__form input::placeholder { color: rgba(58,42,30,0.45) !important; }
+  body .newsletter__form input::placeholder { color: rgba(48,48,48,0.45) !important; }
   body .newsletter__form input:focus {
     border-color: var(--soft-rust) !important;
     background: #fff !important;
@@ -392,9 +408,9 @@
     font-weight: 600 !important;
   }
   body .newsletter__form button:hover {
-    background: var(--soft-ink) !important;
+    background: var(--soft-rust-deep) !important;
     color: var(--soft-bg) !important;
-    border-color: var(--soft-ink) !important;
+    border-color: var(--soft-rust-deep) !important;
   }
 
   body .hero__grid { background-image: none !important; }
