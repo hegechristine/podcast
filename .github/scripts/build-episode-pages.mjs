@@ -528,7 +528,7 @@ function renderEpisode(ep, campaign, allEpisodes, showStats) {
         <ul>
           ${parsed.resources.map(r => `<li>${r.emoji ? `<span class="ep-resources__emoji" aria-hidden="true">${escHtml(r.emoji)}</span>` : ''}${r.href ? `<a href="${escAttr(r.href)}" target="_blank" rel="noopener">${escHtml(r.text.replace(r.href.replace(/^https?:\/\//, ''), '').trim() || r.text)}</a>` : escHtml(r.text)}</li>`).join('\n          ')}
         </ul>
-        ${parsed.disclaimer ? `<p class="ep-resources__disclaimer">Noen av lenkene kan være annonselenker — provisjon påvirker ikke prisen for deg.</p>` : ''}
+        ${parsed.disclaimer ? `<p class="ep-resources__disclaimer">Noen lenker gir provisjon. Du betaler ikke mer — men du får snarveier til verktøy som faktisk leverer i en smartere business.</p>` : ''}
       </section>` : ''}
 
       ${campaign ? `<section class="ep-campaign">
@@ -593,6 +593,7 @@ function renderEpisode(ep, campaign, allEpisodes, showStats) {
 
   ${related.length ? `<section class="ep-more">
     <header class="ep-more__head">
+      <span class="kicker">Lytt videre</span>
       <h2>Siste episoder fra The <em>Edit</em></h2>
     </header>
     <div class="ep-more__row">
