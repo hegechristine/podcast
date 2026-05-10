@@ -621,9 +621,18 @@
   }
   .list-head h2 em { font-family: var(--font-editorial); font-style: italic; font-weight: 500; color: var(--rust-400); }
   .list-head__sub {
-    font-family: var(--font-mono); font-size: 11px;
-    letter-spacing: 0.12em; text-transform: uppercase; color: var(--olive-600);
-    margin-top: 6px;
+    font-family: var(--font-mono); font-size: 11px; font-weight: 600;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--olive-600);
+    margin: 0 0 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .list-head__sub::before {
+    content: "";
+    width: 30px; height: 3px;
+    background: var(--soft-yellow);
+    flex-shrink: 0;
   }
   .controls { display: flex; align-items: center; gap: var(--space-3); }
   .search {
@@ -1686,8 +1695,8 @@
 <!-- ========== LIST CONTROLS ========== -->
 <section class="list-head">
   <div>
-    <h2>Alle <em>episoder</em></h2>
     <div class="list-head__sub" id="list-meta">Nyeste øverst</div>
+    <h2>Alle <em>episoder</em></h2>
   </div>
   <div class="controls">
     <div class="search">
