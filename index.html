@@ -1626,7 +1626,7 @@
       <a href="https://hegechristine.no" rel="noopener">Hovedside ↗</a>
     </nav>
     <div class="topbar__right">
-      <span>Sesong 03</span>
+      <span id="topbar-season">Sesong 02</span>
     </div>
   </div>
 </header>
@@ -1939,9 +1939,9 @@ function updateHeroStats(episodes, channel = {}) {
   // Topbar "Sesong XX"
   if (episodes.length) {
     const latestSeason = episodes[0].season;
-    const topbarRight = document.querySelectorAll('.topbar__right span');
-    if (topbarRight.length >= 2) {
-      topbarRight[1].textContent = `Sesong ${String(latestSeason).padStart(2,'0')}`;
+    const seasonEl = document.getElementById('topbar-season');
+    if (seasonEl && latestSeason) {
+      seasonEl.textContent = `Sesong ${String(latestSeason).padStart(2,'0')}`;
     }
   }
 

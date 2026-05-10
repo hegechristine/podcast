@@ -289,6 +289,30 @@ function formatDuration(seconds) {
   return `${m} min`;
 }
 
+// Build SEO meta description: take whole sentences from text, up to ~155 chars.
+// Never cuts mid-word. If first sentence already exceeds the budget, fall back to
+// trimming on the last whitespace before the limit and append "…".
+function buildSeoDescription(text, maxLen = 155) {
+  const clean = (text || '').replace(/\s+/g, ' ').trim();
+  if (!clean) return '';
+  if (clean.length <= maxLen) return clean;
+
+  const sentences = clean.match(/[^.!?]+[.!?]+/g) || [clean];
+  let acc = '';
+  for (const s of sentences) {
+    const next = (acc + s).trim();
+    if (next.length > maxLen) break;
+    acc = next + ' ';
+  }
+  acc = acc.trim();
+  if (acc) return acc;
+
+  // First sentence is too long — trim on whitespace and ellipsize.
+  const cut = clean.slice(0, maxLen);
+  const lastSpace = cut.lastIndexOf(' ');
+  return (lastSpace > 0 ? cut.slice(0, lastSpace) : cut).replace(/[,;:.!?]+$/, '') + '…';
+}
+
 function paragraphize(text) {
   if (!text) return '';
 
@@ -389,14 +413,23 @@ function renderEpisode(ep, campaign, allEpisodes, showStats) {
   const canonical = `https://podcast.hegechristine.no/${slug}/`;
   const ogImage = ep.imageUrl || 'https://podcast.hegechristine.no/assets/hege-portrait.jpg';
 
-  // Description for SEO meta — first paragraph of hook, capped
-  const metaDesc = (parsed.hook || ep.title).replace(/\s+/g, ' ').trim().slice(0, 160);
+  // SEO description: take whole sentences from hook up to ~155 chars (never mid-word).
+  // Falls back to ep.desc → ep.title if hook is empty.
+  const metaDesc = buildSeoDescription(parsed.hook || ep.desc || ep.title);
+
+  // SEO title: "{episodetittel} | The Edit Podcast" — faller tilbake til ren tittel
+  // hvis sammen blir > 70 tegn (Google viser typisk 50–60, men holder hele tittelen
+  // synlig så lenge den ikke blir absurd lang).
+  const seoTitleSuffix = ' | The Edit Podcast';
+  const seoTitle = (ep.title.length + seoTitleSuffix.length) <= 70
+    ? `${ep.title}${seoTitleSuffix}`
+    : ep.title;
 
   return `<!doctype html>
 <html lang="no">
 <head>
 <meta charset="utf-8" />
-<title>${escHtml(ep.title)} — The Edit</title>
+<title>${escHtml(seoTitle)}</title>
 <meta name="description" content="${escAttr(metaDesc)}" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 
