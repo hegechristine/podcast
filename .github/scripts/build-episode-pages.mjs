@@ -528,6 +528,7 @@ function renderEpisode(ep, campaign, allEpisodes, showStats) {
         <ul>
           ${parsed.resources.map(r => `<li>${r.emoji ? `<span class="ep-resources__emoji" aria-hidden="true">${escHtml(r.emoji)}</span>` : ''}${r.href ? `<a href="${escAttr(r.href)}" target="_blank" rel="noopener">${escHtml(r.text.replace(r.href.replace(/^https?:\/\//, ''), '').trim() || r.text)}</a>` : escHtml(r.text)}</li>`).join('\n          ')}
         </ul>
+        ${parsed.disclaimer ? `<p class="ep-resources__disclaimer">Noen av lenkene kan være annonselenker — provisjon påvirker ikke prisen for deg.</p>` : ''}
       </section>` : ''}
 
       ${campaign ? `<section class="ep-campaign">
