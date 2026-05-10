@@ -650,8 +650,6 @@ em, .italic {
   align-items: flex-start;
   gap: 12px;
   margin-bottom: 32px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid rgba(48, 48, 48, 0.18);
 }
 .ep-more__head .kicker { font-size: 0.7rem; }
 .ep-more__head h2 {
