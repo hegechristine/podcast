@@ -661,20 +661,25 @@ em, .italic {
   font-weight: 500;
   color: var(--soft-rust);
 }
+.ep-more__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 32px;
+  align-items: center;
+}
 .ep-more__list {
   list-style: none;
   padding: 0;
   margin: 0;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 32px;
+  display: contents;
 }
 @media (max-width: 720px) {
-  .ep-more__list { grid-template-columns: 1fr; gap: 20px; }
+  .ep-more__row { grid-template-columns: 1fr; gap: 20px; }
 }
 .ep-more__cta {
-  display: block;
-  margin-top: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 20px 24px;
   background: var(--soft-rust);
   color: var(--soft-bg-alt);
@@ -687,6 +692,8 @@ em, .italic {
   border-radius: 4px;
   text-align: center;
   transition: background 0.18s ease;
+  align-self: center;
+  min-height: 96px;
 }
 .ep-more__cta:hover { background: var(--soft-rust-deep); }
 .ep-more__item {

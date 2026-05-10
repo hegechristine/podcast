@@ -399,6 +399,10 @@ function renderEpisode(ep, campaign, allEpisodes, showStats) {
 <title>${escHtml(ep.title)} — The Edit</title>
 <meta name="description" content="${escAttr(metaDesc)}" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; default-src 'self' https: data:; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:; font-src 'self' data: https:; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https:">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+
 <link rel="canonical" href="${escAttr(canonical)}" />
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 
@@ -591,16 +595,18 @@ function renderEpisode(ep, campaign, allEpisodes, showStats) {
       <span class="kicker">Mer fra</span>
       <h2>The <em>Edit</em></h2>
     </header>
-    <ul class="ep-more__list">
-      ${related.map(r => `<li><a href="/${escAttr(r.slug)}/" class="ep-more__item">
-        <div class="ep-more__cover">${r.imageUrl ? `<img src="${escAttr(r.imageUrl)}" alt="" loading="lazy" />` : ''}</div>
-        <div class="ep-more__body">
-          <span class="ep-more__num">Episode ${escHtml(String(r.n))}</span>
-          <span class="ep-more__title">${escHtml(r.title)}</span>
-        </div>
-      </a></li>`).join('\n      ')}
-    </ul>
-    <a class="ep-more__cta" href="/">Se alle episoder →</a>
+    <div class="ep-more__row">
+      <ul class="ep-more__list">
+        ${related.map(r => `<li><a href="/${escAttr(r.slug)}/" class="ep-more__item">
+          <div class="ep-more__cover">${r.imageUrl ? `<img src="${escAttr(r.imageUrl)}" alt="" loading="lazy" />` : ''}</div>
+          <div class="ep-more__body">
+            <span class="ep-more__num">Episode ${escHtml(String(r.n))}</span>
+            <span class="ep-more__title">${escHtml(r.title)}</span>
+          </div>
+        </a></li>`).join('\n        ')}
+      </ul>
+      <a class="ep-more__cta" href="/">Se alle episoder →</a>
+    </div>
   </section>` : ''}
 
 </main>
