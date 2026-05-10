@@ -480,14 +480,12 @@ em, .italic {
   padding-bottom: 1px;
 }
 .ep-resources a:hover { color: var(--rust-400); }
-.ep-resources__disclaimer {
-  margin: 14px 0 0;
-  padding-top: 12px;
-  border-top: 1px solid rgba(48, 48, 48, 0.18);
+.ep-sidebar__disclaimer {
+  margin: 8px 4px 0;
   font-family: var(--font-display);
   font-style: italic;
-  font-size: 0.78rem;
-  line-height: 1.4;
+  font-size: 0.85rem;
+  line-height: 1.45;
   color: var(--soft-ink-soft);
 }
 

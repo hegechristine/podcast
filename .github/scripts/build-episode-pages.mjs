@@ -528,7 +528,6 @@ function renderEpisode(ep, campaign, allEpisodes, showStats) {
         <ul>
           ${parsed.resources.map(r => `<li>${r.emoji ? `<span class="ep-resources__emoji" aria-hidden="true">${escHtml(r.emoji)}</span>` : ''}${r.href ? `<a href="${escAttr(r.href)}" target="_blank" rel="noopener">${escHtml(r.text.replace(r.href.replace(/^https?:\/\//, ''), '').trim() || r.text)}</a>` : escHtml(r.text)}</li>`).join('\n          ')}
         </ul>
-        ${parsed.disclaimer ? `<p class="ep-resources__disclaimer">Noen lenker gir provisjon. Du betaler ikke mer — men du får snarveier til verktøy som faktisk leverer i en smartere business.</p>` : ''}
       </section>` : ''}
 
       ${campaign ? `<section class="ep-campaign">
@@ -537,6 +536,8 @@ function renderEpisode(ep, campaign, allEpisodes, showStats) {
         <p>${escHtml(campaign.body)}</p>
         <a href="${escAttr(campaign.href)}" target="_blank" rel="noopener" class="btn btn--primary">${escHtml(campaign.cta)}</a>
       </section>` : ''}
+
+      <p class="ep-sidebar__disclaimer">Noen lenker gir provisjon. Du betaler ikke mer — men du får snarveier til verktøy som faktisk leverer i en smartere business.</p>
     </aside>
   </div>
 
