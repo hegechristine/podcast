@@ -481,18 +481,22 @@ em, .italic {
 }
 .ep-resources a:hover { color: var(--rust-400); }
 
-/* OM PODCASTEN — samme komponent som .about på showsiden */
+/* OM PODCASTEN — pixel-perfekt parity med .about på showsiden.
+   Negativ margin -96px bryter ut av .ep-container-padding så seksjonen
+   får samme bredde og padding som på showsiden. */
 .about {
-  margin-top: 56px;
-  padding: 64px 0;
+  margin: 0 -96px;
+  padding: 96px 64px;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 64px;
   align-items: center;
-  border-top: 1px solid var(--soft-ink);
+  border-bottom: 1px solid var(--soft-ink);
+  position: relative;
+  box-sizing: border-box;
 }
 @media (max-width: 720px) {
-  .about { grid-template-columns: 1fr; padding: 48px 0; gap: 32px; }
+  .about { margin: 0 -24px; grid-template-columns: 1fr; padding: 48px 24px; gap: 32px; }
 }
 .about__portrait {
   aspect-ratio: 4/5;
