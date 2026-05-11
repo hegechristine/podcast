@@ -501,7 +501,7 @@ function renderEpisode(ep, campaign, allEpisodes, showStats) {
       <a href="/">Podcast</a>
       <a href="/#about">Om</a>
       <a href="/#newsletter">Nyhetsbrev</a>
-      <a href="https://hegechristine.no" rel="noopener">Hovedside ↗</a>
+      <a href="https://www.hegechristine.no" rel="noopener">Hovedside ↗</a>
     </nav>
     <div class="topbar__right">${ep.n ? `Episode ${ep.n}` : 'The Edit'}</div>
   </div>
@@ -679,7 +679,7 @@ function renderEpisode(ep, campaign, allEpisodes, showStats) {
       <div>
         <h5>Hege Christine</h5>
         <ul>
-          <li><a href="https://hegechristine.no" rel="noopener">Hovedside</a></li>
+          <li><a href="https://www.hegechristine.no" rel="noopener">Hovedside</a></li>
           <li><a href="/#om">Om podcasten</a></li>
           <li><a href="mailto:hegechristine@hegechristine.no">Kontakt</a></li>
         </ul>
