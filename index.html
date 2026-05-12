@@ -2040,11 +2040,14 @@ function updateFeatured(latest) {
   if (playBtn) playBtn.dataset.playId = latest.id;
 
   // Sett episode-art som bakgrunn, gi den en mørk overlay så teksten leser.
-  // Bruker /covers/_latest.webp (kopi av nyeste episode, oppdatert av build) slik
-  // at <link rel="preload"> i head treffer riktig URL og LCP-bildet er klart før JS kjører.
+  // <link rel="preload" href="/covers/_latest.webp"> i head varmer cache for LCP,
+  // men JS swapper til slug-basert URL fordi _latest.webp har stabil URL med
+  // endrende innhold — browser cacher det aggressivt og kan vise forrige episodes
+  // cover i opptil 10 min etter en ny publisering. Slug-URL er unik per episode
+  // og cache-buster automatisk.
   if (artEl && latest.cover) {
     artEl.style.backgroundImage =
-      `linear-gradient(135deg, rgba(48,48,48,0.55), rgba(80,61,48,0.65)), url('/covers/_latest.webp')`;
+      `linear-gradient(135deg, rgba(48,48,48,0.55), rgba(80,61,48,0.65)), url('${latest.cover}')`;
     artEl.style.backgroundSize = 'cover';
     artEl.style.backgroundPosition = 'center';
   }
