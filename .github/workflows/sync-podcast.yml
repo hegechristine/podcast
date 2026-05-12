@@ -2,9 +2,14 @@ name: Sync podcast episodes & build pages
 
 on:
   schedule:
-    # 04:00 UTC = 05:00 norsk vinter / 06:00 norsk sommer.
-    # Med ~5–10 min build + Pages-deploy: live senest ~06:10 norsk uansett sesong.
-    - cron: '0 4 * * *'
+    # Episode publiseres ~03:00 UTC (05:00 norsk sommer / 04:00 norsk vinter).
+    # Tre cron-uttrykk med skjeve minutter for redundans — GH Actions schedule
+    # blir ofte 15–60 min forsinket, og noen ganger droppet helt på hele timer.
+    # Sync er idempotent (committer bare hvis RSS har endret seg), så ekstra
+    # kjøringer koster ingenting. Verst case live ~07:30 norsk sommer.
+    - cron: '13 4 * * *'   # 04:13 UTC = 06:13 norsk sommer / 05:13 norsk vinter (primary)
+    - cron: '43 4 * * *'   # 04:43 UTC = backup +30 min
+    - cron: '17 5 * * *'   # 05:17 UTC = backup +1 t
   workflow_dispatch:
   push:
     paths:
