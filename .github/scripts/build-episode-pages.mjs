@@ -428,6 +428,12 @@ function renderEpisode(ep, campaign, allEpisodes, showStats) {
   // i samme workflow-kjøring og pushes i samme commit.
   const ogImage = `https://podcast.hegechristine.no/og/${slug}.png`;
 
+  // ISO 8601 av pubDate — LinkedIn/Facebook leser article:published_time herfra
+  const pubIso = (() => {
+    const d = new Date(ep.pubDate || ep.date || '');
+    return isNaN(d.getTime()) ? '' : d.toISOString();
+  })();
+
   // SEO description: take whole sentences from hook up to ~155 chars (never mid-word).
   // Falls back to ep.desc → ep.title if hook is empty.
   const metaDesc = buildSeoDescription(parsed.hook || ep.desc || ep.title);
@@ -454,28 +460,44 @@ function renderEpisode(ep, campaign, allEpisodes, showStats) {
 <link rel="canonical" href="${escAttr(canonical)}" />
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 
+<meta name="author" content="Hege Christine" />
+
 <meta property="og:type" content="article" />
 <meta property="og:site_name" content="The Edit" />
 <meta property="og:title" content="${escAttr(ep.title)}" />
 <meta property="og:description" content="${escAttr(metaDesc)}" />
 <meta property="og:url" content="${escAttr(canonical)}" />
 <meta property="og:image" content="${escAttr(ogImage)}" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="${escAttr(ep.title)} — The Edit Podcast" />
 <meta property="og:locale" content="nb_NO" />
+
+<meta property="article:published_time" content="${escAttr(pubIso)}" />
+<meta property="article:modified_time" content="${escAttr(pubIso)}" />
+<meta property="article:author" content="https://www.hegechristine.no" />
+<meta property="article:section" content="Podcast" />
 
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="${escAttr(ep.title)}" />
 <meta name="twitter:description" content="${escAttr(metaDesc)}" />
 <meta name="twitter:image" content="${escAttr(ogImage)}" />
+<meta name="twitter:image:alt" content="${escAttr(ep.title)} — The Edit Podcast" />
 
 <script type="application/ld+json">${JSON.stringify({
   "@context": "https://schema.org",
   "@type": "PodcastEpisode",
   "name": ep.title,
   "url": canonical,
-  "datePublished": ep.pubDate || ep.date,
+  "datePublished": pubIso || (ep.pubDate || ep.date),
   "duration": `PT${Math.round((ep.durationSeconds || 0)/60)}M`,
   "description": metaDesc,
   "image": ogImage,
+  "author": {
+    "@type": "Person",
+    "name": "Hege Christine",
+    "url": "https://www.hegechristine.no"
+  },
   "associatedMedia": ep.audioUrl ? { "@type": "MediaObject", "contentUrl": ep.audioUrl } : undefined,
   "partOfSeries": {
     "@type": "PodcastSeries",
