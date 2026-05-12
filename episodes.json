@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-05-11T16:12:16.140Z",
+  "updatedAt": "2026-05-12T07:02:28.359Z",
   "channel": {
     "title": "The Edit",
     "description": "The Edit er podkasten for deg som vil bygge en smartere business. Ved å redigere bort det som ikke gir de resultatene du ønsker deg. Her deler Hege Christine praktiske strategier og ærlige refleksjoner sammen med gjester som har bygget noe på egne premisser. Tema er strategi, systemer, salg og mindset. Målet er at du skal sitte igjen med noe konkret du faktisk kan implementere i egen business. Strategisk. Ærlig. Praktisk.",
@@ -7,7 +7,7 @@
     "spotifyShowUrl": "https://open.spotify.com/show/286EpL6ZfSuJVB47nXSQbZ",
     "appleShowUrl": "https://podcasts.apple.com/us/podcast/the-edit/id1857930330",
     "rssUrl": "https://anchor.fm/s/4f734584/podcast/rss",
-    "episodeCount": 24,
+    "episodeCount": 25,
     "author": "Hege Christine",
     "stats": {
       "rating": "5",
@@ -15,6 +15,29 @@
     }
   },
   "episodes": [
+    {
+      "id": "b67f03f5-eeac-4b71-801f-fdd21e136e17",
+      "n": 24,
+      "title": "Hacket og kastet ut: Takk for alt Meta!",
+      "rawTitle": "24 - Hacket og kastet ut: Takk for alt Meta!",
+      "desc": "Hacket, og det tok ikke mer enn en time. Sider, grupper, Business Manager, annonsekontoer. Alt Hege Christine har bygget på Meta gjennom mange år, utilgjengelig på en lørdag formiddag. Permanent deaktivert, med den mest…",
+      "fullDesc": "Hacket, og det tok ikke mer enn en time. Sider, grupper, Business Manager, annonsekontoer. Alt Hege Christine har bygget på Meta gjennom mange år, utilgjengelig på en lørdag formiddag. Permanent deaktivert, med den mest alvorlige anklagen Meta opererer med. I denne episoden tar Hege Christine deg gjennom uka som fulgte, dag for dag. Hva som skjedde teknisk i de første minuttene. Hvorfor sterkt passord og tofaktorautentisering ikke stoppet det. Kafka og Slottet som har blitt brennende aktuelle. En kunde som blir dratt med i dragsuget. Og det som blir igjen når økosystemet du har bygget på i mange år, plutselig er borte. Det er òg en historie om hva hun sitter med nå. Hvilke konkrete grep du kan ta i dag for å sikre businessen din mot det samme. Hva som blir borte for godt, og hva som kommer tilbake. En episode for alle som driver business på Meta. Og for alle som lurer på hva de egentlig eier av sin egen business i 2026. ----------------------------- Bli bedre kjent med Hege Christine: 📸 Instagram: @hegechristine.no 💼 LinkedIn: @hegechristine 💬 Facebook-gruppe: Strategisk Salg 🌐 Nettside: hegechristine.no ----------------------------- Ressurser: 🎓 Test Kajabi gratis og uforpliktende i 30 dager: www.hegechristine.no/kajabi ----------------------------- Disclaimer: Noen av lenkene i dette innlegget kan være annonselenker. Det betyr at det kan mottas provisjon ved kjøp gjennom dem – uten at det påvirker prisen for deg.",
+      "descriptionHtml": "<p>Hacket, og det tok ikke mer enn en time. Sider, grupper, Business Manager, annonsekontoer. Alt Hege Christine har bygget på Meta gjennom mange år, utilgjengelig på en lørdag formiddag. Permanent deaktivert, med den mest alvorlige anklagen Meta opererer med.</p><p>I denne episoden tar Hege Christine deg gjennom uka som fulgte, dag for dag. Hva som skjedde teknisk i de første minuttene. Hvorfor sterkt passord og tofaktorautentisering ikke stoppet det. Kafka og Slottet som har blitt brennende aktuelle. En kunde som blir dratt med i dragsuget. Og det som blir igjen når økosystemet du har bygget på i mange år, plutselig er borte.</p><p>Det er òg en historie om hva hun sitter med nå. Hvilke konkrete grep du kan ta i dag for å sikre businessen din mot det samme. Hva som blir borte for godt, og hva som kommer tilbake.</p><p>En episode for alle som driver business på Meta. Og for alle som lurer på hva de egentlig eier av sin egen business i 2026.</p><p><br></p><hr><p><strong>Bli bedre kjent med Hege Christine:</strong></p><p>📸 Instagram:<a href=\"https://www.instagram.com/hegechristine.no/\" target=\"_blank\" rel=\"noopener noreferrer\"> @hegechristine.no</a></p><p>💼 LinkedIn:<a href=\"https://www.linkedin.com/in/hegechristine/\" target=\"_blank\" rel=\"noopener noreferrer\"> @hegechristine</a></p><p>💬 Facebook-gruppe:<a href=\"https://www.facebook.com/groups/strategisksalg\" target=\"_blank\" rel=\"noopener noreferrer\"> Strategisk Salg</a></p><p>🌐 Nettside:<a href=\"https://www.hegechristine.no/\" target=\"_blank\" rel=\"noopener noreferrer\"> hegechristine.no</a></p><hr><p><strong>Ressurser:</strong></p><p>🎓 Test Kajabi gratis og uforpliktende i 30 dager:<a href=\"https://www.hegechristine.no/kajabi\" target=\"_blank\" rel=\"noopener noreferrer\"> www.hegechristine.no/kajabi</a></p><hr><p><em>Disclaimer: Noen av lenkene i dette innlegget kan være annonselenker. Det betyr at det kan mottas provisjon ved kjøp gjennom dem – uten at det påvirker prisen for deg. </em></p>",
+      "date": "12. mai 2026",
+      "pubDate": "Tue, 12 May 2026 03:00:00 GMT",
+      "isNew": true,
+      "dur": "36 min",
+      "durationSeconds": 2189,
+      "audioUrl": "https://anchor.fm/s/4f734584/podcast/play/119836735/https%3A%2F%2Fd3ctxlq1ktw2nl.cloudfront.net%2Fstaging%2F2026-4-11%2F423946937-44100-2-5fed84506c95f.mp3",
+      "episodeUrl": "https://podcasters.spotify.com/pod/show/hege-christine-brunsvik/episodes/24---Hacket-og-kastet-ut-Takk-for-alt-Meta-e3j7kjv",
+      "imageUrl": "https://d3t3ozftmdmh3i.cloudfront.net/staging/podcast_uploaded_nologo/13229545/13229545-1764775912328-a3788a7dba0e8.jpg",
+      "season": "2026",
+      "episode": "19",
+      "guest": null,
+      "type": "samtale",
+      "appleEpisodeUrl": "",
+      "slug": "episode-024-hacket-og-kastet-ut-takk-for-alt-meta"
+    },
     {
       "id": "c2be5f4d-f7a7-4d13-acb4-5126d7933c78",
       "n": 23,
@@ -48,7 +71,7 @@
       "descriptionHtml": "<p>Dette er en episode som er perfekt for deg som har en e-postsekvens som har gått en stund. Enten det er en evergreen-funnel, eller en lansering du har kjørt flere ganger. </p><p>Vet du hvor folk faller av? Hvilken e-post som drar ned hele snittet? Hvor konverterer du godt, og hvor gjør du ikke det i det hele tatt?</p><p>Det er så lett å tenke at det er produktet som er feil, eller prisen, eller at det er på tide å lage noe nytt. Når sannheten ofte er at produktet er bra nok. Det er måten det blir solgt inn på som ikke fungerer.</p><p>I denne episoden tar Hege Christine deg gjennom hvordan du faktisk optimaliserer en e-postsekvens du allerede har satt opp. Du får konkrete spørsmål du kan stille deg selv for å finne ut hva som mangler, og en måte å bruke AI som strategisk partner som de fleste ikke utnytter nok.</p><p><br></p><hr><p><strong>Bli bedre kjent med Hege Christine:</strong></p><p>📸 Instagram:<a href=\"https://www.instagram.com/hegechristine.no/\" target=\"_blank\" rel=\"ugc noopener noreferrer\"> @hegechristine.no</a></p><p>💼 LinkedIn:<a href=\"https://www.linkedin.com/in/hegechristine/\" target=\"_blank\" rel=\"ugc noopener noreferrer\"> @hegechristine</a></p><p>💬 Facebook-gruppe:<a href=\"https://www.facebook.com/groups/strategisksalg\" target=\"_blank\" rel=\"ugc noopener noreferrer\"> Strategisk Salg</a></p><p>🌐 Nettside:<a href=\"https://www.hegechristine.no/\" target=\"_blank\" rel=\"ugc noopener noreferrer\"> hegechristine.no</a></p><hr><p><strong>Ressurser:</strong></p><p>🎓 Test Kajabi gratis og uforpliktende i 30 dager:<a href=\"https://www.hegechristine.no/kajabi\" target=\"_blank\" rel=\"ugc noopener noreferrer\"> www.hegechristine.no/kajabi</a></p><hr><p><em>Disclaimer: Noen av lenkene i dette innlegget kan være annonselenker. Det betyr at det kan mottas provisjon ved kjøp gjennom dem – uten at det påvirker prisen for deg. </em></p>",
       "date": "28. apr. 2026",
       "pubDate": "Tue, 28 Apr 2026 03:00:00 GMT",
-      "isNew": true,
+      "isNew": false,
       "dur": "17 min",
       "durationSeconds": 1029,
       "audioUrl": "https://anchor.fm/s/4f734584/podcast/play/119142049/https%3A%2F%2Fd3ctxlq1ktw2nl.cloudfront.net%2Fstaging%2F2026-3-28%2F423003421-44100-2-27cea6e5b55e1.mp3",
