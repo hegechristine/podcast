@@ -149,6 +149,9 @@ function detectGuest(title) {
   return null;
 }
 
+// Show-cover (channel-level itunes:image) — brukes for solo-episoder og som fallback
+const SHOW_IMAGE_URL = channel['itunes:image']?.href || channel.image?.url || '';
+
 const episodes = items.map((item, idx) => {
   const rawTitle = getText(item.title);
   const description = getText(item.description) || getText(item['itunes:summary']);
@@ -218,6 +221,18 @@ const appleMap = await fetchAppleEpisodeUrls(config.appleShowId);
 for (const ep of episodes) {
   const key = ep.rawTitle.trim().toLowerCase();
   ep.appleEpisodeUrl = appleMap.get(key) || '';
+}
+
+// Cover-regel: solo bruker show-cover, gjest bruker custom upload (med show som fallback).
+// Overstyrer hva Anchor returnerer i item-level itunes:image — Anchor returnerer alltid
+// noe per item, men for solo-episoder skal vi alltid vise show-coveret uavhengig av hva
+// som ligger på selve episoden i Anchor.
+for (const ep of episodes) {
+  if (!ep.guest) {
+    ep.imageUrl = SHOW_IMAGE_URL;
+  } else if (!ep.imageUrl) {
+    ep.imageUrl = SHOW_IMAGE_URL;
+  }
 }
 
 const output = {
