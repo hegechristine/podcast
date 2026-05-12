@@ -223,16 +223,15 @@ for (const ep of episodes) {
   ep.appleEpisodeUrl = appleMap.get(key) || '';
 }
 
-// Cover-regel: solo bruker show-cover, gjest bruker custom upload (med show som fallback).
-// Overstyrer hva Anchor returnerer i item-level itunes:image — Anchor returnerer alltid
-// noe per item, men for solo-episoder skal vi alltid vise show-coveret uavhengig av hva
-// som ligger på selve episoden i Anchor.
+// Cover-regel: har Hege lastet opp custom cover for episoden, bruk det. Ellers show-cover.
+// Anchor reflekterer "ingen custom" ved å returnere channel-level URL i item-level itunes:image,
+// så lik-sjekken fanger det. Solo/gjest-distinksjon er ikke logikkens ansvar — Hege bestemmer
+// per-episode ved å laste opp eller la være.
 for (const ep of episodes) {
-  if (!ep.guest) {
-    ep.imageUrl = SHOW_IMAGE_URL;
-  } else if (!ep.imageUrl) {
+  if (!ep.imageUrl || ep.imageUrl === SHOW_IMAGE_URL) {
     ep.imageUrl = SHOW_IMAGE_URL;
   }
+  // else: custom upload — behold
 }
 
 const output = {
