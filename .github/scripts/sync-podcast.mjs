@@ -250,5 +250,52 @@ const output = {
   episodes: episodes.slice(0, config.maxEpisodes || 50),
 };
 
+// SAFETY GUARDS — forhindre at en transient Anchor-glitch sletter data fra siten.
+// Hvis noen av disse trigger: exit non-zero så workflow feiler og INGEN commit skjer.
+// Override med --allow-shrink hvis en faktisk slettelse er intensjonell.
+const ALLOW_SHRINK = process.argv.includes('--allow-shrink');
+
+// Guard 1: tom feed
+if (output.episodes.length === 0) {
+  console.error('✕ ABORT: 0 episoder parsed fra RSS. Sannsynligvis nettverks- eller parse-feil.');
+  process.exit(1);
+}
+
+// Guard 2 + 3: sammenlign med forrige episodes.json
+try {
+  const previousRaw = await fs.readFile(OUTPUT_PATH, 'utf-8');
+  const previous = JSON.parse(previousRaw);
+  const prevEps = previous.episodes || [];
+  const prevCount = prevEps.length;
+  const newCount = output.episodes.length;
+
+  // Guard 2: shrink (færre episoder enn forrige)
+  if (newCount < prevCount && !ALLOW_SHRINK) {
+    console.error(`✕ ABORT: ny sync har ${newCount} episoder, forrige hadde ${prevCount}.`);
+    console.error(`  Sannsynligvis transient Anchor RSS-glitch. Stopper for å unngå datatap.`);
+    console.error(`  Hvis episode-sletting er intensjonell: kjør med --allow-shrink.`);
+    process.exit(1);
+  }
+
+  // Guard 3: episode-id forsvinner (selv om count er lik — episode byttet ut)
+  const prevIds = new Set(prevEps.map(e => e.id).filter(Boolean));
+  const newIds = new Set(output.episodes.map(e => e.id).filter(Boolean));
+  const missing = [...prevIds].filter(id => !newIds.has(id));
+  if (missing.length > 0 && !ALLOW_SHRINK) {
+    console.error(`✕ ABORT: ${missing.length} episode-id(er) er borte fra RSS:`);
+    for (const id of missing) {
+      const ep = prevEps.find(e => e.id === id);
+      console.error(`  - ${id}: ${ep?.title || '(ukjent tittel)'}`);
+    }
+    console.error(`  Stopper for å unngå datatap. Kjør med --allow-shrink hvis intensjonelt.`);
+    process.exit(1);
+  }
+} catch (err) {
+  if (err.code !== 'ENOENT') {
+    console.warn(`! Kunne ikke sammenligne med forrige episodes.json (${err.message}). Fortsetter uten guard.`);
+  }
+  // Første kjøring (ENOENT) eller parse-feil — fortsett
+}
+
 await fs.writeFile(OUTPUT_PATH, JSON.stringify(output, null, 2) + '\n', 'utf-8');
 console.log(`✓ Wrote ${output.episodes.length} episodes to ${path.relative(ROOT, OUTPUT_PATH)}`);
