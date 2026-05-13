@@ -1,0 +1,219 @@
+/* ============================================================
+   EXIT-INTENT POPUP — 150K Challenge
+   Brand: The Edit (cream + warm brown + terracotta)
+   ============================================================ */
+
+.exit-popup {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 220ms ease;
+}
+
+.exit-popup.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.exit-popup__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(48, 48, 48, 0.55);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  cursor: pointer;
+}
+
+.exit-popup__card {
+  position: relative;
+  background: var(--soft-bg, #F4F2EF);
+  color: var(--soft-ink, #303030);
+  padding: 44px 36px 36px;
+  border-radius: 4px;
+  max-width: 480px;
+  width: 100%;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
+  transform: translateY(12px) scale(0.97);
+  transition: transform 240ms cubic-bezier(.2,.7,.2,1);
+}
+
+.exit-popup.is-open .exit-popup__card {
+  transform: translateY(0) scale(1);
+}
+
+.exit-popup__close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 36px;
+  height: 36px;
+  background: none;
+  border: none;
+  font-size: 26px;
+  line-height: 1;
+  color: var(--soft-ink, #303030);
+  cursor: pointer;
+  opacity: 0.55;
+  transition: opacity 150ms ease;
+  font-family: inherit;
+}
+
+.exit-popup__close:hover { opacity: 1; }
+
+.exit-popup__kicker {
+  display: inline-block;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--soft-rust, #A0522D);
+  margin-bottom: 14px;
+}
+
+.exit-popup__card h2 {
+  font-family: 'CS Calory', 'Cormorant Garamond', serif;
+  font-size: clamp(26px, 4vw, 34px);
+  line-height: 1.08;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  margin: 0 0 14px;
+  color: var(--soft-ink, #303030);
+}
+
+.exit-popup__accent {
+  font-style: normal;
+  color: var(--soft-rust, #A0522D);
+}
+
+.exit-popup__face--back h2 em {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-weight: 500;
+  color: var(--soft-rust, #A0522D);
+}
+
+.exit-popup__sub {
+  font-family: 'Montserrat', system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--soft-ink-soft, #503D30);
+  margin: 0 0 22px;
+}
+
+.exit-popup__form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.exit-popup__form input {
+  width: 100%;
+  padding: 13px 14px;
+  border: 1px solid rgba(48, 48, 48, 0.2);
+  background: #fff;
+  font-family: 'Montserrat', system-ui, sans-serif;
+  font-size: 15px;
+  color: var(--soft-ink, #303030);
+  border-radius: 2px;
+  transition: border-color 150ms ease;
+}
+
+.exit-popup__form input::placeholder {
+  color: rgba(48, 48, 48, 0.45);
+}
+
+.exit-popup__form input:focus {
+  outline: none;
+  border-color: var(--soft-rust, #A0522D);
+}
+
+.exit-popup__form button {
+  width: 100%;
+  padding: 14px;
+  background: var(--soft-ink, #303030);
+  color: var(--soft-bg, #F4F2EF);
+  border: none;
+  font-family: 'Montserrat', system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 2px;
+  margin-top: 4px;
+  transition: background 160ms ease, transform 150ms ease;
+}
+
+.exit-popup__form button:hover:not(:disabled) {
+  background: var(--soft-rust, #A0522D);
+  transform: translateY(-1px);
+}
+
+.exit-popup__form button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.exit-popup__msg {
+  font-family: 'Montserrat', system-ui, sans-serif;
+  font-size: 13px;
+  color: var(--soft-rust, #A0522D);
+  min-height: 18px;
+  text-align: center;
+}
+
+.exit-popup__meta {
+  display: block;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--soft-muted, #6B5945);
+  margin-top: 18px;
+  text-align: center;
+}
+
+.exit-popup__face--back {
+  text-align: center;
+  padding: 8px 0;
+}
+
+.exit-popup__check {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--soft-rust, #A0522D);
+  color: var(--soft-bg, #F4F2EF);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.exit-popup__check svg { width: 28px; height: 28px; }
+
+.exit-popup__kajabi-wrap {
+  position: absolute;
+  left: -9999px;
+  top: -9999px;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+@media (max-width: 720px) {
+  .exit-popup { display: none !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .exit-popup,
+  .exit-popup__card,
+  .exit-popup__form button {
+    transition: none;
+  }
+}
