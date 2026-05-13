@@ -15,7 +15,7 @@
   if (!popup) return;
 
   const REDIRECT_URL = 'https://sider.hegechristine.no/150k-challenge-altB/';
-  const ARM_DELAY_MS = 15000;
+  const ARM_DELAY_MS = 10000;
   const SUCCESS_DELAY_MS = 500;
   const REDIRECT_DELAY_MS = 1800;
 
