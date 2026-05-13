@@ -1,9 +1,18 @@
 /* ============================================================
    EXIT-INTENT POPUP — 150K Challenge
-   Brand: The Edit (cream + warm brown + terracotta)
+   Matcher design fra sider.hegechristine.no/150k-challenge-altB/
+   - Archivo bold + Newsreader italic + JetBrains Mono
+   - Ink border + offset shadow (neo-editorial)
+   - Cream + ink + rust palette
    ============================================================ */
 
 .exit-popup {
+  --ep-cream:    #EFE6D4;
+  --ep-cream-lt: #FBF8F0;
+  --ep-ink:      #2E3230;
+  --ep-rust:     #C5522C;
+  --ep-olive:    #5E5F4C;
+
   position: fixed;
   inset: 0;
   z-index: 9999;
@@ -24,7 +33,7 @@
 .exit-popup__overlay {
   position: absolute;
   inset: 0;
-  background: rgba(48, 48, 48, 0.55);
+  background: rgba(46, 50, 48, 0.55);
   backdrop-filter: blur(3px);
   -webkit-backdrop-filter: blur(3px);
   cursor: pointer;
@@ -32,19 +41,38 @@
 
 .exit-popup__card {
   position: relative;
-  background: var(--soft-bg, #F4F2EF);
-  color: var(--soft-ink, #303030);
-  padding: 44px 36px 36px;
+  background: var(--ep-cream-lt);
+  color: var(--ep-ink);
+  padding: 40px 36px 36px;
+  border: 1.5px solid var(--ep-ink);
   border-radius: 4px;
+  box-shadow: 10px 10px 0 var(--ep-ink);
   max-width: 480px;
   width: 100%;
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
-  transform: translateY(12px) scale(0.97);
+  transform: translate(8px, 8px) scale(0.98);
   transition: transform 240ms cubic-bezier(.2,.7,.2,1);
 }
 
 .exit-popup.is-open .exit-popup__card {
-  transform: translateY(0) scale(1);
+  transform: translate(0, 0) scale(1);
+}
+
+.exit-popup__flag {
+  position: absolute;
+  top: -14px;
+  left: 24px;
+  background: var(--ep-rust);
+  color: var(--ep-cream);
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-weight: 600;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 7px 14px;
+  border-radius: 3px;
+  border: 1.5px solid var(--ep-ink);
+  box-shadow: 2px 2px 0 var(--ep-ink);
+  white-space: nowrap;
 }
 
 .exit-popup__close {
@@ -57,7 +85,7 @@
   border: none;
   font-size: 26px;
   line-height: 1;
-  color: var(--soft-ink, #303030);
+  color: var(--ep-ink);
   cursor: pointer;
   opacity: 0.55;
   transition: opacity 150ms ease;
@@ -67,92 +95,108 @@
 .exit-popup__close:hover { opacity: 1; }
 
 .exit-popup__kicker {
-  display: inline-block;
   font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-weight: 600;
   font-size: 11px;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--soft-rust, #A0522D);
+  color: var(--ep-olive);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
   margin-bottom: 14px;
 }
 
+.exit-popup__kicker::before {
+  content: "→";
+  font-weight: 700;
+  color: var(--ep-rust);
+}
+
 .exit-popup__card h2 {
-  font-family: 'CS Calory', 'Cormorant Garamond', serif;
-  font-size: clamp(26px, 4vw, 34px);
-  line-height: 1.08;
-  font-weight: 400;
-  letter-spacing: -0.01em;
+  font-family: 'Archivo', system-ui, sans-serif;
+  font-weight: 800;
+  font-size: clamp(24px, 3vw, 30px);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  color: var(--ep-ink);
   margin: 0 0 14px;
-  color: var(--soft-ink, #303030);
+  max-width: 22ch;
 }
 
 .exit-popup__accent {
-  font-style: normal;
-  color: var(--soft-rust, #A0522D);
+  font-family: 'Newsreader', serif;
+  font-style: italic;
+  font-weight: 500;
+  color: var(--ep-rust);
 }
 
 .exit-popup__face--back h2 em {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Newsreader', serif;
   font-style: italic;
   font-weight: 500;
-  color: var(--soft-rust, #A0522D);
+  color: var(--ep-rust);
 }
 
 .exit-popup__sub {
-  font-family: 'Montserrat', system-ui, sans-serif;
-  font-size: 15px;
-  line-height: 1.5;
-  color: var(--soft-ink-soft, #503D30);
+  font-family: 'Archivo', system-ui, sans-serif;
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: var(--ep-olive);
   margin: 0 0 22px;
+  max-width: 40ch;
 }
 
 .exit-popup__form {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
 }
 
 .exit-popup__form input {
   width: 100%;
-  padding: 13px 14px;
-  border: 1px solid rgba(48, 48, 48, 0.2);
-  background: #fff;
-  font-family: 'Montserrat', system-ui, sans-serif;
+  font-family: 'Archivo', system-ui, sans-serif;
   font-size: 15px;
-  color: var(--soft-ink, #303030);
-  border-radius: 2px;
-  transition: border-color 150ms ease;
+  line-height: 1.4;
+  color: var(--ep-ink);
+  background: var(--ep-cream);
+  border: 1.5px solid var(--ep-ink);
+  border-radius: 3px;
+  padding: 14px 16px;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease;
 }
 
 .exit-popup__form input::placeholder {
-  color: rgba(48, 48, 48, 0.45);
+  color: rgba(46, 50, 48, 0.5);
 }
 
 .exit-popup__form input:focus {
   outline: none;
-  border-color: var(--soft-rust, #A0522D);
+  border-color: var(--ep-rust);
+  box-shadow: 3px 3px 0 var(--ep-ink);
 }
 
 .exit-popup__form button {
   width: 100%;
-  padding: 14px;
-  background: var(--soft-ink, #303030);
-  color: var(--soft-bg, #F4F2EF);
-  border: none;
-  font-family: 'Montserrat', system-ui, sans-serif;
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
   cursor: pointer;
-  border-radius: 2px;
-  margin-top: 4px;
-  transition: background 160ms ease, transform 150ms ease;
+  background: var(--ep-ink);
+  color: var(--ep-cream);
+  font-family: 'Archivo', system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: 1.5px solid var(--ep-ink);
+  border-radius: 3px;
+  padding: 16px 22px;
+  margin-top: 6px;
+  transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.15s ease;
 }
 
 .exit-popup__form button:hover:not(:disabled) {
-  background: var(--soft-rust, #A0522D);
-  transform: translateY(-1px);
+  background: var(--ep-rust);
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0 var(--ep-ink);
 }
 
 .exit-popup__form button:disabled {
@@ -161,22 +205,25 @@
 }
 
 .exit-popup__msg {
-  font-family: 'Montserrat', system-ui, sans-serif;
-  font-size: 13px;
-  color: var(--soft-rust, #A0522D);
-  min-height: 18px;
-  text-align: center;
+  min-height: 1em;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-top: 4px;
+  color: #B33A1F;
 }
 
 .exit-popup__meta {
   display: block;
   font-family: 'JetBrains Mono', ui-monospace, monospace;
   font-size: 11px;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--soft-muted, #6B5945);
+  color: var(--ep-olive);
+  opacity: 0.85;
   margin-top: 18px;
-  text-align: center;
 }
 
 .exit-popup__face--back {
@@ -188,12 +235,14 @@
   width: 56px;
   height: 56px;
   border-radius: 50%;
-  background: var(--soft-rust, #A0522D);
-  color: var(--soft-bg, #F4F2EF);
+  background: var(--ep-rust);
+  color: var(--ep-cream);
   display: inline-flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 16px;
+  border: 1.5px solid var(--ep-ink);
+  box-shadow: 3px 3px 0 var(--ep-ink);
 }
 
 .exit-popup__check svg { width: 28px; height: 28px; }
@@ -204,6 +253,13 @@
   top: -9999px;
   visibility: hidden;
   pointer-events: none;
+}
+
+@media (max-width: 540px) {
+  .exit-popup__card {
+    padding: 32px 24px 28px;
+    box-shadow: 6px 6px 0 var(--ep-ink);
+  }
 }
 
 @media (max-width: 720px) {
