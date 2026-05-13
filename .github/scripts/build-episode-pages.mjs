@@ -797,6 +797,8 @@ function renderEpisode(ep, campaign, allEpisodes, showStats) {
 
 </script>
 
+<script defer src="/edit.js"></script>
+
 </body>
 </html>
 `;
