@@ -162,6 +162,19 @@ node .github/scripts/sync-podcast.mjs --allow-shrink
 
 ---
 
+## Dormant features
+
+### Exit-intent-popup for 150K Challenge
+
+Ferdig bygd, men deaktivert i påvente av at Hege velger å aktivere. Assets:
+
+- `assets/exit-popup.css` — design matcher [sider.hegechristine.no/150k-challenge-altB/](https://sider.hegechristine.no/150k-challenge-altB/)
+- `assets/exit-popup.js` — desktop-only, arm etter 10s, mouseleave top edge, én visning per session
+
+**Aktivering**: legg tilbake CSS-link, popup-HTML og JS-script-tag i `index.html` og template-stringen i `.github/scripts/build-episode-pages.mjs`, så regenerer (`node .github/scripts/build-episode-pages.mjs`). Konfig (Kajabi-form `2149575768`, redirect til `/150k-challenge-altB/`) er hardkodet i HTML-snippeten/JS-en.
+
+---
+
 ## Mer
 
 - **Brand & design system**: [`docs/brand.md`](docs/brand.md)
