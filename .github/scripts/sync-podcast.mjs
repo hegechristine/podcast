@@ -14,16 +14,6 @@ if (!config.rssUrl || config.rssUrl.startsWith('REPLACE_')) {
   process.exit(0);
 }
 
-console.log(`Fetching ${config.rssUrl}...`);
-const res = await fetch(config.rssUrl, {
-  headers: { 'User-Agent': 'hegechristine.github.io podcast sync' },
-});
-if (!res.ok) {
-  console.error(`Fetch failed: ${res.status} ${res.statusText}`);
-  process.exit(1);
-}
-const xml = await res.text();
-
 const parser = new XMLParser({
   ignoreAttributes: false,
   attributeNamePrefix: '',
@@ -34,15 +24,51 @@ const parser = new XMLParser({
   processEntities: false,
 });
 
-const data = parser.parse(xml);
-const channel = data?.rss?.channel;
-if (!channel) {
-  console.error('No <channel> found in RSS');
-  process.exit(1);
+async function fetchAndParseRSS(url) {
+  console.log(`Fetching ${url}...`);
+  const res = await fetch(url, {
+    headers: { 'User-Agent': 'hegechristine.github.io podcast sync' },
+  });
+  if (!res.ok) throw new Error(`Fetch failed: ${res.status} ${res.statusText}`);
+  const xml = await res.text();
+  const data = parser.parse(xml);
+  const ch = data?.rss?.channel;
+  if (!ch) throw new Error('No <channel> found in RSS');
+  const its = Array.isArray(ch.item) ? ch.item : (ch.item ? [ch.item] : []);
+  return { channel: ch, items: its };
 }
 
-const items = Array.isArray(channel.item) ? channel.item : (channel.item ? [channel.item] : []);
-console.log(`Found ${items.length} items`);
+// Anchor.fm sin RSS-edge er inkonsistent — forskjellige edge-noder serverer
+// forskjellige snapshots av feeden i opptil noen minutter etter publisering.
+// Hvis vi får like mange items som forrige sync OG forrige episode er ≥6 dager
+// gammel, så forventer vi ny episode og prøver en annen edge.
+let prevCount = 0;
+let prevLatestPubDate = null;
+try {
+  const previous = JSON.parse(await fs.readFile(OUTPUT_PATH, 'utf-8'));
+  prevCount = (previous.episodes || []).length;
+  prevLatestPubDate = previous.episodes?.[0]?.pubDate || null;
+} catch { /* første kjøring eller parse-feil — fortsett */ }
+
+const MAX_ATTEMPTS = 3;
+const RETRY_DELAY_MS = 60_000;
+let channel, items;
+for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
+  ({ channel, items } = await fetchAndParseRSS(config.rssUrl));
+  const grew = items.length > prevCount;
+  const daysSincePrev = prevLatestPubDate
+    ? (Date.now() - new Date(prevLatestPubDate).getTime()) / 86_400_000
+    : 0;
+  const expectNew = daysSincePrev >= 6;
+
+  if (grew || !expectNew || attempt === MAX_ATTEMPTS) {
+    const tag = grew ? ' (grew)' : expectNew ? ` (no growth after ${attempt} attempt${attempt > 1 ? 's' : ''})` : '';
+    console.log(`Found ${items.length} items${tag}`);
+    break;
+  }
+  console.log(`Found ${items.length} items, same as forrige sync (${Math.floor(daysSincePrev)} dager siden siste episode) — anchor-edge antakelig stale. Sleep ${RETRY_DELAY_MS / 1000}s og prøv på nytt (${attempt}/${MAX_ATTEMPTS - 1}).`);
+  await new Promise(r => setTimeout(r, RETRY_DELAY_MS));
+}
 
 function getText(node) {
   if (node === undefined || node === null) return '';
