@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-05-19T05:52:17.323Z",
+  "updatedAt": "2026-05-19T05:55:03.183Z",
   "channel": {
     "title": "The Edit",
     "description": "The Edit er podkasten for deg som vil bygge en smartere business. Ved å redigere bort det som ikke gir de resultatene du ønsker deg. Her deler Hege Christine praktiske strategier og ærlige refleksjoner sammen med gjester som har bygget noe på egne premisser. Tema er strategi, systemer, salg og mindset. Målet er at du skal sitte igjen med noe konkret du faktisk kan implementere i egen business. Strategisk. Ærlig. Praktisk.",
@@ -7,7 +7,7 @@
     "spotifyShowUrl": "https://open.spotify.com/show/286EpL6ZfSuJVB47nXSQbZ",
     "appleShowUrl": "https://podcasts.apple.com/us/podcast/the-edit/id1857930330",
     "rssUrl": "https://anchor.fm/s/4f734584/podcast/rss",
-    "episodeCount": 25,
+    "episodeCount": 26,
     "author": "Hege Christine",
     "stats": {
       "rating": "5",
@@ -15,6 +15,29 @@
     }
   },
   "episodes": [
+    {
+      "id": "ba73fe0e-e04d-42f8-82d2-1ce0a320bb03",
+      "n": 25,
+      "title": "Hvorfor overtenkning er den dyreste vanen din",
+      "rawTitle": "25 — Hvorfor overtenkning er den dyreste vanen din",
+      "desc": "Dette er en episode som er perfekt for deg som har stått fast i en beslutning i flere uker. Den ene tingen du vet du bør gjøre, men som du fortsatt ikke har gjort. Lanseringen som har ligget på vent i seks måneder,…",
+      "fullDesc": "Dette er en episode som er perfekt for deg som har stått fast i en beslutning i flere uker. Den ene tingen du vet du bør gjøre, men som du fortsatt ikke har gjort. Lanseringen som har ligget på vent i seks måneder, samarbeidet som ikke fungerer lenger, eller bare det å få inn hjelp på noe du har holdt på med alene altfor lenge. Det folk ofte ikke tenker på, er at det ikke er selve beslutningen som koster deg mest. Det er tiden mellom. Og forskning viser faktisk at mental load, det å la noe kverne rundt i hodet, er det som tærer mest på oss lenge - også etter at selve situasjonen er over. I denne episoden tar Hege Christine deg gjennom hvorfor overtenkning er den dyreste vanen du har som gründer. Du får fire konkrete spørsmål du kan stille deg selv neste gang du står fast, og en helt ny vinkel på hvordan AI faktisk kan være med på å forsterke overtenkningen din i stedet for å hjelpe deg ut av den. ----------------------------- Bli bedre kjent med Hege Christine: 📸 Instagram: @hegechristine.no 💼 LinkedIn: @hegechristine 💬 Facebook-gruppe: Strategisk Salg 🌐 Nettside: hegechristine.no ----------------------------- Ressurser: 🎓 Test Kajabi gratis og uforpliktende i 30 dager: www.hegechristine.no/kajabi ----------------------------- Disclaimer: Noen av lenkene i dette innlegget kan være annonselenker. Det betyr at det kan mottas provisjon ved kjøp gjennom dem – uten at det påvirker prisen for deg.",
+      "descriptionHtml": "<p>Dette er en episode som er perfekt for deg som har stått fast i en beslutning i flere uker. Den ene tingen du vet du bør gjøre, men som du fortsatt ikke har gjort. Lanseringen som har ligget på vent i seks måneder, samarbeidet som ikke fungerer lenger, eller bare det å få inn hjelp på noe du har holdt på med alene altfor lenge.</p><p>Det folk ofte ikke tenker på, er at det ikke er selve beslutningen som koster deg mest. Det er tiden mellom. Og forskning viser faktisk at mental load, det å la noe kverne rundt i hodet, er det som tærer mest på oss lenge - også etter at selve situasjonen er over.</p><p>I denne episoden tar Hege Christine deg gjennom hvorfor overtenkning er den dyreste vanen du har som gründer. Du får fire konkrete spørsmål du kan stille deg selv neste gang du står fast, og en helt ny vinkel på hvordan AI faktisk kan være med på å forsterke overtenkningen din i stedet for å hjelpe deg ut av den.</p><hr><p><strong>Bli bedre kjent med Hege Christine:</strong></p><p>📸 Instagram:<a href=\"https://www.instagram.com/hegechristine.no/\" target=\"_blank\" rel=\"noopener noreferrer\"> @hegechristine.no</a></p><p>💼 LinkedIn:<a href=\"https://www.linkedin.com/in/hegechristine/\" target=\"_blank\" rel=\"noopener noreferrer\"> @hegechristine</a></p><p>💬 Facebook-gruppe:<a href=\"https://www.facebook.com/groups/strategisksalg\" target=\"_blank\" rel=\"noopener noreferrer\"> Strategisk Salg</a></p><p>🌐 Nettside:<a href=\"https://www.hegechristine.no/\" target=\"_blank\" rel=\"noopener noreferrer\"> hegechristine.no</a></p><hr><p><strong>Ressurser:</strong></p><p>🎓 Test Kajabi gratis og uforpliktende i 30 dager:<a href=\"https://www.hegechristine.no/kajabi\" target=\"_blank\" rel=\"noopener noreferrer\"> www.hegechristine.no/kajabi</a></p><hr><p><em>Disclaimer: Noen av lenkene i dette innlegget kan være annonselenker. Det betyr at det kan mottas provisjon ved kjøp gjennom dem – uten at det påvirker prisen for deg. </em></p>",
+      "date": "19. mai 2026",
+      "pubDate": "Tue, 19 May 2026 03:00:00 GMT",
+      "isNew": true,
+      "dur": "10 min",
+      "durationSeconds": 615,
+      "audioUrl": "https://anchor.fm/s/4f734584/podcast/play/120187954/https%3A%2F%2Fd3ctxlq1ktw2nl.cloudfront.net%2Fstaging%2F2026-4-18%2F424417647-44100-2-1f3778055c139.mp3",
+      "episodeUrl": "https://podcasters.spotify.com/pod/show/hege-christine-no/episodes/25--Hvorfor-overtenkning-er-den-dyreste-vanen-din-e3jibji",
+      "imageUrl": "https://d3t3ozftmdmh3i.cloudfront.net/staging/podcast_uploaded_nologo/13229545/13229545-1764775912328-a3788a7dba0e8.jpg",
+      "season": "2026",
+      "episode": "20",
+      "guest": null,
+      "type": "samtale",
+      "appleEpisodeUrl": "",
+      "slug": "episode-025-hvorfor-overtenkning-er-den-dyreste-vanen-din"
+    },
     {
       "id": "b67f03f5-eeac-4b71-801f-fdd21e136e17",
       "n": 24,
