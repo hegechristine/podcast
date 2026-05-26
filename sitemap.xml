@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://podcast.hegechristine.no/</loc>
-    <lastmod>2026-05-25</lastmod>
+    <lastmod>2026-05-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -10,6 +10,12 @@
     <loc>https://podcast.hegechristine.no/velkommen/</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://podcast.hegechristine.no/episode-026-etter-6-ar-vurderte-jeg-a-bytte-plattform-dette-stoppet-meg/</loc>
+    <lastmod>2026-05-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://podcast.hegechristine.no/episode-025-hvorfor-overtenkning-er-den-dyreste-vanen-din/</loc>
