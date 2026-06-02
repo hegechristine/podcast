@@ -59,8 +59,11 @@ jobs:
         run: node .github/scripts/generate-cover-images.mjs
 
       - name: Install Chrome for Puppeteer
+        continue-on-error: true  # Chrome er kun for OG-images; episode-publisering skal aldri blokkeres av dette
         working-directory: .github/scripts
-        run: npx puppeteer browsers install chrome
+        run: |
+          rm -rf /home/runner/.cache/puppeteer/chrome  # fjern evt corrupt cache fra forrige run
+          npx puppeteer browsers install chrome
 
       - name: Generate OG-images
         continue-on-error: true  # OG-images er nice-to-have, ikke blokker commit hvis Chrome svikter
