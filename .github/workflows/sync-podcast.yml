@@ -58,7 +58,12 @@ jobs:
       - name: Generate cover-images (resized WebP)
         run: node .github/scripts/generate-cover-images.mjs
 
+      - name: Install Chrome for Puppeteer
+        working-directory: .github/scripts
+        run: npx puppeteer browsers install chrome
+
       - name: Generate OG-images
+        continue-on-error: true  # OG-images er nice-to-have, ikke blokker commit hvis Chrome svikter
         run: node .github/scripts/generate-og-images.mjs
 
       - name: Generate sitemap
