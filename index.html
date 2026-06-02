@@ -1687,12 +1687,12 @@
     <div class="featured" id="featured">
       <div class="featured__tag">Siste episode</div>
       <div class="featured__art" id="featured-art" style="background-image: linear-gradient(135deg, rgba(48,48,48,0.55), rgba(80,61,48,0.65)), url('/covers/_latest.webp'); background-size: cover; background-position: center;">
-        <div class="featured__art-num">EP&nbsp;42 · Sesong 03</div>
-        <div class="featured__art-title" id="featured-art-title">Når <em>nok</em> er nok</div>
+        <div class="featured__art-num">Laster …</div>
+        <div class="featured__art-title" id="featured-art-title">Siste episode</div>
       </div>
       <div class="featured__row">
-        <div class="meta" id="featured-meta">5. mai 2026 · 47 min</div>
-        <button class="featured__play" data-play-id="ep-42">
+        <div class="meta" id="featured-meta">—</div>
+        <button class="featured__play" data-play-id="">
           <span class="glyph"></span> Spill av
         </button>
       </div>
@@ -1863,10 +1863,10 @@
 <div class="player" id="player" role="region" aria-label="Avspiller">
   <audio id="player-audio" preload="none"></audio>
   <div class="player__now">
-    <div class="player__art" id="player-art">42</div>
+    <div class="player__art" id="player-art"></div>
     <div class="player__info">
-      <p class="player__title" id="player-title">Når nok er nok</p>
-      <span class="player__sub" id="player-sub">EP 42 · Sesong 03 · 47 min</span>
+      <p class="player__title" id="player-title">—</p>
+      <span class="player__sub" id="player-sub">Velg en episode</span>
     </div>
   </div>
   <div class="player__center">
@@ -2034,8 +2034,8 @@ function updateFeatured(latest) {
   if (titleEl) titleEl.textContent = latest.title;
   if (metaEl) metaEl.textContent = `${latest.date} · ${latest.dur}`;
   if (artNum) {
-    const label = latest.n ? `EP ${String(latest.n).padStart(2,'0')}` : 'TRAILER';
-    artNum.textContent = `${label} · Sesong ${String(latest.season).padStart(2,'0')}`;
+    // ep.season fra Anchor er ÅRSTALL (2026), ikke sesongnummer — vis derfor kun episode-nummer
+    artNum.textContent = latest.n ? `EP ${String(latest.n).padStart(2,'0')}` : 'TRAILER';
   }
   if (playBtn) playBtn.dataset.playId = latest.id;
 
@@ -2060,7 +2060,13 @@ async function loadEpisodes() {
     const data = await res.json();
     EPISODES = (data.episodes || []).map(mapEpisode);
     updateHeroStats(EPISODES, data.channel || {});
-    if (EPISODES.length) updateFeatured(EPISODES[0]);
+    if (EPISODES.length) {
+      updateFeatured(EPISODES[0]);
+      // Initialiser fixed-player med siste episode så den ikke viser tomme placeholders
+      // før noen klikker play. audio preload="none" hindrer faktisk nedlasting.
+      setPlayerEpisode(EPISODES[0]);
+      activeEpId = EPISODES[0].id;
+    }
     renderList();
   } catch (err) {
     console.error('Could not load episodes:', err);
@@ -2271,7 +2277,8 @@ function setPlayerEpisode(ep) {
     playerArt.textContent = ep.glyph;
   }
   playerTitle.textContent = ep.title.replace(/<[^>]*>/g, '');
-  playerSub.textContent = `EP ${ep.n} · Sesong 0${ep.season} · ${ep.dur}`;
+  // ep.season fra Anchor er ÅRSTALL (2026), ikke sesongnummer — ikke vis
+  playerSub.textContent = `EP ${ep.n} · ${ep.dur}`;
   totalSec = ep.durSec || 0;
   playerDur.textContent = ep.durSec ? fmtTime(ep.durSec) : '–:––';
   playerCur.textContent = '00:00';
