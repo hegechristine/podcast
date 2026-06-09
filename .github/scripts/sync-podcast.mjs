@@ -277,14 +277,18 @@ const output = {
 };
 
 // SAFETY GUARDS — forhindre at en transient Anchor-glitch sletter data fra siten.
-// Hvis noen av disse trigger: exit non-zero så workflow feiler og INGEN commit skjer.
-// Override med --allow-shrink hvis en faktisk slettelse er intensjonell.
+// Hvis noen av disse trigger: skip skrivingen (episodes.json røres ikke) og exit 0
+// som en ren no-op. Vi committer aldri en shrink — men en stale anchor-edge er
+// IKKE en feil, den er forventet på redundante kjøringer rett etter publisering.
+// Derfor ::warning:: (synlig i Actions) i stedet for ::error:: + rød run + falske
+// "notify on failure"-e-poster. Override med --allow-shrink hvis en faktisk
+// slettelse er intensjonell (da skrives den nye, mindre listen).
 const ALLOW_SHRINK = process.argv.includes('--allow-shrink');
 
 // Guard 1: tom feed
 if (output.episodes.length === 0) {
-  console.error('✕ ABORT: 0 episoder parsed fra RSS. Sannsynligvis nettverks- eller parse-feil.');
-  process.exit(1);
+  console.log('::warning::SKIP: 0 episoder parsed fra RSS (transient nettverks-/parse-feil). episodes.json røres ikke.');
+  process.exit(0);
 }
 
 // Guard 2 + 3: sammenlign med forrige episodes.json
@@ -297,10 +301,8 @@ try {
 
   // Guard 2: shrink (færre episoder enn forrige)
   if (newCount < prevCount && !ALLOW_SHRINK) {
-    console.error(`✕ ABORT: ny sync har ${newCount} episoder, forrige hadde ${prevCount}.`);
-    console.error(`  Sannsynligvis transient Anchor RSS-glitch. Stopper for å unngå datatap.`);
-    console.error(`  Hvis episode-sletting er intensjonell: kjør med --allow-shrink.`);
-    process.exit(1);
+    console.log(`::warning::SKIP: ny sync har ${newCount} episoder, forrige hadde ${prevCount} — sannsynligvis transient Anchor RSS-glitch. episodes.json røres ikke. Kjør med --allow-shrink hvis sletting er intensjonell.`);
+    process.exit(0);
   }
 
   // Guard 3: episode-id forsvinner (selv om count er lik — episode byttet ut)
@@ -308,13 +310,9 @@ try {
   const newIds = new Set(output.episodes.map(e => e.id).filter(Boolean));
   const missing = [...prevIds].filter(id => !newIds.has(id));
   if (missing.length > 0 && !ALLOW_SHRINK) {
-    console.error(`✕ ABORT: ${missing.length} episode-id(er) er borte fra RSS:`);
-    for (const id of missing) {
-      const ep = prevEps.find(e => e.id === id);
-      console.error(`  - ${id}: ${ep?.title || '(ukjent tittel)'}`);
-    }
-    console.error(`  Stopper for å unngå datatap. Kjør med --allow-shrink hvis intensjonelt.`);
-    process.exit(1);
+    const titles = missing.map(id => `${id}: ${prevEps.find(e => e.id === id)?.title || '(ukjent tittel)'}`).join('; ');
+    console.log(`::warning::SKIP: ${missing.length} episode-id(er) er borte fra RSS (sannsynligvis transient Anchor-glitch) — ${titles}. episodes.json røres ikke. Kjør med --allow-shrink hvis intensjonelt.`);
+    process.exit(0);
   }
 } catch (err) {
   if (err.code !== 'ENOENT') {
