@@ -34,7 +34,8 @@
     '<div class="hc-consent__actions">' +
     '<button type="button" class="hc-consent__btn hc-consent__btn--yes">Ja, greit</button>' +
     '<button type="button" class="hc-consent__btn hc-consent__btn--no">Nei takk</button>' +
-    '</div>';
+    '</div>' +
+    '<p class="hc-consent__more"><a href="https://www.hegechristine.no/pages/cookieerklaering" target="_blank" rel="noopener">Les mer i cookieerklæringen</a></p>';
 
   var style = document.createElement('style');
   style.textContent =
@@ -52,6 +53,9 @@
     '.hc-consent__btn--no{background:transparent;border:1px solid var(--ink-300,#777D73);' +
     'color:var(--cream-50,#FBF8F0);}' +
     '.hc-consent__btn--no:hover{border-color:var(--cream-50,#FBF8F0);}' +
+    '.hc-consent__more{margin:12px 0 0!important;font-size:.75rem;opacity:.75;}' +
+    '.hc-consent__more a{color:inherit;text-decoration:underline;text-underline-offset:2px;}' +
+    '.hc-consent__more a:hover{opacity:1;}' +
     '@media (min-width:640px){#hc-consent{left:auto;right:24px;bottom:24px;}}';
 
   function choose(value) {
