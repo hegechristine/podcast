@@ -30,7 +30,7 @@
   banner.setAttribute('role', 'dialog');
   banner.setAttribute('aria-label', 'Informasjonskapsler');
   banner.innerHTML =
-    '<p>Jeg bruker informasjonskapsler til anonym statistikk — for å se hva som er nyttig her. Greit for deg?</p>' +
+    '<p>Denne siden bruker informasjonskapsler til statistikk — for å forstå hva som er nyttig og hva som kan bli bedre. Greit for deg?</p>' +
     '<div class="hc-consent__actions">' +
     '<button type="button" class="hc-consent__btn hc-consent__btn--yes">Ja, greit</button>' +
     '<button type="button" class="hc-consent__btn hc-consent__btn--no">Nei takk</button>' +
