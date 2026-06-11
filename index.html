@@ -1645,6 +1645,22 @@
   }
   .ep__shownotes li { margin-bottom: 4px; }
 </style>
+
+<!-- Google Analytics (GA4) — Consent Mode v2: ingen cookies før samtykke gis i banneret (assets/consent.js) -->
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('consent', 'default', {
+  analytics_storage: 'denied',
+  ad_storage: 'denied',
+  ad_user_data: 'denied',
+  ad_personalization: 'denied',
+  wait_for_update: 500
+});
+gtag('js', new Date());
+gtag('config', 'G-54TTVN50X6');
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-54TTVN50X6"></script>
 </head>
 <body>
 
@@ -2443,5 +2459,6 @@ document.getElementById('player-close').addEventListener('click', () => {
 
 <script defer src="/edit.js"></script>
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "23ddf51c04ba4d6597c41ee0e86c252a"}'></script><!-- End Cloudflare Web Analytics -->
+<script defer src="/assets/consent.js"></script>
 </body>
 </html>

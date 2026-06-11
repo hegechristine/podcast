@@ -42,6 +42,22 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Archivo+Black&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=Newsreader:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=JetBrains+Mono:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/episode.css">
+
+<!-- Google Analytics (GA4) — Consent Mode v2: ingen cookies før samtykke gis i banneret (assets/consent.js) -->
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('consent', 'default', {
+  analytics_storage: 'denied',
+  ad_storage: 'denied',
+  ad_user_data: 'denied',
+  ad_personalization: 'denied',
+  wait_for_update: 500
+});
+gtag('js', new Date());
+gtag('config', 'G-54TTVN50X6');
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-54TTVN50X6"></script>
 </head>
 <body>
 
@@ -327,6 +343,7 @@
 
 <script defer src="/edit.js"></script>
 <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "23ddf51c04ba4d6597c41ee0e86c252a"}'></script><!-- End Cloudflare Web Analytics -->
+<script defer src="/assets/consent.js"></script>
 
 </body>
 </html>
