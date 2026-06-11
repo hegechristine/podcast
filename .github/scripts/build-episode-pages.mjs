@@ -525,9 +525,9 @@ gtag('consent', 'default', {
   wait_for_update: 500
 });
 gtag('js', new Date());
-gtag('config', 'G-54TTVN50X6');
+gtag('config', 'G-HRLY7EXF6V');
 </script>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-54TTVN50X6"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HRLY7EXF6V"></script>
 </head>
 <body>
 
