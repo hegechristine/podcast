@@ -2445,6 +2445,7 @@ document.getElementById('player-close').addEventListener('click', () => {
     try {
       kajabiForm.submit();
       setTimeout(function() {
+        if (typeof gtag === 'function') gtag('event', 'nyhetsbrev_pamelding', { kilde: 'podcast_forside' });
         success.classList.add('is-shown');
         customForm.reset();
         button.disabled = false;

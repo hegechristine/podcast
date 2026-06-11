@@ -302,6 +302,7 @@ gtag('config', 'G-HRLY7EXF6V');
     try {
       k.submit();
       setTimeout(function(){
+        if (typeof gtag === 'function') gtag('event', 'nyhetsbrev_pamelding', { kilde: 'podcast_episode' });
         document.querySelector('.ep-newsletter__face--front').hidden = true;
         document.querySelector('.ep-newsletter__face--back').hidden = false;
       }, 700);
