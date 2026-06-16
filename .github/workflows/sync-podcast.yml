@@ -58,43 +58,23 @@ jobs:
       - name: Generate cover-images (resized WebP)
         run: node .github/scripts/generate-cover-images.mjs
 
-      - name: Cache Puppeteer browser
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/puppeteer
-          key: puppeteer-${{ runner.os }}-${{ hashFiles('.github/scripts/package-lock.json') }}
-          restore-keys: |
-            puppeteer-${{ runner.os }}-
-
-      - name: Install Chrome for Puppeteer
+      - name: Locate Chrome for Puppeteer
         continue-on-error: true  # Chrome er kun for OG-images; episode-publisering skal aldri blokkeres av dette
-        working-directory: .github/scripts
         run: |
-          # Cachet browser (actions/cache over) gjenbrukes — install er idempotent og
-          # hopper over hvis den allerede finnes. Retry dekker transiente nedlastingsfeil
-          # ved cache-miss (det var DETTE som flaket og etterlot ep. 27-28 uten OG-bilde).
-          #
-          # En korrupt actions/cache kan gjenopprette en Chrome-MAPPE uten selve binæren.
-          # Da mener puppeteer at Chrome finnes og nekter å re-laste — install feiler hvert
-          # forsøk på rad (det var DETTE som flaket og etterlot ep. 029 uten OG-bilde).
-          # Vi rydder derfor vekk halv-installerte mapper før hvert forsøk, så nedlastingen
-          # alltid får starte rent.
-          clean_broken() {
-            for dir in ~/.cache/puppeteer/chrome/*/; do
-              [ -d "$dir" ] || continue
-              if [ ! -x "${dir}chrome-linux64/chrome" ]; then
-                echo "Fjerner ufullstendig Chrome-install: $dir"
-                rm -rf "$dir"
-              fi
-            done
-          }
-          for i in 1 2 3; do
-            clean_broken
-            npx puppeteer browsers install chrome && exit 0
-            echo "Chrome-install forsøk $i feilet — venter 10s og prøver igjen."
-            sleep 10
-          done
-          echo "Chrome-install feilet etter 3 forsøk."
+          # GitHub-runneren har Google Chrome forhåndsinstallert. Puppeteers EGEN nedlasting
+          # av Chrome 148 har vært kronisk ustabil — den lager mappa linux-148.../ uten selve
+          # binæren (skjer til og med under `npm install`s postinstall), og `puppeteer browsers
+          # install` returnerer 0 uten å faktisk laste ned. Det etterlot ep. 027–029 uten
+          # OG-bilde. Vi dropper derfor nedlastingen helt og peker puppeteer på systemets Chrome.
+          path="$(command -v google-chrome || command -v google-chrome-stable || command -v chromium-browser || command -v chromium || true)"
+          if [ -n "$path" ]; then
+            echo "Bruker system-Chrome: $path ($("$path" --version 2>/dev/null || echo 'ukjent versjon'))"
+            echo "PUPPETEER_EXECUTABLE_PATH=$path" >> "$GITHUB_ENV"
+          else
+            # Siste utvei hvis runner-imaget en dag mangler Chrome: prøv puppeteers nedlasting.
+            echo "Fant ikke system-Chrome — faller tilbake til puppeteer-nedlasting."
+            (cd .github/scripts && npx puppeteer browsers install chrome) || echo "Chrome-install feilet."
+          fi
 
       - name: Generate OG-images
         continue-on-error: true  # OG-images er nice-to-have, ikke blokker commit hvis Chrome svikter
@@ -129,7 +109,7 @@ jobs:
           done
           if [ -n "$missing" ]; then
             echo "::error::OG/SEO-bilde mangler for:$missing"
-            echo "Fiks: re-kjør denne workflowen (Chrome er cachet nå), eller kjør 'node .github/scripts/generate-og-images.mjs' lokalt."
+            echo "Fiks: re-kjør denne workflowen, eller kjør 'node .github/scripts/generate-og-images.mjs' lokalt."
             exit 1
           fi
           echo "✓ OG-dekning komplett — alle episoder har SEO-bilde."
