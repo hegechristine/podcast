@@ -73,7 +73,23 @@ jobs:
           # Cachet browser (actions/cache over) gjenbrukes — install er idempotent og
           # hopper over hvis den allerede finnes. Retry dekker transiente nedlastingsfeil
           # ved cache-miss (det var DETTE som flaket og etterlot ep. 27-28 uten OG-bilde).
+          #
+          # En korrupt actions/cache kan gjenopprette en Chrome-MAPPE uten selve binæren.
+          # Da mener puppeteer at Chrome finnes og nekter å re-laste — install feiler hvert
+          # forsøk på rad (det var DETTE som flaket og etterlot ep. 029 uten OG-bilde).
+          # Vi rydder derfor vekk halv-installerte mapper før hvert forsøk, så nedlastingen
+          # alltid får starte rent.
+          clean_broken() {
+            for dir in ~/.cache/puppeteer/chrome/*/; do
+              [ -d "$dir" ] || continue
+              if [ ! -x "${dir}chrome-linux64/chrome" ]; then
+                echo "Fjerner ufullstendig Chrome-install: $dir"
+                rm -rf "$dir"
+              fi
+            done
+          }
           for i in 1 2 3; do
+            clean_broken
             npx puppeteer browsers install chrome && exit 0
             echo "Chrome-install forsøk $i feilet — venter 10s og prøver igjen."
             sleep 10
